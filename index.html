@@ -9,7 +9,30 @@
 :root{color-scheme:dark;--bg:#071426;--panel:#10233d;--panel2:#142d4a;--line:#294563;--text:#f3f8ff;--muted:#c3d5e9;--blue:#17658b;--cyan:#7bdcff;--green:#6fe0a0;--orange:#ffd09a}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at top right,#14345a 0,transparent 48%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.7}header{padding:32px 18px 25px;background:linear-gradient(125deg,#102748,#174d78);border-bottom:1px solid var(--line)}.wrap{width:min(1050px,100%);margin:auto}main{width:min(1050px,100%);margin:auto;padding:22px 16px 60px}h1{font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.2;margin:8px 0}h2{font-size:1.3rem;margin:0 0 10px}h3{font-size:1.08rem;margin:0 0 8px}.muted,small{color:var(--muted)}.eyebrow{font-size:.86rem;color:#bdeaff;font-weight:750;letter-spacing:.08em}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:19px;margin:16px 0;box-shadow:0 8px 25px #0002}.subject-grid,.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}.subject{min-height:100px;text-align:left;padding:16px;border:1px solid #3b6384;background:#10233d;border-radius:15px;color:var(--text);font:inherit;cursor:pointer}.subject strong{display:block;font-size:1.18rem}.subject span{color:var(--muted);font-size:.9rem}.subject[aria-pressed=true]{outline:3px solid var(--cyan);background:#163b5a}.menu{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:6px;min-height:145px;padding:16px;background:var(--panel2);border:1px solid var(--line);border-radius:14px;color:var(--text);font:inherit;cursor:pointer}.menu strong{font-size:1rem}.menu span{font-size:.9rem;color:var(--muted)}button{font:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}.primary,.secondary,.option{border-radius:10px;padding:10px 14px;font-weight:700}.primary{background:#17658b;color:white;border:1px solid #438bb0}.secondary{background:#e9f4ff;color:#142b44;border:1px solid #8fb8d8}.option{display:block;width:100%;text-align:left;background:#0a1a2e;color:var(--text);border:1px solid #355575;margin:8px 0}.option[aria-pressed=true]{border:2px solid var(--cyan);background:#183b5a}.option:disabled{opacity:.75}input,select,textarea{width:100%;min-width:0;padding:12px;background:#091a2e;color:var(--text);border:1px solid #355575;border-radius:10px;font:inherit}label{display:block;font-weight:700;margin:10px 0 5px}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.row>*{flex:0 1 auto}.tag{display:inline-block;padding:3px 10px;border-radius:999px;background:#193d5b;color:#c6ecff;border:1px solid #355575;font-size:.84rem}.notice{background:#0a1a2e;border-left:4px solid var(--cyan);border-radius:9px;padding:12px;margin:12px 0}.feedback{padding:13px;border-radius:10px;margin-top:12px;background:#0a1a2e;border:1px solid var(--line);white-space:pre-wrap}.correct{border-color:#3c9e6b;background:#103526}.wrong{border-color:#ba7845;background:#382718}.hidden{display:none!important}.term-result{border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0;background:#0a1a2e}.term-result h3{color:var(--cyan)}.progress{height:8px;background:#263e59;border-radius:99px;overflow:hidden;margin:8px 0}.progress>div{height:100%;width:0;background:var(--cyan);transition:width .2s}.big{font-size:1.1rem;font-weight:750}.question-title{font-size:1.12rem;font-weight:750;line-height:1.6}footer{text-align:center;color:var(--muted);padding:24px;font-size:.9rem}a{color:var(--cyan)}@media(max-width:560px){header{padding:25px 15px}main{padding:16px 12px 42px}.panel{padding:15px}.menu{min-height:unset}.row>*{flex:1 1 auto}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
-</head>
+<style id="responsive-layout-polish">
+/* Responsive layout and touch-target polish; content and learning data are unchanged. */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:5rem}
+body{max-width:100%;overflow-wrap:anywhere}
+img,svg,canvas,video{max-width:100%;height:auto}
+button,input,select,textarea{font:inherit;max-width:100%;min-width:0}
+button,a,[role="button"]{touch-action:manipulation}
+button{min-height:42px}
+:where(button,a,input,select,textarea,[role="button"],[tabindex]):focus-visible{outline:3px solid #65c9f1;outline-offset:3px}
+@media(max-width:640px){
+  body{font-size:16px;line-height:1.65}
+  header,main{padding-left:max(16px,env(safe-area-inset-left))!important;padding-right:max(16px,env(safe-area-inset-right))!important}
+  h1{font-size:clamp(1.55rem,7vw,2.25rem)!important;line-height:1.2}
+  h2{font-size:clamp(1.15rem,5vw,1.45rem)}
+  .grid,.cards,.subject-grid,.subjects,.menu-grid,.topic-grid,.cards-grid,.dashboard,.two-col,.three-col{grid-template-columns:minmax(0,1fr)!important}
+  .card,.panel,.topic-card,.menu-card{min-width:0;overflow-wrap:anywhere}
+  button{min-height:44px}
+  .choices button{width:100%;text-align:left;white-space:normal}
+  table{display:block;max-width:100%;overflow-x:auto}
+  pre,code{overflow-wrap:anywhere;white-space:pre-wrap}
+  input,select,textarea{font-size:16px}
+}
+</style></head>
 <body>
 <header><div class="wrap"><div class="eyebrow">PASS JUKEN ACADEMY · STUDY LAB</div><h1>高校国語スタディラボ</h1><p>古典・国語・漢文を選んで、基礎から入試演習まで。解いて、答え合わせをして、苦手を復習しよう。</p></div></header>
 <main>
