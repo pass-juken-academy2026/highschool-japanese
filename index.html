@@ -200,7 +200,7 @@ const terms=[
 ["literature","掛詞","一つの音に複数の意味を持たせる和歌の修辞技法。","和歌・修辞"],
 ["literature","縁語","ある語と意味上関連する語を近くに配して響き合わせる修辞技法。","和歌・修辞"],
 ["literature","本歌取り","古歌を踏まえ、その表現や趣向を新しい歌に取り入れる技法。","和歌・修辞"],
-["literature","無常観","物事は移り変わり、永続しないという見方。中世文学の理解で重要。","文学史・思想"]
+["literature","無常観","物事は移り変わり、永続しないという見方。中世文学の理解で重要。","文学史・思想"],
 ["japanese","主題","文章全体で中心的に扱われているテーマ。細部の例と区別する。","読解"],
 ["japanese","要旨","文章の中心的な内容を、重要な点に絞ってまとめたもの。","読解"],
 ["japanese","論旨","筆者が主張をどのような筋道で展開しているかという論理の流れ。","評論読解"],
@@ -299,10 +299,7 @@ function openMenu(i){selectedMenu=i;const content=node('div');const name=subject
 }
 function makeQuizCard(parent,items,title){let idx=0,score=0,selected=null,done=false,miss=[];const card=node('div');const heading=node('p','muted',title||'選択肢を選び、採点して解説を確認しよう。');const progress=node('div','progress');const bar=node('div');progress.appendChild(bar);const q=node('div','question-title');const options=node('div');const feedback=node('div','feedback','選択肢を選んでください。');const stats=node('p','muted','');const actions=node('div','row');const check=node('button','primary','採点する');const next=node('button','secondary','次の問題');actions.append(check,next);card.append(heading,progress,q,options,feedback,stats,actions);parent.appendChild(card);
  function draw(){selected=null;done=false;const item=items[idx];q.textContent=(idx+1)+'. '+item.q;options.replaceChildren();item.c.forEach((v,j)=>{const b=node('button','option',String.fromCharCode(65+j)+'. '+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(done)return;selected=j;[...options.children].forEach((x,k)=>x.setAttribute('aria-pressed',String(k===j)));feedback.textContent='選択肢を選びました。採点して確認しよう。';});options.appendChild(b)});feedback.className='feedback';feedback.textContent='選択肢を選んでください。';bar.style.width=(idx/items.length*100)+'%';stats.textContent='問題 '+(idx+1)+' / '+items.length+'　正解 '+score+'問';check.disabled=false;}
- check.addEventListener('click',()=>{if(done)return;if(selected===null){feedback.textContent='先に選択肢を選んでください。';return}done=true;const item=items[idx];if(selected===item.a)score++;else miss.push(item);feedback.className='feedback '+(selected===item.a?'correct':'wrong');feedback.textContent=(selected===item.a?'正解！
-':'不正解。
-')+'正解：'+item.c[item.a]+'
-解説：'+item.e;stats.textContent='正解 '+score+' / 解答 '+(idx+1)+'問（正答率 '+Math.round(score/(idx+1)*100)+'%）';bar.style.width=((idx+1)/items.length*100)+'%';check.disabled=true;if(idx===items.length-1){next.textContent='結果を見る';}});
+ check.addEventListener('click',()=>{if(done)return;if(selected===null){feedback.textContent='先に選択肢を選んでください。';return}done=true;const item=items[idx];if(selected===item.a)score++;else miss.push(item);feedback.className='feedback '+(selected===item.a?'correct':'wrong');feedback.textContent=(selected===item.a?'正解！\n':'不正解。\n')+'正解：'+item.c[item.a]+'\n解説：'+item.e;stats.textContent='正解 '+score+' / 解答 '+(idx+1)+'問（正答率 '+Math.round(score/(idx+1)*100)+'%）';bar.style.width=((idx+1)/items.length*100)+'%';check.disabled=true;if(idx===items.length-1){next.textContent='結果を見る';}});
  next.addEventListener('click',()=>{if(!done&&selected!==null){feedback.textContent='先に採点してください。';return}if(idx<items.length-1){idx++;draw()}else{card.replaceChildren();card.appendChild(node('h3','', '結果：'+score+' / '+items.length+'問正解'));card.appendChild(node('p','big','正答率 '+Math.round(score/items.length*100)+'%'));if(miss.length){card.appendChild(node('h3','','復習したい問題'));miss.forEach(m=>{const box=node('div','term-result');box.append(node('strong','',m.q),node('p','', '正解：'+m.c[m.a]),node('p','muted','解説：'+m.e));card.appendChild(box)})}else card.appendChild(node('p','', '全問正解！この調子で別のメニューにも挑戦しよう。'));const retry=node('button','primary','もう一度挑戦');retry.addEventListener('click',()=>makeQuizCard(parent,items,title));card.appendChild(retry)}});
  draw();return card;
 }
