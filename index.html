@@ -3,132 +3,168 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f4f6fb">
-<title>高校国語スタディラボ｜古典・国語・漢文</title>
-<meta name="description" content="高校国語の漢字、語彙、古典文法、漢文、読解を練習できる学習サイト。">
+<meta name="description" content="高校国語の古典・国語・漢文を選んで学べる、文法・漢字・語彙・読解・模擬テスト・共通テスト対策サイト。">
+<title>高校国語スタディラボ</title>
 <style>
-:root{--ink:#172033;--muted:#647087;--brand:#4057c8;--brand2:#6878e5;--paper:#fff;--bg:#f4f6fb;--line:#e1e6f0;--good:#168253;--bad:#c2414b;--soft:#eef1ff;--shadow:0 12px 32px #24345a12}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;line-height:1.7}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit}.wrap{max-width:1100px;margin:auto;padding:20px}.hero{padding:30px 0 20px}.eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.12em;color:var(--brand)}h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.2;margin:.4rem 0}h2{margin:.2rem 0 .8rem;font-size:1.45rem}h3{margin:.1rem 0 .4rem}.sub{color:var(--muted);margin:0}.panel{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:clamp(16px,3vw,26px);box-shadow:var(--shadow);margin:16px 0}.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.choice{border:1px solid var(--line);background:#fff;border-radius:18px;padding:20px 12px;text-align:left;min-height:150px;transition:.15s}.choice:hover,.choice:focus-visible{border-color:var(--brand);transform:translateY(-2px);outline:2px solid #4057c833}.choice .emoji{font-size:2rem;display:block}.choice strong{display:block;font-size:1.2rem}.choice small{color:var(--muted)}.menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.menu-btn{display:flex;gap:12px;align-items:center;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}.menu-btn .num{display:grid;place-items:center;background:var(--soft);color:var(--brand);font-weight:900;border-radius:10px;min-width:42px;height:42px}.menu-btn small{display:block;color:var(--muted);font-size:.83rem}.btn{border:0;border-radius:12px;background:var(--brand);color:#fff;padding:11px 16px;font-weight:750}.btn.secondary{background:#edf0f8;color:var(--ink)}.btn.ghost{background:transparent;color:var(--brand);border:1px solid var(--line)}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.hidden{display:none!important}.crumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.9rem;margin-bottom:12px}.crumb button{border:0;background:none;color:var(--brand);padding:0;font-weight:700}.question{font-size:1.15rem;font-weight:800;margin:12px 0}.options{display:grid;gap:9px;margin:16px 0}.option{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:13px;border:1px solid var(--line);background:#fff;border-radius:12px}.option:hover{border-color:var(--brand)}.option.correct{border-color:var(--good);background:#eaf8f0}.option.wrong{border-color:var(--bad);background:#fff0f0}.feedback{border-radius:12px;padding:13px;margin:12px 0;background:#f1f4fa}.feedback.good{background:#eaf8f0;color:#125b3b}.feedback.bad{background:#fff0f0;color:#8d2630}.tag{display:inline-block;background:#eef1ff;color:#3948a8;border-radius:999px;padding:3px 9px;font-size:.78rem;font-weight:800}.progress{height:8px;background:#e7eaf3;border-radius:99px;overflow:hidden;margin:12px 0}.progress>div{height:100%;background:var(--brand);width:0;transition:width .2s}.stat{font-size:2rem;font-weight:900}.input{width:100%;border:1px solid #cfd6e5;border-radius:11px;padding:12px;background:#fff}.answer-line{display:flex;gap:8px}.answer-line .input{flex:1;min-width:0}.result-list{padding-left:1.2rem}.result-list li{margin:8px 0}.search-results{display:grid;gap:10px;margin-top:14px}.term-card{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.term-card strong{font-size:1.05rem}.muted{color:var(--muted)}.tiny{font-size:.85rem}.footer{text-align:center;color:var(--muted);font-size:.82rem;padding:25px 0 40px}.notice{background:#fff8e8;border:1px solid #f1dfb5;padding:12px 14px;border-radius:12px;color:#6c531e}.passage{white-space:pre-wrap;line-height:2;background:#f8f9fd;border:1px solid var(--line);padding:15px;border-radius:12px}.select{padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff;max-width:100%}
-@media(max-width:650px){.wrap{padding:14px}.choices{grid-template-columns:1fr}.choice{min-height:0;display:grid;grid-template-columns:48px 1fr;align-items:center;column-gap:10px}.choice .emoji{grid-row:span 2}.menu-grid{grid-template-columns:1fr}.panel{border-radius:16px}.answer-line{flex-direction:column}}
+:root{color-scheme:dark;--bg:#071426;--panel:#10233d;--panel2:#142d4a;--line:#294563;--text:#f3f8ff;--muted:#c3d5e9;--blue:#17658b;--cyan:#7bdcff;--green:#6fe0a0;--orange:#ffd09a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at top right,#14345a 0,transparent 48%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.7}header{padding:32px 18px 25px;background:linear-gradient(125deg,#102748,#174d78);border-bottom:1px solid var(--line)}.wrap{width:min(1050px,100%);margin:auto}main{width:min(1050px,100%);margin:auto;padding:22px 16px 60px}h1{font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.2;margin:8px 0}h2{font-size:1.3rem;margin:0 0 10px}h3{font-size:1.08rem;margin:0 0 8px}.muted,small{color:var(--muted)}.eyebrow{font-size:.86rem;color:#bdeaff;font-weight:750;letter-spacing:.08em}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:19px;margin:16px 0;box-shadow:0 8px 25px #0002}.subject-grid,.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}.subject{min-height:100px;text-align:left;padding:16px;border:1px solid #3b6384;background:#10233d;border-radius:15px;color:var(--text);font:inherit;cursor:pointer}.subject strong{display:block;font-size:1.18rem}.subject span{color:var(--muted);font-size:.9rem}.subject[aria-pressed=true]{outline:3px solid var(--cyan);background:#163b5a}.menu{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:6px;min-height:145px;padding:16px;background:var(--panel2);border:1px solid var(--line);border-radius:14px;color:var(--text);font:inherit;cursor:pointer}.menu strong{font-size:1rem}.menu span{font-size:.9rem;color:var(--muted)}button{font:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}.primary,.secondary,.option{border-radius:10px;padding:10px 14px;font-weight:700}.primary{background:#17658b;color:white;border:1px solid #438bb0}.secondary{background:#e9f4ff;color:#142b44;border:1px solid #8fb8d8}.option{display:block;width:100%;text-align:left;background:#0a1a2e;color:var(--text);border:1px solid #355575;margin:8px 0}.option[aria-pressed=true]{border:2px solid var(--cyan);background:#183b5a}.option:disabled{opacity:.75}input,select,textarea{width:100%;min-width:0;padding:12px;background:#091a2e;color:var(--text);border:1px solid #355575;border-radius:10px;font:inherit}label{display:block;font-weight:700;margin:10px 0 5px}.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.row>*{flex:0 1 auto}.tag{display:inline-block;padding:3px 10px;border-radius:999px;background:#193d5b;color:#c6ecff;border:1px solid #355575;font-size:.84rem}.notice{background:#0a1a2e;border-left:4px solid var(--cyan);border-radius:9px;padding:12px;margin:12px 0}.feedback{padding:13px;border-radius:10px;margin-top:12px;background:#0a1a2e;border:1px solid var(--line);white-space:pre-wrap}.correct{border-color:#3c9e6b;background:#103526}.wrong{border-color:#ba7845;background:#382718}.hidden{display:none!important}.term-result{border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0;background:#0a1a2e}.term-result h3{color:var(--cyan)}.progress{height:8px;background:#263e59;border-radius:99px;overflow:hidden;margin:8px 0}.progress>div{height:100%;width:0;background:var(--cyan);transition:width .2s}.big{font-size:1.1rem;font-weight:750}.question-title{font-size:1.12rem;font-weight:750;line-height:1.6}footer{text-align:center;color:var(--muted);padding:24px;font-size:.9rem}a{color:var(--cyan)}@media(max-width:560px){header{padding:25px 15px}main{padding:16px 12px 42px}.panel{padding:15px}.menu{min-height:unset}.row>*{flex:1 1 auto}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header class="hero">
-<div class="eyebrow">STUDY LAB / JAPANESE</div>
-<h1>高校国語スタディラボ</h1>
-<p class="sub">文法・語彙・読解を、選んで、解いて、身につける。</p>
-</header>
-
+<header><div class="wrap"><div class="eyebrow">PASS JUKEN ACADEMY · STUDY LAB</div><h1>高校国語スタディラボ</h1><p>古典・国語・漢文を選んで、基礎から入試演習まで。解いて、答え合わせをして、苦手を復習しよう。</p></div></header>
 <main>
-<section id="home" class="panel">
-<h2>まず、学習する分野を選ぼう</h2>
-<p class="sub">選んだ分野に合わせて、8つの学習メニューが切り替わるよ。</p>
-<div class="choices" style="margin-top:16px">
-<button class="choice" data-track="classic"><span class="emoji">📜</span><strong>古典</strong><small>用言・助動詞・助詞・古文読解</small></button>
-<button class="choice" data-track="japanese"><span class="emoji">📖</span><strong>国語</strong><small>漢字・語彙・ことわざ・現代文</small></button>
-<button class="choice" data-track="kanbun"><span class="emoji">🎋</span><strong>漢文</strong><small>語句・熟語・置き字・漢文読解</small></button>
-</div>
-</section>
-
-<section id="menus" class="panel hidden">
-<div class="crumb"><button id="backHome">分野選択へ</button><span>›</span><strong id="trackName"></strong></div>
-<h2 id="menuHeading">学習メニュー</h2>
-<p class="sub" id="trackIntro"></p>
-<div class="menu-grid" id="menuGrid" style="margin-top:16px"></div>
-</section>
-
-<section id="workspace" class="panel hidden">
-<div class="crumb"><button id="toMenus">メニューへ</button><span>›</span><strong id="workTitle"></strong></div>
-<div id="workBody"></div>
-</section>
-</main>
-<footer class="footer">高校国語スタディラボ · 学習用サンプル問題を含みます</footer>
-</div>
+<section class="panel" aria-labelledby="subject-title"><h2 id="subject-title">STEP 1｜学習分野を選ぶ</h2><div class="subject-grid" id="subjects">
+<button class="subject" data-subject="classical" aria-pressed="true"><strong>📜 古典</strong><span>用言・助動詞・助詞・古文読解</span></button>
+<button class="subject" data-subject="japanese" aria-pressed="false"><strong>📖 国語</strong><span>漢字・語彙・ことわざ・文章読解</span></button>
+<button class="subject" data-subject="kanbun" aria-pressed="false"><strong>🀄 漢文</strong><span>単語・熟語・置き字・書き下し</span></button>
+</div></section>
+<section class="panel" aria-labelledby="menu-title"><h2 id="menu-title">STEP 2｜学習メニューを選ぶ</h2><div id="menu-grid" class="menu-grid"></div></section>
+<section id="work" class="panel hidden" aria-live="polite"><div class="row" style="justify-content:space-between"><span class="tag" id="work-tag">学習</span><button class="secondary" id="back-menu" type="button">メニューに戻る</button></div><h2 id="work-title" style="margin-top:12px"></h2><div id="work-content"></div></section>
+<section class="panel"><h2>使い方</h2><p class="muted">分野を選び、8つのメニューから練習内容を選択。問題は採点後に解説を確認できます。模擬テスト・共通テスト型は複数問をまとめて解けます。</p><p class="notice">このサイトは学習用のオリジナル問題を収録した初期版です。今後、問題数や本文の種類を追加していく想定です。</p></section>
+</main><footer>PASS JUKEN ACADEMY · 学びを一歩ずつ</footer>
 <script>
-"use strict";
-const TRACKS={
- classic:{name:"古典",icon:"📜",intro:"古典文法と古文読解を基礎から練習しよう。",menus:[
- ["用言","活用の種類・活用形を確認"],["助動詞","意味・接続・活用を練習"],["助詞","格助詞・接続助詞などを整理"],["文法の見分け","用言・助動詞・助詞を見分ける"],["本文翻訳","古文を現代語訳する"],["模擬テスト","文法と読解の総合演習"],["共通テスト","資料・文章を読んで考える"],["単語検索","古語を入力して意味を調べる"]]},
- japanese:{name:"国語",icon:"📖",intro:"漢字・語彙・ことわざから現代文読解まで練習しよう。",menus:[
- ["漢字","読み方・書き方を確認"],["単語の意味","語彙の意味を選ぶ"],["ことわざ","意味や使い方を覚える"],["短文問題","文脈に合う表現を考える"],["読解四択","本文から読み取れることを選ぶ"],["模擬テスト","漢字・語彙・読解の総合演習"],["共通テスト","複数の情報を比べて読み解く"],["単語検索","言葉を入力して意味を調べる"]]},
- kanbun:{name:"漢文",icon:"🎋",intro:"漢文の語句・句法・訓読と読解を練習しよう。",menus:[
- ["単語の意味","漢文で使う語句を確認"],["熟語","熟語の意味を選ぶ"],["置き字","置き字の働きを整理"],["本文翻訳","書き下し・現代語訳に挑戦"],["読解四択","本文から読み取れることを選ぶ"],["模擬テスト","語句・句法・読解の総合演習"],["共通テスト","文章と資料を組み合わせて読む"],["単語検索","漢文語句を入力して意味を調べる"]]}
+(function(){
+'use strict';
+const subjects={
+ classical:{name:'古典',menus:[
+ ['用言','動詞・形容詞・形容動詞の活用を確認'],
+ ['助動詞','接続・意味・活用をセットで練習'],
+ ['助詞','助詞の働きと意味を整理'],
+ ['文法の見分け','用言・助動詞・助詞を見分ける短問'],
+ ['本文翻訳','古文の短い本文を現代語訳する練習'],
+ ['模擬テスト','古典の複数分野をまとめてチェック'],
+ ['共通テスト','文章・文法・内容理解の総合演習'],
+ ['単語検索','古語を入力して意味を調べる']
+ ]},
+ japanese:{name:'国語',menus:[
+ ['漢字','漢字の読み・表記を練習'],
+ ['単語の意味','語句の意味を確認'],
+ ['ことわざ','ことわざの意味と使い方'],
+ ['短文問題','短文を読んで文法・語彙を判断'],
+ ['本文読解','本文から読み取れることを四択で選ぶ'],
+ ['模擬テスト','漢字・語彙・短文・読解をまとめて確認'],
+ ['共通テスト','文章と選択肢を根拠で照合する演習'],
+ ['単語検索','国語・古典・漢文の語句をまとめて検索']
+ ]},
+ kanbun:{name:'漢文',menus:[
+ ['単語の意味','漢文で使う語の意味を確認'],
+ ['熟語','熟語の意味と用法を練習'],
+ ['置き字','置き字の働きと見分け方'],
+ ['本文翻訳','書き下し・現代語訳に挑戦'],
+ ['本文読解','本文から読み取れることを四択で選ぶ'],
+ ['模擬テスト','語彙・句法・読解をまとめて確認'],
+ ['共通テスト','漢文の文章理解と選択肢演習'],
+ ['単語検索','国語・古典・漢文の語句をまとめて検索']
+ ]}
 };
-const DATA={
- classic:[
- {m:0,q:"「書く」の活用の種類は？",o:["四段活用","上一段活用","下一段活用","カ行変格活用"],a:0,e:"「書く」はカ行四段活用です。未然形「書か」、連用形「書き」、終止形「書く」と活用します。"},
- {m:0,q:"「見る」の活用の種類は？",o:["四段活用","上一段活用","下一段活用","サ行変格活用"],a:1,e:"「見る」はマ行上一段活用です。"},
- {m:0,q:"形容詞「高し」の連用形は？",o:["高く","高し","高けれ","高さ"],a:0,e:"ク活用の形容詞「高し」の連用形は「高く」です。"},
- {m:1,q:"助動詞「ず」の基本的な意味は？",o:["打消","過去","推量","完了"],a:0,e:"「ず」は打消を表す助動詞です。未然形に接続します。"},
- {m:1,q:"助動詞「けり」の代表的な意味は？",o:["断定・存在","過去・詠嘆","推量","可能"],a:1,e:"「けり」は過去や詠嘆を表します。文脈で判断します。"},
- {m:1,q:"助動詞「む」が表すことのある意味は？",o:["推量・意志","打消のみ","完了のみ","受身のみ"],a:0,e:"「む」は推量・意志など複数の意味があり、主語や文脈で判断します。"},
- {m:2,q:"「花咲きて」の「て」の働きは？",o:["接続助詞","格助詞","係助詞","終助詞"],a:0,e:"動作をつなぐ「て」は接続助詞です。"},
- {m:2,q:"「山を越ゆ」の「を」の働きは？",o:["格助詞","接続助詞","終助詞","副助詞"],a:0,e:"「を」は動作の対象や通過点などを示す格助詞です。"},
- {m:3,q:"「いとをかし」の「をかし」は何？",o:["形容詞","助動詞","格助詞","動詞"],a:0,e:"「をかし」はシク活用の形容詞です。"},
- {m:3,q:"「花咲きけり」の「けり」は何？",o:["助動詞","接続助詞","動詞","形容詞"],a:0,e:"「けり」は過去・詠嘆を表す助動詞です。"},
- {m:4,q:"「春になりて、花ぞ咲きける。」の大意として適切なのは？",o:["春になって、花が咲いたことだなあ","秋になり、葉が落ちた","春になる前に花を摘んだ","花は咲かなかった"],a:0,e:"「花ぞ…ける」は係り結びで、詠嘆を含む訳が自然です。"},
- {m:6,q:"文章の内容と資料を合わせて考えるとき、最も大切なのは？",o:["本文と資料の両方を根拠に判断する","自分の知識だけで決める","資料は見ず本文の一部だけ読む","選択肢の長さで決める"],a:0,e:"本文と資料を照合し、根拠に基づいて判断します。"}
+const db={
+ classical:[
+ {type:0,q:'「書く」の活用の種類は？',c:['四段活用','上一段活用','下一段活用','カ変活用'],a:0,e:'「書か・書き・書く・書く・書け・書け」と活用する四段活用です。'},
+ {type:0,q:'「見る」の活用の種類は？',c:['四段活用','上一段活用','上一段活用ではない','上一段活用'],a:3,e:'「見（み）・見（み）・見る・見る・見れ・見よ」。古典の「見る」はマ行上一段活用です。'},
+ {type:0,q:'形容詞「高し」の連体形は？',c:['高く','高き','高けれ','高し'],a:1,e:'ク活用形容詞「高し」の連体形は「高き」です。'},
+ {type:1,q:'助動詞「む」の意味として当てはまるものは？「われ行かむ」',c:['過去','意志','打消','完了'],a:1,e:'話し手自身の動作なので、ここでは意志「行こう」と考えます。文脈によって推量などにもなります。'},
+ {type:1,q:'過去の助動詞「き」の連体形は？',c:['し','しか','き','せ'],a:0,e:'「き」は「せ・○・き・し・しか・○」。連体形は「し」です。'},
+ {type:1,q:'助動詞「ず」の意味は？',c:['打消','推量','完了','尊敬'],a:0,e:'「ず」は打消を表す助動詞です。'},
+ {type:2,q:'係助詞「こそ」があるとき、文末は原則どの活用形になる？',c:['未然形','連用形','已然形','命令形'],a:2,e:'係り結びでは「こそ」に呼応して已然形になります。'},
+ {type:2,q:'「花ぞ咲く」の「ぞ」の働きは？',c:['係助詞','格助詞','接続助詞','終助詞'],a:0,e:'「ぞ」は係助詞で、文末に連体形を結びます。'},
+ {type:3,q:'「花ぞ咲く」の「ぞ」と文末の関係として正しいものは？',c:['ぞ—連体形','ぞ—已然形','ぞ—命令形','ぞ—未然形'],a:0,e:'「ぞ・なむ・や・か」は連体形、「こそ」は已然形で結びます。'},
+ {type:3,q:'「書かず」の「ず」は何に当たる？',c:['用言','助動詞','助詞','接続詞'],a:1,e:'「ず」は打消の助動詞。直前の「書か」は未然形です。'},
+ {type:4,q:'古文「いとをかし」の意味として最も近いものは？',c:['とても趣がある','とても恐ろしい','まったく違う','急いでいる'],a:0,e:'「をかし」は趣がある・すばらしい・おもしろいなど。文脈に合わせて訳します。'},
+ {type:4,q:'古文「ありがたし」の古語としての意味は？',c:['ありがたい・めったにない','感謝を伝える','値段が高いだけ','腹が立つ'],a:0,e:'古語の「ありがたし」は「めったにない・珍しい」が基本です。'},
+ {type:5,q:'古文の主語を推定する手がかりとして適切なのは？',c:['敬語と前後の文脈','句読点だけ','文字数だけ','現代語の語順だけ'],a:0,e:'敬語の種類・敬意の方向、会話の主体、前後関係を合わせて判断します。'},
+ {type:6,q:'古文の助動詞を判別するときに確認する組み合わせは？',c:['接続・活用・意味','文字の形だけ','句読点の数','文章の長さ'],a:0,e:'接続する活用形、助動詞自体の活用、文脈上の意味をセットで見ます。'}
  ],
  japanese:[
- {m:0,q:"「遵守」の読み方は？",o:["じゅんしゅ","そんしゅ","じゅんじゅ","そんじゅ"],a:0,e:"遵守（じゅんしゅ）は、決まりなどを守ることです。"},
- {m:0,q:"「懸念」の読み方は？",o:["けねん","けんねん","かねん","けんれん"],a:1,e:"懸念（けんねん）は、気にかかって不安に思うことです。"},
- {m:0,q:"「あいまい」の漢字表記は？",o:["曖昧","愛昧","曖妹","愛妹"],a:0,e:"「曖昧」と書きます。"},
- {m:1,q:"「簡潔」の意味として正しいものは？",o:["短くまとまっていること","複雑で分かりにくいこと","強く反対すること","慎重に疑うこと"],a:0,e:"簡潔は、余分なものがなく簡単にまとまっていることです。"},
- {m:1,q:"「妥当」の意味は？",o:["適切で道理に合っている","非常に珍しい","意見が一致しない","完全に不可能だ"],a:0,e:"妥当は、その状況にふさわしく、道理に合っていることです。"},
- {m:2,q:"「石の上にも三年」の意味は？",o:["辛抱強く続ければ成果が出る","石は長く使うと壊れる","三年で必ず引っ越す","急いで行動するべきだ"],a:0,e:"辛抱強く続けることの大切さを表します。"},
- {m:2,q:"「猫に小判」の意味は？",o:["価値が分からない相手に貴重なものを与えても無駄","思いがけない幸運","大きな失敗をする","仲間と協力する"],a:0,e:"価値の分からない相手には、貴重なものも役立たないというたとえです。"},
- {m:3,q:"「彼の説明は簡潔で、要点がすぐに分かった。」の「簡潔」に近い意味は？",o:["手短で分かりやすい","長くて複雑な","感情的な","不正確な"],a:0,e:"「要点がすぐに分かった」ことから、手短でまとまっている意味です。"},
- {m:4,q:"本文：『便利な道具は時間を節約する。一方、使い方を考えずに頼りすぎると、自分で考える機会が減ることもある。』読み取れることは？",o:["便利な道具には利点と注意点がある","道具は必ず使わない方がよい","道具を使うと必ず失敗する","時間の節約は不可能だ"],a:0,e:"本文は利点と、頼りすぎることへの注意を両方述べています。"},
- {m:5,q:"筆者の主張を探すときに有効なのは？",o:["結論や理由を示す表現に注目する","最初の一文だけで必ず決める","難しい漢字だけを拾う","自分の意見と同じ選択肢を選ぶ"],a:0,e:"主張・理由・具体例のつながりを確認します。"},
- {m:6,q:"複数の文章や資料を比較するとき、適切なのは？",o:["共通点と相違点を根拠とともに整理する","片方だけを読んで判断する","書かれていない情報を事実とする","題名だけで結論を決める"],a:0,e:"それぞれの情報を照合して判断するのが基本です。"}
+ {type:0,q:'「遵守」の読み方は？',c:['じゅんしゅ','そんしゅ','じゅんじゅ','じゅうしゅ'],a:0,e:'「遵守（じゅんしゅ）」は規則や約束を守ること。'},
+ {type:0,q:'「懸念」の読み方は？',c:['けねん','けんねん','かねん','けんれん'],a:1,e:'「懸念（けねん）」は気にかかって不安に思うこと。'},
+ {type:1,q:'「示唆」の意味として最も近いものは？',c:['それとなく教え、手がかりを与える','強く禁止する','すべてを記録する','完全に否定する'],a:0,e:'「示唆」は、直接言い切らずに何かを示して気づかせること。'},
+ {type:1,q:'「抽象的」の反対に近い言葉は？',c:['具体的','一般的','複雑','曖昧'],a:0,e:'抽象的は共通点や概念に注目すること。具体的は個々の事例や形をはっきり示します。'},
+ {type:2,q:'「石の上にも三年」の意味は？',c:['辛抱強く続ければ成果が出る','石を運ぶ仕事をする','三年以内に引っ越す','急いで行動する'],a:0,e:'つらくても辛抱強く続けることで、成果につながるということ。'},
+ {type:2,q:'「猿も木から落ちる」の意味は？',c:['得意な人でも失敗することがある','猿は木に登れない','失敗したら必ず成功する','動物は予測できない'],a:0,e:'その道の名人でも、ときには失敗するというたとえです。'},
+ {type:3,q:'「雨が降っていた。しかし、試合は予定どおり行われた。」の「しかし」が示す関係は？',c:['逆接','理由','具体例','言い換え'],a:0,e:'前の内容から予想されることと異なる内容を続ける逆接です。'},
+ {type:3,q:'「例えば」という接続表現が導きやすいものは？',c:['具体例','結論の否定','時間の逆行','原因の否定'],a:0,e:'「例えば」は、直前の説明を具体的な事例で示すときに使います。'},
+ {type:4,q:'筆者の主張を探すときに最も適切な方法は？',c:['本文の根拠と段落の役割を確認する','自分の意見で補う','長い段落を飛ばす','選択肢の長さだけを見る'],a:0,e:'主張・根拠・具体例を分け、本文中の根拠に照らして判断します。'},
+ {type:4,q:'本文に書かれていない内容を選択肢が断定している場合は？',c:['本文の根拠と合うか慎重に確認する','必ず正解にする','常識なら正解にする','必ず一番長い選択肢を選ぶ'],a:0,e:'本文の範囲を超える断定や、根拠のない付け足しに注意します。'},
+ {type:5,q:'文章の要旨をまとめるとき優先する内容は？',c:['中心的な主張と主要な理由','細かな例をすべて列挙','自分の感想だけ','本文と無関係な知識'],a:0,e:'中心となる主張と主要な理由を残し、細部を整理します。'},
+ {type:6,q:'選択肢問題で最も確実な解き方は？',c:['選択肢を本文の根拠と照合する','常識だけで決める','最初の選択肢を選ぶ','難しい語がある選択肢を選ぶ'],a:0,e:'選択肢の各部分を本文と照合し、根拠の有無を確認します。'}
  ],
  kanbun:[
- {m:0,q:"漢文の「故人」の意味として適切なのは？",o:["昔からの友人","亡くなった人だけ","故郷の人","役人"],a:0,e:"漢文では「故人」は古くからの友人を表すことがあります。文脈に注意。"},
- {m:0,q:"「少」の意味として適切なのは？",o:["少ない・わずか","多い","速い","遠い"],a:0,e:"「少」は少ない、わずかという意味で使われます。"},
- {m:1,q:"「温故知新」の意味は？",o:["昔のことを学び、そこから新しい知識を得る","温度を測って知る","古いものをすべて捨てる","友人を温かく迎える"],a:0,e:"過去を学び直して新しい理解を得るという意味です。"},
- {m:1,q:"「四面楚歌」の意味は？",o:["周囲が敵ばかりで孤立すること","大勢で歌を歌うこと","旅が順調に進むこと","仲間が増えること"],a:0,e:"周囲を敵に囲まれ、孤立することのたとえです。"},
- {m:2,q:"漢文の置き字「而」が文中で表すことのある働きは？",o:["順接・逆接などの接続","必ず疑問を表す","必ず人名を表す","必ず否定を表す"],a:0,e:"「而」は文脈により順接・逆接などを表し、訓読で読まない場合があります。"},
- {m:2,q:"「於」は漢文でどのように扱われることが多い？",o:["場所・対象などを示す置き字","過去を表す助動詞","必ず主語になる字","数を表す字"],a:0,e:"「於」は場所・対象・比較などを示し、訓読では置き字になることがあります。"},
- {m:3,q:"「学而時習之」の意味として最も近いものは？",o:["学んだことを折に触れて復習する","学ぶことをやめる","時を見て旅に出る","人に教えることだけが大切だ"],a:0,e:"学んだことを時々復習する、という意味です。"},
- {m:4,q:"本文：『人不知而不慍、不亦君子乎。』読み取れる考えは？",o:["人に認められなくても恨まない姿勢を大切にする","他人に必ず認めさせる","学ぶことは無意味だ","人と話してはいけない"],a:0,e:"人に知られなくても不満に思わないことを君子のあり方として述べています。"},
- {m:5,q:"漢文を読むとき、返り点の役割は？",o:["読む順序を示す","語句の意味を必ず示す","文章の作者を示す","句読点を消す"],a:0,e:"返り点は漢字を読む順序を示します。"},
- {m:6,q:"漢文の設問を解くときに適切なのは？",o:["書き下し・語句・前後の文脈を確認する","一字だけ見て全文を決める","現代語の意味だけで判断する","返り点を無視する"],a:0,e:"語句の意味と句法、文脈を合わせて考えます。"}
- ]};
-const TERMS={
- classic:[
- ["あはれなり","しみじみと趣深い。感動を覚える。"],["をかし","趣がある。おもしろい。美しい。"],["いみじ","たいそう。すばらしい、ひどいなど文脈で変わる。"],["ありがたし","めったにない。珍しい。"],["やうやう","だんだん。しだいに。"],["おぼゆ","思われる。感じられる。似る。"],["なむ","係助詞など。文中の働きと接続で判断する。"],["けり","過去・詠嘆を表す助動詞。"],["ず","打消を表す助動詞。"],["む","推量・意志などを表す助動詞。"],["べし","推量・意志・可能・当然・命令など。文脈で判断。"],["ぞ","強意を表す係助詞。結びは連体形。"]],
- japanese:[
- ["簡潔","余分なものがなく、短くまとまっていること。"],["妥当","適切で、道理に合っていること。"],["懸念","気にかかり、不安に思うこと。"],["遵守","決まりや約束を守ること。"],["抽象","共通する性質を抜き出して考えること。"],["具体","はっきりした形や内容を備えていること。"],["矛盾","二つのことが食い違い、つじつまが合わないこと。"],["普遍","広くすべてに共通していること。"],["石の上にも三年","辛抱強く続ければ成果が得られるというたとえ。"],["猫に小判","価値の分からない相手に貴重なものを与えても無駄というたとえ。"],["急がば回れ","急ぐときほど安全で確実な方法を選ぶ方がよい。"]],
- kanbun:[
- ["故人","昔から親しくしている友人。文脈によって意味が異なる。"],["少","少ない、わずか。"],["嘗","かつて。以前。"],["遂","ついに。とうとう。"],["温故知新","昔のことを学び、そこから新しい知識を得ること。"],["四面楚歌","周囲を敵に囲まれ孤立すること。"],["而","順接・逆接などを表す。訓読で読まない場合がある。"],["於","場所・対象・比較などを示す。置き字になる場合がある。"],["焉","文末などで語気を添えることがある。文脈で判断。"],["未","まだ〜ない。未然・未完了を表す。"]]
+ {type:0,q:'漢文で「未」の基本的な読み方・意味は？',c:['いまだ〜ず（まだ〜ない）','すでに〜した','必ず〜する','どうして〜か'],a:0,e:'再読文字の「未」は「未だ〜ず」と読み、「まだ〜ない」を表します。'},
+ {type:0,q:'漢文の「皆」の意味は？',c:['みな・すべて','少しだけ','なぜ','まだ'],a:0,e:'「皆」は「みな・すべて」の意味です。'},
+ {type:1,q:'「温故知新」の意味は？',c:['昔のことを学び、新しい知識や見解を得る','古いものをすべて捨てる','温度を測って新しさを知る','人に教えずに覚える'],a:0,e:'古いことを学び直して、新しい理解を得るという意味です。'},
+ {type:1,q:'「四面楚歌」の意味は？',c:['周囲が敵や反対者ばかりで孤立する','大勢に助けられる','四方を旅する','歌を習う'],a:0,e:'周囲を敵に囲まれ、味方がなく孤立することのたとえです。'},
+ {type:2,q:'漢文の「而」は文脈によってどのように扱われる？',c:['接続などを表す字として読む場合がある','常に読まない字である','必ず人名を表す','数字だけを表す'],a:0,e:'「而」は文脈に応じて「しかして」「しかれども」などと読み、接続関係を示すことがあります。置き字とは限らない点に注意。'},
+ {type:2,q:'漢文の置き字「於」は一般にどう扱う？',c:['書き下しで読まない場合がある','必ず「お」と読む','数字として読む','必ず文末に置く'],a:0,e:'「於」は句法によって、書き下し文では読まない置き字として扱われる場合があります。用法を確認します。'},
+ {type:3,q:'「未だ学ばず」の意味として正しいものは？',c:['まだ学んでいない','すでに学んだ','学ぶ必要がない','必ず学ぶだろう'],a:0,e:'「未だ〜ず」は「まだ〜ない」という意味です。'},
+ {type:3,q:'「不レ知」の返り点に従った読み方は？',c:['知らず','知る不','不知る','知られず'],a:0,e:'レ点は、後の字を先に読み、そのあと戻って読むことを示します。'},
+ {type:4,q:'漢文の内容を正確に訳すため、まず確認することは？',c:['句形・返り点・語句の意味','漢字の画数','本文の文字数だけ','自分の予想だけ'],a:0,e:'句形と語句の意味を確認し、返り点に従って読み順を整えます。'},
+ {type:4,q:'本文から読み取れることを選ぶ際、適切なのは？',c:['本文の表現と選択肢を照合する','知っている故事なら本文を読まない','最も長い選択肢を選ぶ','現代の常識だけで判断する'],a:0,e:'本文に書かれている内容・因果関係と選択肢を照合します。'},
+ {type:5,q:'漢文を読むときの基本的な手順として適切なのは？',c:['句形と返り点を確認して意味を組み立てる','漢字をすべて音読みする','返り点を無視する','最初に選択肢だけ決める'],a:0,e:'返り点や句形を確認し、語句の意味と文脈を合わせて訳します。'},
+ {type:6,q:'「温故知新」から読み取れる考え方は？',c:['過去を学ぶことが新しい理解につながる','過去をすべて忘れる','新しいものを避ける','知識を共有しない'],a:0,e:'過去の事柄を学び直すことが、新しい知識や見解につながるという考えです。'}
+ ]
 };
-const PASSAGES={
- classic:{title:"古文の短文",text:"春になりて、庭の梅の花、いと美しく咲きたり。人々、これを見て心を慰めけり。",q:"本文の内容として最も適切なのは？",o:["春に梅が美しく咲き、人々の心を和ませた","冬に梅が枯れ、人々が悲しんだ","人々は庭に行かなかった","梅の花はまだ咲いていなかった"],a:0,e:"「春」「梅の花」「美しく咲きたり」「心を慰めけり」が根拠です。現代語訳の一例：春になって庭の梅の花がとても美しく咲いた。人々はそれを見て心を慰めた。"},
- japanese:{title:"現代文の短文",text:"図書館は本を借りる場所であるだけでなく、静かに考えたり、他者の知識に触れたりする場所でもある。利用する人が互いに配慮することで、その価値はさらに高まる。",q:"本文から読み取れることは？",o:["図書館の価値は本を借りることだけにある","利用者同士の配慮も図書館の価値を高める","図書館では考えごとをしてはいけない","他者の知識に触れる必要はない"],a:1,e:"「互いに配慮することで、その価値はさらに高まる」と述べています。"},
- kanbun:{title:"漢文の短文",text:"学而時習之、不亦説乎。",q:"この文の意味として最も適切なのは？",o:["学んだことを時々復習するのは、なんと喜ばしいことではないか","学ぶことは喜ばしくない","時が来たら学ぶのをやめる","人に学ばせることだけが大切だ"],a:0,e:"学んだことを折に触れて復習する喜びを述べています。"}
+const terms=[
+['classical','あはれ','しみじみと心に感じられること。趣深いこと。','古典'],
+['classical','をかし','趣がある、おもしろい、すばらしい。','古典'],
+['classical','いと','とても、たいそう。','古典'],
+['classical','ありがたし','めったにない、珍しい。','古典'],
+['classical','つれづれなり','することがなく、退屈だ。','古典'],
+['classical','む','推量・意志・勧誘・仮定・婉曲など。主語と文脈で判別する。','古典文法'],
+['classical','ず','打消を表す助動詞。','古典文法'],
+['classical','き','過去を表す助動詞。活用と接続を確認する。','古典文法'],
+['japanese','示唆','それとなく示し、気づくための手がかりを与えること。','国語'],
+['japanese','懸念','気にかかって不安に思うこと。','国語'],
+['japanese','遵守','規則や約束を守ること。','国語'],
+['japanese','抽象的','個々の具体例から共通点や概念を取り出しているさま。','国語'],
+['japanese','具体的','内容や形がはっきりしていて、個々の事例に即しているさま。','国語'],
+['japanese','石の上にも三年','辛抱強く続ければ、成果が現れることがあるというたとえ。','ことわざ'],
+['japanese','猿も木から落ちる','その道の名人でも、ときには失敗するというたとえ。','ことわざ'],
+['kanbun','未','「未だ〜ず」と読み、まだ〜ないことを表す。','漢文'],
+['kanbun','皆','みな、すべて。','漢文'],
+['kanbun','故','ゆえ、理由。また「故（ふる）きを温（たず）ねて」のような用法もある。','漢文'],
+['kanbun','温故知新','昔のことを学び、新しい知識や見解を得ること。','漢文・熟語'],
+['kanbun','四面楚歌','周囲が敵や反対者ばかりで孤立すること。','漢文・熟語'],
+['kanbun','於','句法によって場所・対象などを示し、書き下しで読まない場合がある。','漢文・置き字']
+];
+const translations={
+ classical:{title:'古文の本文翻訳',text:'春になりて、花いと美しく咲きたり。人々、これを見て心をなぐさむ。',question:'この文の現代語訳として最も適切なものは？',c:['春になって、花がとても美しく咲いた。人々はこれを見て心を慰める。','春になる前に、花を切って人々に配った。','花は美しくなく、人々は悲しんだ。','人々は花を見ずに帰った。'],a:0,e:'「春になりて」は春になって、「いと」はとても、「咲きたり」は咲いている・咲いた、「なぐさむ」は心を慰める、という意味です。'},
+ kanbun:{title:'漢文の本文翻訳',text:'温故而知新。',question:'この文の意味として最も適切なものは？',c:['古いことを学び直して、新しい知識や見解を得る。','新しいことを知るために、古い知識を捨てる。','温度を測ってから、新しい物を作る。','昔の人は新しいことを学ばなかった。'],a:0,e:'「温故知新」は、過去の事柄を学び直すことで新たな理解を得るという考えです。'}
 };
-let trackKey=null,menuIndex=null,quiz=[],qIndex=0,score=0,answers=[],mode="quiz";
 const $=id=>document.getElementById(id);
-function show(id){$(id).classList.remove("hidden")}
-function hide(id){$(id).classList.add("hidden")}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function chooseTrack(key){trackKey=key;const t=TRACKS[key];$("trackName").textContent=t.icon+" "+t.name;$("trackIntro").textContent=t.intro;$("menuGrid").innerHTML=t.menus.map((m,i)=>'<button class="menu-btn" data-menu="'+i+'"><span class="num">'+(i+1)+'</span><span><strong>'+esc(m[0])+'</strong><small>'+esc(m[1])+'</small></span></button>').join("");hide("home");hide("workspace");show("menus");window.scrollTo({top:0,behavior:"smooth"})}
-function openMenu(i){menuIndex=i;const t=TRACKS[trackKey];$("workTitle").textContent=(i+1)+". "+t.menus[i][0];$("workBody").innerHTML="";hide("menus");show("workspace");if(i===7)renderSearch();else if(i===4&&trackKey!=="japanese")renderTranslation();else if(i===3&&trackKey==="kanbun")renderTranslation();else if(i===3&&trackKey==="japanese")startQuiz([3]);else if(i===4&&trackKey==="japanese")startQuiz([4,6]);else if(i===6)startQuiz([6]);else if(i===5)startQuiz([0,1,2,3,4,5,6]);else if(i===3&&trackKey==="classic")startQuiz([0,1,2,3]);else startQuiz([i]);window.scrollTo({top:0,behavior:"smooth"})}
-function startQuiz(menus){mode="quiz";const pool=DATA[trackKey].filter(q=>menus.includes(q.m));quiz=pool.length?pool.slice():DATA[trackKey].slice();qIndex=0;score=0;answers=[];renderQuestion()}
-function renderQuestion(){if(qIndex>=quiz.length){renderResult();return}const q=quiz[qIndex];$("workBody").innerHTML='<div class="row"><span class="tag">'+esc(TRACKS[trackKey].name)+'</span><span class="tag">'+(qIndex+1)+' / '+quiz.length+' 問</span></div><div class="progress"><div style="width:'+(qIndex/quiz.length*100)+'%"></div></div>'+(q.p?'<div class="passage">'+esc(q.p)+'</div>':'')+'<div class="question">'+esc(q.q)+'</div><div class="options">'+q.o.map((o,i)=>'<button class="option" data-answer="'+i+'"><strong>'+(i+1)+'.</strong><span>'+esc(o)+'</span></button>').join("")+'</div><div id="feedback" aria-live="polite"></div><div class="row"><button id="nextQ" class="btn hidden">'+(qIndex===quiz.length-1?'結果を見る':'次の問題へ')+'</button></div>'}
-function answerQuestion(n){const q=quiz[qIndex];const ok=n===q.a;if(ok)score++;answers.push({q,selected:n,ok});document.querySelectorAll("[data-answer]").forEach(b=>{b.disabled=true;const v=Number(b.dataset.answer);if(v===q.a)b.classList.add("correct");if(v===n&&!ok)b.classList.add("wrong")});$("feedback").innerHTML='<div class="feedback '+(ok?'good':'bad')+'"><strong>'+(ok?'正解！':'不正解')+'</strong><br>'+esc(q.e||"解説を確認しよう。")+'</div>';$("nextQ").classList.remove("hidden");$("nextQ").onclick=()=>{qIndex++;renderQuestion()}}
-function renderResult(){const pct=Math.round(score/quiz.length*100);const misses=answers.filter(a=>!a.ok);$("workBody").innerHTML='<div style="text-align:center;padding:16px"><div class="tag">学習結果</div><div class="stat">'+score+' / '+quiz.length+'</div><h2>'+pct+'%</h2><p class="sub">'+(pct===100?'全問正解！すばらしい！':pct>=70?'いい感じ！間違えた問題を復習しよう。':'解説を読み返して、もう一度挑戦しよう。')+'</p></div><div class="progress"><div style="width:'+pct+'%"></div></div><h3>間違えた問題（'+misses.length+'問）</h3>'+(misses.length?'<ol class="result-list">'+misses.map(a=>'<li><strong>'+esc(a.q.q)+'</strong><br>正解：'+esc(a.q.o[a.q.a])+'<br><span class="muted">'+esc(a.q.e||"")+'</span></li>').join("")+'</ol>':'<p>間違えた問題はないよ！</p>')+'<div class="row"><button class="btn" id="retry">もう一度挑戦</button><button class="btn secondary" id="resultMenus">メニューへ戻る</button></div>';$("retry").onclick=()=>startQuiz([menuIndex]);$("resultMenus").onclick=backMenus}
-function renderTranslation(){mode="translation";const p=PASSAGES[trackKey];$("workBody").innerHTML='<p class="sub">本文を読んで、自分の言葉で訳や意味を書いてから、解答例を確認しよう。</p><h3>'+esc(p.title)+'</h3><div class="passage">'+esc(p.text)+'</div><label for="translationAnswer"><strong>'+(trackKey==="classic"?"現代語訳":trackKey==="kanbun"?"書き下し・現代語訳":"本文の要約")+'を入力</strong></label><textarea id="translationAnswer" class="input" rows="4" placeholder="自分の訳・要約を入力しよう"></textarea><div class="row" style="margin-top:12px"><button class="btn" id="showModel">解答例・ポイントを見る</button></div><div id="modelAnswer"></div><hr style="border:0;border-top:1px solid var(--line);margin:22px 0"><h3>内容理解の確認</h3><p class="question">'+esc(p.q)+'</p><div class="options">'+p.o.map((o,i)=>'<button class="option" data-trans="'+i+'">'+(i+1)+'. '+esc(o)+'</button>').join("")+'</div><div id="transFeedback"></div>';$("showModel").onclick=()=>{$("modelAnswer").innerHTML='<div class="feedback"><strong>解答例・ポイント</strong><p>'+esc(p.e)+'</p></div>'};document.querySelectorAll("[data-trans]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-trans]").forEach(x=>x.disabled=true);const ok=Number(b.dataset.trans)===p.a;b.classList.add(ok?"correct":"wrong");$("transFeedback").innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'正解！':'もう一度、本文を確認しよう。')+'<br>'+esc(p.e)+'</div>'})}
-function renderSearch(){mode="search";const terms=TERMS[trackKey];$("workBody").innerHTML='<p class="sub">単語を入力すると、登録されている意味が表示されるよ。ひらがな・漢字の一部でも検索できます。</p><div class="answer-line"><input class="input" id="termInput" placeholder="'+(trackKey==="classic"?"例：あはれなり、けり":trackKey==="kanbun"?"例：故人、而":"例：簡潔、妥当")+'" autocomplete="off"><button class="btn" id="termSearch">意味を調べる</button></div><div class="row" style="margin-top:10px"><button class="btn ghost" id="showAllTerms">登録語句を一覧表示</button></div><div class="search-results" id="termResults"></div>';$("termSearch").onclick=searchTerms;$("termInput").addEventListener("keydown",e=>{if(e.key==="Enter")searchTerms()});$("showAllTerms").onclick=()=>showTerms(terms)}
-function searchTerms(){const word=$("termInput").value.trim();if(!word){$("termResults").innerHTML='<p class="muted">調べたい単語を入力してね。</p>';return}const found=TERMS[trackKey].filter(t=>t[0].includes(word)||t[1].includes(word));showTerms(found,word)}
-function showTerms(terms,word=""){ $("termResults").innerHTML=terms.length?terms.map(t=>'<div class="term-card"><strong>'+esc(t[0])+'</strong><div>'+esc(t[1])+'</div></div>').join(""):'<div class="feedback">「'+esc(word)+'」に一致する登録語句は見つかりませんでした。表記を変えて試してね。<br><small>登録語句は学習用サンプルです。すべての単語を網羅しているわけではありません。</small></div>'}
-function backMenus(){hide("workspace");show("menus");window.scrollTo({top:0,behavior:"smooth"})}
-document.querySelectorAll("[data-track]").forEach(b=>b.addEventListener("click",()=>chooseTrack(b.dataset.track)));
-$("backHome").addEventListener("click",()=>{hide("menus");hide("workspace");show("home");window.scrollTo({top:0,behavior:"smooth"})});
-$("toMenus").addEventListener("click",backMenus);
-$("menuGrid").addEventListener("click",e=>{const b=e.target.closest("[data-menu]");if(b)openMenu(Number(b.dataset.menu))});
-$("workBody").addEventListener("click",e=>{const b=e.target.closest("[data-answer]");if(b&&!b.disabled)answerQuestion(Number(b.dataset.answer))});
+let subject='classical',selectedMenu=0,quiz=null,picked=null,answered=false,quizItems=[],quizIndex=0,quizScore=0,quizMiss=[];
+function safe(s){return String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+function renderMenus(){
+ const grid=$('menu-grid');grid.innerHTML='';
+ subjects[subject].menus.forEach((m,i)=>{const b=document.createElement('button');b.type='button';b.className='menu';b.innerHTML='<span class="tag">MENU '+(i+1)+'</span><strong>'+(i+1)+'. '+safe(m[0])+'</strong><span>'+safe(m[1])+'</span>';b.addEventListener('click',()=>openMenu(i));grid.appendChild(b)});
+ $('menu-title').textContent='STEP 2｜'+subjects[subject].name+'の学習メニューを選ぶ';
+}
+document.querySelectorAll('[data-subject]').forEach(b=>b.addEventListener('click',()=>{subject=b.dataset.subject;document.querySelectorAll('[data-subject]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderMenus();$('work').classList.add('hidden');}));
+$('back-menu').addEventListener('click',()=>{$('work').classList.add('hidden');$('menu-grid').scrollIntoView({block:'nearest'});});
+function begin(title,content){$('work').classList.remove('hidden');$('work-tag').textContent=subjects[subject].name+' · MENU '+(selectedMenu+1);$('work-title').textContent=title;$('work-content').replaceChildren();$('work-content').appendChild(content);$('work').scrollIntoView({behavior:'smooth',block:'start'});}
+function node(tag,cls,txt){const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;}
+function openMenu(i){selectedMenu=i;const content=node('div');const name=subjects[subject].menus[i][0];
+ if(i===7){termSearch(content);begin('単語検索｜入力して意味を調べる',content);return}
+ if(subject==='classical'&&i===4){translation(content,'classical');begin('古典｜本文翻訳',content);return}
+ if(subject==='kanbun'&&i===3){translation(content,'kanbun');begin('漢文｜本文翻訳',content);return}
+ if((subject==='japanese'&&i===3)){shortQuestions(content);begin('国語｜短文問題',content);return}
+ if((subject==='japanese'&&i===4)||(subject==='kanbun'&&i===4)){readingQuestion(content);begin(subjects[subject].name+'｜本文読解・四択問題',content);return}
+ if(i===5||i===6){startTest(content,i===5?'mock':'common');begin(subjects[subject].name+'｜'+(i===5?'模擬テスト':'共通テスト型演習'),content);return}
+ startPractice(content,i,name);begin(subjects[subject].name+'｜'+name,content);
+}
+function makeQuizCard(parent,items,title){let idx=0,score=0,selected=null,done=false,miss=[];const card=node('div');const heading=node('p','muted',title||'選択肢を選び、採点して解説を確認しよう。');const progress=node('div','progress');const bar=node('div');progress.appendChild(bar);const q=node('div','question-title');const options=node('div');const feedback=node('div','feedback','選択肢を選んでください。');const stats=node('p','muted','');const actions=node('div','row');const check=node('button','primary','採点する');const next=node('button','secondary','次の問題');actions.append(check,next);card.append(heading,progress,q,options,feedback,stats,actions);parent.appendChild(card);
+ function draw(){selected=null;done=false;const item=items[idx];q.textContent=(idx+1)+'. '+item.q;options.replaceChildren();item.c.forEach((v,j)=>{const b=node('button','option',String.fromCharCode(65+j)+'. '+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(done)return;selected=j;[...options.children].forEach((x,k)=>x.setAttribute('aria-pressed',String(k===j)));feedback.textContent='選択肢を選びました。採点して確認しよう。';});options.appendChild(b)});feedback.className='feedback';feedback.textContent='選択肢を選んでください。';bar.style.width=(idx/items.length*100)+'%';stats.textContent='問題 '+(idx+1)+' / '+items.length+'　正解 '+score+'問';check.disabled=false;}
+ check.addEventListener('click',()=>{if(done)return;if(selected===null){feedback.textContent='先に選択肢を選んでください。';return}done=true;const item=items[idx];if(selected===item.a)score++;else miss.push(item);feedback.className='feedback '+(selected===item.a?'correct':'wrong');feedback.textContent=(selected===item.a?'正解！\n':'不正解。\n')+'正解：'+item.c[item.a]+'\n解説：'+item.e;stats.textContent='正解 '+score+' / 解答 '+(idx+1)+'問（正答率 '+Math.round(score/(idx+1)*100)+'%）';bar.style.width=((idx+1)/items.length*100)+'%';check.disabled=true;if(idx===items.length-1){next.textContent='結果を見る';}});
+ next.addEventListener('click',()=>{if(!done&&selected!==null){feedback.textContent='先に採点してください。';return}if(idx<items.length-1){idx++;draw()}else{card.replaceChildren();card.appendChild(node('h3','', '結果：'+score+' / '+items.length+'問正解'));card.appendChild(node('p','big','正答率 '+Math.round(score/items.length*100)+'%'));if(miss.length){card.appendChild(node('h3','','復習したい問題'));miss.forEach(m=>{const box=node('div','term-result');box.append(node('strong','',m.q),node('p','', '正解：'+m.c[m.a]),node('p','muted','解説：'+m.e));card.appendChild(box)})}else card.appendChild(node('p','', '全問正解！この調子で別のメニューにも挑戦しよう。'));const retry=node('button','primary','もう一度挑戦');retry.addEventListener('click',()=>makeQuizCard(parent,items,title));card.appendChild(retry)}});
+ draw();return card;
+}
+function startPractice(parent,i,name){let items=db[subject].filter(q=>q.type===i);if(!items.length)items=db[subject].filter(q=>q.type===0||q.type===1);if(i===0&&subject==='classical')items=db.classical.filter(q=>q.type===0);const lead=node('p','muted',({0:'基本用語を理解し、活用や読みを確認しよう。',1:'意味・接続・使い方をセットで覚えよう。',2:'働きや意味を文脈から判断しよう.',3:'似た語や文法を比較して見分けよう.'})[i]||'問題を解き、根拠と解説を確認しよう。');parent.appendChild(lead);makeQuizCard(parent,items,name);}
+function startTest(parent,mode){let items;if(mode==='mock'){items=db[subject].slice(0,Math.min(8,db[subject].length))}else{items=db[subject].filter(q=>q.type>=4).concat(db[subject].filter(q=>q.type===3)).slice(0,6)}if(!items.length)items=db[subject].slice(0,6);parent.appendChild(node('p','notice',mode==='mock'?'分野を横断する模擬テストです。最後に正答率と復習問題が表示されます。':'本文や知識を根拠に判断する共通テスト型の練習です。'));makeQuizCard(parent,items,mode==='mock'?'模擬テスト':'共通テスト型');}
+function translation(parent,kind){const data=translations[kind];parent.appendChild(node('p','muted','本文を読んで、現代語訳として最も適切なものを選びましょう。'));parent.appendChild(node('div','term-result',data.text));makeQuizCard(parent,[{q:data.question,c:data.c,a:data.a,e:data.e}],data.title);}
+function shortQuestions(parent){const items=db.japanese.filter(q=>q.type===3);parent.appendChild(node('p','muted','短い文章の表現・接続関係を読み取る練習です。'));makeQuizCard(parent,items,'短文読解');}
+function readingQuestion(parent){const data=subject==='kanbun'?translations.kanbun: {text:'ある文章で、筆者は「地域の図書館は本を貸し出すだけでなく、人々が知識を共有し、交流する場所でもある」と述べている。',question:'この文から読み取れる内容として最も適切なものは？',c:['図書館の役割は本の貸し出しだけではない','図書館は本を貸し出してはいけない','人々は図書館で交流できない','知識を共有する必要はない'],a:0,e:'本文は、本の貸し出しに加えて、知識共有や人々の交流も図書館の役割だと述べています。'};parent.appendChild(node('p','muted','本文の内容に合う選択肢を、本文中の根拠から選ぼう。'));parent.appendChild(node('div','term-result',data.text));makeQuizCard(parent,[{q:data.question,c:data.c,a:data.a,e:data.e}], '本文読解');}
+function termSearch(parent){parent.appendChild(node('p','muted','古典・国語・漢文の語句を横断して検索できます。単語を入力すると意味が表示されます。'));const input=node('input');input.type='search';input.placeholder='例：あはれ、示唆、未、温故知新';input.setAttribute('aria-label','検索する単語');const results=node('div');const all=node('button','secondary','すべての単語を見る');all.type='button';parent.append(input,all,results);function search(){const word=input.value.trim().toLowerCase();const matches=terms.filter(t=>!word||t[1].toLowerCase().includes(word)||t[2].toLowerCase().includes(word));results.replaceChildren();if(!matches.length){results.appendChild(node('p','feedback','見つかりませんでした。別の表記で検索してみてください。'));return}matches.forEach(t=>{const box=node('article','term-result');box.append(node('span','tag',t[3]),node('h3','',t[1]),node('p','',t[2]));results.appendChild(box)});if(word)results.prepend(node('p','muted',matches.length+'件見つかりました。'))}input.addEventListener('input',search);all.addEventListener('click',()=>{input.value='';search()});search();}
+renderMenus();
+})();
 </script>
 </body>
 </html>
