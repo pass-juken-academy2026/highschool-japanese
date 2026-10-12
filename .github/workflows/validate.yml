@@ -146,5 +146,14 @@ jobs:
               print('Invalid Japanese question data:')
               print('\n'.join(errors))
               sys.exit(1)
+          # Regression checks for known high-risk answer/definition errors.
+          if "q:'「懸念」の読み方は？',c:['けねん','けんねん','かねん','けんれん'],a:0" not in page:
+              errors.append('懸念 reading answer must be けねん (choice index 0)')
+          if '["classical","あからさま","ほんの少し、ちょっとの間。一時的に。","古語"]' not in page:
+              errors.append('classical あからさま must use its classical meaning (briefly/for a short time)')
+          if errors:
+              print('Invalid Japanese question data:')
+              print('\\n'.join(errors))
+              sys.exit(1)
           print(f'Stage 2 Japanese coverage OK; index quiz records: {len(quizzes)}; evidence items: {len(evidence)}; practice quiz records: {len(bank)}')
           PY
