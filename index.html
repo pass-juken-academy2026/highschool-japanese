@@ -2175,7 +2175,8 @@ function openMenu(i){selectedMenu=i;const content=node('div');const name=subject
  if(subject==='kanbun'&&i===2){kanbunPatternDrill(content);begin('漢文｜返り点・句形・再読文字ドリル',content);return}
  if(subject==='kanbun'&&i===3){kanbunConversionDrill(content);begin('漢文｜返り点・書き下し文・現代語訳',content);return}
  if((subject==='japanese'&&i===3)){shortQuestions(content);begin('国語｜短文問題',content);return}
- if((subject==='japanese'&&i===4)||(subject==='kanbun'&&i===4)){readingQuestion(content);begin(subjects[subject].name+'｜本文読解・四択問題',content);return}
+ if(subject==='japanese'&&i===4){modernEvidencePractice(content);begin('国語｜本文根拠を自分で選ぶ読解',content);return}
+ if(subject==='kanbun'&&i===4){readingQuestion(content);begin(subjects[subject].name+'｜本文読解・四択問題',content);return}
  if(i===5||i===6){startTest(content,i===5?'mock':'common');begin(subjects[subject].name+'｜'+(i===5?'模擬テスト':'共通テスト型演習'),content);return}
  startPractice(content,i,name);begin(subjects[subject].name+'｜'+name,content);
 }
@@ -2260,6 +2261,18 @@ function readingQuestion(parent){
  ];
  makeQuizCard(parent,items,'各問で本文の根拠と誤答の理由を確認しよう。');
  const guide=node('div','notice');guide.append(node('h3','','読解のチェック手順'),node('p','','①設問の条件に線を引く　②本文の該当箇所を探す　③選択肢を「一致・矛盾・本文にない情報」に分ける　④段落ごとの役割を一言でまとめる。'));parent.appendChild(guide);
+}
+function modernEvidencePractice(parent){
+ parent.appendChild(node('p','muted','まず設問の答えを選び、次に根拠となる本文の一文を自分で選びます。根拠が選択肢と一致しているかを確認しよう。'));
+ const passage=node('article','term-result');
+ passage.append(node('h3','','本文'),node('p','','地域の図書館は、本を貸し出す場所として知られている。しかし、その役割はそれだけではない。人々が調べものをしたり、異なる世代が交流したり、地域の情報を共有したりする場にもなっている。'),node('p','','オンラインで多くの情報を得られるようになった今、図書館の役割が変化していることは確かだ。それでも、情報の信頼性を確かめ、他者と考えを深める場としての価値は失われていない。'));parent.appendChild(passage);
+ const question=node('div','question-title','問：筆者が、今も図書館に価値があると考える理由は？');parent.appendChild(question);
+ const opts=['本を貸し出すことだけが役割だから','情報の信頼性を確かめ、他者と考えを深める場だから','オンライン情報を利用できないから','図書館の役割は変化していないから'];
+ let answer=-1,evidence=-1;const answerBox=node('div');const feedback=node('p','feedback','答えを選んでください。');opts.forEach((v,i)=>{const b=node('button','option',String.fromCharCode(65+i)+'. '+v);b.type='button';b.addEventListener('click',()=>{answer=i;[...answerBox.children].forEach((x,j)=>x.setAttribute('aria-pressed',String(i===j)));feedback.textContent='答えを選びました。根拠の一文も選ぼう。'});b.setAttribute('aria-pressed','false');answerBox.appendChild(b)});parent.append(answerBox,feedback);
+ parent.appendChild(node('h3','','次に、根拠となる本文の一文を選ぶ'));
+ const lines=['地域の図書館は、本を貸し出す場所として知られている。','人々が調べものをしたり、異なる世代が交流したり、地域の情報を共有したりする場にもなっている。','オンラインで多くの情報を得られるようになった今、図書館の役割が変化していることは確かだ。','それでも、情報の信頼性を確かめ、他者と考えを深める場としての価値は失われていない。'];
+ const evidenceBox=node('div');lines.forEach((v,i)=>{const b=node('button','option',String(i+1)+'. '+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{evidence=i;[...evidenceBox.children].forEach((x,j)=>x.setAttribute('aria-pressed',String(i===j)));});evidenceBox.appendChild(b)});parent.appendChild(evidenceBox);
+ const check=node('button','primary','答えと根拠を確認');const result=node('div','feedback','');check.addEventListener('click',()=>{if(answer<0||evidence<0){result.textContent='答えと根拠の一文を両方選んでね。';return}const aOk=answer===1,eOk=evidence===3||evidence===1;result.className='feedback '+(aOk&&eOk?'correct':'wrong');result.textContent=(aOk?'答えは正解。':'答えは不正解。正解はB。')+(eOk?' 根拠の選び方も適切。':' 根拠は2文目または4文目が適切。特に4文目が設問に直接答えている。')+' 根拠を選ぶときは、答えの言い換えが本文にあるか確認しよう。'});parent.append(check,result);
 }
 function writingPractice(parent){
  parent.appendChild(node('p','muted','記述は「結論だけ」ではなく、本文の根拠と設問で求められた要素をそろえる練習をしよう。'));
