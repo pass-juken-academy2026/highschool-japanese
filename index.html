@@ -81,6 +81,7 @@ const subjects={
  ['本文読解','本文から読み取れることを四択で選ぶ'],
  ['模擬テスト','漢字・語彙・短文・読解をまとめて確認'],
  ['共通テスト','文章と選択肢を根拠で照合する演習'],
+ ['記述問題','本文の根拠・必要な要素・採点基準を確認'],
  ['単語検索','国語・古典・漢文の語句をまとめて検索']
  ]},
  kanbun:{name:'漢文',menus:[
@@ -2162,7 +2163,8 @@ $('back-menu').addEventListener('click',()=>{$('work').classList.add('hidden');$
 function begin(title,content){$('work').classList.remove('hidden');$('work-tag').textContent=subjects[subject].name+' · MENU '+(selectedMenu+1);$('work-title').textContent=title;$('work-content').replaceChildren();$('work-content').appendChild(content);$('work').scrollIntoView({behavior:'smooth',block:'start'});}
 function node(tag,cls,txt){const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;}
 function openMenu(i){selectedMenu=i;const content=node('div');const name=subjects[subject].menus[i][0];
- if(i===7){termSearch(content);begin('単語検索｜入力して意味を調べる',content);return}
+ if(subject==='japanese'&&i===7){writingPractice(content);begin('国語｜記述問題・採点ポイント',content);return}
+ if(i===(subject==='japanese'?8:7)){termSearch(content);begin('単語検索｜入力して意味を調べる',content);return}
  if(subject==='classical'&&i===4){translation(content,'classical');begin('古典｜本文翻訳',content);return}
  if(subject==='kanbun'&&i===3){translation(content,'kanbun');begin('漢文｜本文翻訳',content);return}
  if((subject==='japanese'&&i===3)){shortQuestions(content);begin('国語｜短文問題',content);return}
@@ -2180,7 +2182,30 @@ function startPractice(parent,i,name){let items=db[subject].filter(q=>q.type===i
 function startTest(parent,mode){let items;if(mode==='mock'){items=db[subject].slice(0,Math.min(8,db[subject].length))}else{items=db[subject].filter(q=>q.type>=4).concat(db[subject].filter(q=>q.type===3)).slice(0,6)}if(!items.length)items=db[subject].slice(0,6);parent.appendChild(node('p','notice',mode==='mock'?'分野を横断する模擬テストです。最後に正答率と復習問題が表示されます。':'本文や知識を根拠に判断する共通テスト型の練習です。'));makeQuizCard(parent,items,mode==='mock'?'模擬テスト':'共通テスト型');}
 function translation(parent,kind){const data=translations[kind];parent.appendChild(node('p','muted','本文を読んで、現代語訳として最も適切なものを選びましょう。'));parent.appendChild(node('div','term-result',data.text));makeQuizCard(parent,[{q:data.question,c:data.c,a:data.a,e:data.e}],data.title);}
 function shortQuestions(parent){const items=db.japanese.filter(q=>q.type===3);parent.appendChild(node('p','muted','短い文章の表現・接続関係を読み取る練習です。'));makeQuizCard(parent,items,'短文読解');}
-function readingQuestion(parent){const data=subject==='kanbun'?translations.kanbun: {text:'ある文章で、筆者は「地域の図書館は本を貸し出すだけでなく、人々が知識を共有し、交流する場所でもある」と述べている。',question:'この文から読み取れる内容として最も適切なものは？',c:['図書館の役割は本の貸し出しだけではない','図書館は本を貸し出してはいけない','人々は図書館で交流できない','知識を共有する必要はない'],a:0,e:'本文は、本の貸し出しに加えて、知識共有や人々の交流も図書館の役割だと述べています。'};parent.appendChild(node('p','muted','本文の内容に合う選択肢を、本文中の根拠から選ぼう。'));parent.appendChild(node('div','term-result',data.text));makeQuizCard(parent,[{q:data.question,c:data.c,a:data.a,e:data.e}], '本文読解');}
+function readingQuestion(parent){
+ if(subject==='kanbun'){const data=translations.kanbun;parent.appendChild(node('p','muted','句形・語句・本文の内容を対応させて読み取ろう。'));parent.appendChild(node('div','term-result',data.text));makeQuizCard(parent,[{q:data.question,c:data.c,a:data.a,e:data.e}],'漢文本文読解');return}
+ parent.appendChild(node('p','muted','国語の専用練習：本文の根拠を探す → 選択肢のズレを見抜く → 段落の役割を整理する。'));
+ const passage=node('article','term-result');
+ passage.append(node('h3','','本文'),node('p','','地域の図書館は、本を貸し出す場所として知られている。しかし、その役割はそれだけではない。人々が調べものをしたり、異なる世代が交流したり、地域の情報を共有したりする場にもなっている。'),
+ node('p','','もちろん、オンラインで多くの情報を得られるようになった今、図書館の役割が変化していることは確かだ。それでも、情報を集めるだけでなく、信頼性を確かめ、他者と考えを深める場としての価値は失われていない。'));
+ parent.appendChild(passage);
+ const items=[
+ {q:'問1｜筆者が図書館の役割として述べている内容は？',c:['本の貸し出しに限られる','情報収集に加えて交流や情報共有の場でもある','オンライン情報をすべて禁止する','地域の情報を一か所に隠す'],a:1,e:'【本文の根拠】第1段落の「しかし、その役割はそれだけではない」に続き、調べもの・世代間交流・地域情報の共有が挙げられている。\n【誤答分析】Aは「それだけではない」と矛盾。C・Dは本文にない内容を付け足している。'},
+ {q:'問2｜第2段落の「それでも」が示す関係は？',c:['前の内容を受けた逆接・譲歩','具体例の列挙','同じ内容の言い換え','原因と結果だけの関係'],a:0,e:'【本文の根拠】オンライン情報の普及で役割が変化したことを認めたうえで、図書館の価値は失われていないと述べている。\n【誤答分析】前の内容をそのまま言い換えたり、例を列挙したりしているわけではない。'},
+ {q:'問3｜文章全体の要旨として最も適切なのは？',c:['図書館はオンライン情報が増えたため不要になった','図書館の価値は本の貸し出しだけでなく、情報の確認や交流にもある','図書館では本を借りずに交流だけをするべきだ','地域の情報は信頼性を確かめる必要がない'],a:1,e:'【段落の役割】第1段落は図書館の役割を広げて説明し、第2段落はオンライン化による変化を認めながら、現在も残る価値を示している。\n【誤答分析】Aは筆者の結論と逆。C・Dは本文の範囲を超えた断定。'}
+ ];
+ makeQuizCard(parent,items,'各問で本文の根拠と誤答の理由を確認しよう。');
+ const guide=node('div','notice');guide.append(node('h3','','読解のチェック手順'),node('p','','①設問の条件に線を引く　②本文の該当箇所を探す　③選択肢を「一致・矛盾・本文にない情報」に分ける　④段落ごとの役割を一言でまとめる。'));parent.appendChild(guide);
+}
+function writingPractice(parent){
+ parent.appendChild(node('p','muted','記述は「結論だけ」ではなく、本文の根拠と設問で求められた要素をそろえる練習をしよう。'));
+ const passage=node('div','term-result');passage.append(node('h3','','課題文'),node('p','','地域の図書館は、本の貸し出しだけでなく、人々が情報の信頼性を確かめ、異なる世代と交流する場にもなっている。オンラインで情報を得やすくなった今も、他者と考えを深められる点に価値がある。'));parent.appendChild(passage);
+ parent.appendChild(node('p','question-title','問題：本文をもとに、今も図書館に価値がある理由を40〜60字で説明しよう。'));
+ const ta=node('textarea');ta.rows=4;ta.placeholder='本文の根拠を使って、自分の言葉でまとめる';ta.setAttribute('aria-label','記述答案');parent.appendChild(ta);
+ const count=node('p','muted','0字');const update=()=>{count.textContent=Array.from(ta.value).length+'字';};ta.addEventListener('input',update);parent.appendChild(count);
+ const rubric=node('div','term-result');rubric.append(node('h3','','採点基準（3点満点）'),node('p','','1点：情報の信頼性を確かめることに触れている'),node('p','','1点：異なる世代との交流、または他者と考えを深めることに触れている'),node('p','','1点：オンライン化しても価値が残るという問いに答えている'));parent.appendChild(rubric);
+ const sample=node('details');const summary=node('summary','','模範解答と見直しポイントを見る');summary.style.cursor='pointer';sample.appendChild(summary);sample.appendChild(node('p','','模範解答例：図書館は情報の信頼性を確かめ、世代を超えて交流し、他者と考えを深められる場だから。'));sample.appendChild(node('p','muted','見直し：①理由が書けているか ②本文にない主張を足していないか ③指定字数に収まっているか。'));parent.appendChild(sample);
+}
 function termSearch(parent){parent.appendChild(node('p','muted','古典・国語・漢文の語句を横断して検索できます。単語を入力すると意味が表示されます。'));const input=node('input');input.type='search';input.placeholder='例：あはれ、示唆、未、温故知新';input.setAttribute('aria-label','検索する単語');const results=node('div');const all=node('button','secondary','すべての単語を見る');all.type='button';parent.append(input,all,results);const termAliases={
 "あはれ":"あわれ しみじみ 趣深い","をかし":"趣 おもしろい すばらしい","ありがたし":"有難し 珍しい めったにない",
 "む":"推量 意志 勧誘 仮定 婉曲 助動詞","ず":"打消 助動詞","き":"過去 助動詞","けり":"過去 詠嘆 助動詞",
