@@ -2349,9 +2349,9 @@ function writingPractice(parent){
   const answer=ta.value.trim(),n=Array.from(answer).length;
   if(!answer){validation.className='feedback wrong';validation.textContent='まず答案を書いてみよう。';return;}
   const criteria=[
-   {name:'情報の信頼性を確かめること',ok:/信頼|確かめ|情報/.test(answer),tip:'「情報の信頼性を確かめる」など、本文にある具体的な役割を入れる。'},
-   {name:'交流・他者と考えを深めること',ok:/交流|世代|他者|考え/.test(answer),tip:'「異なる世代と交流する」「他者と考えを深める」などの要素を確認する。'},
-   {name:'オンライン化した今も価値がある理由',ok:/価値|今も|オンライン|役割|残る|失われ/.test(answer),tip:'「オンラインで情報を得やすい今も価値がある理由」まで、設問に答える形でまとめる。'}
+   {name:'情報の信頼性を確かめること',ok:/信頼性|信頼できるか|情報の正しさ|情報を確かめ|真偽/.test(answer),tip:'「情報の信頼性を確かめる」など、本文にある具体的な役割を入れる。'},
+   {name:'交流・他者と考えを深めること',ok:/交流|世代|他者と考え|他者と意見|意見を交わ|考えを深め/.test(answer),tip:'「異なる世代と交流する」「他者と考えを深める」などの要素を確認する。'},
+   {name:'オンライン化した今も価値がある理由',ok:/オンライン|今も|現在も|なお|価値がある|価値は失われ|価値が残|価値を保|必要性/.test(answer),tip:'「オンラインで情報を得やすい今も価値がある理由」まで、設問に答える形でまとめる。'}
   ];
   const points=criteria.filter(x=>x.ok).length,lengthOk=n>=40&&n<=60;
   validation.className='feedback '+(points===3&&lengthOk?'correct':'');
@@ -2364,7 +2364,7 @@ function writingPractice(parent){
   validation.appendChild(node('p','muted','注意：これは指定語句の有無と字数を確認する補助評価です。答案の意味・論理・本文との対応を完全に自動採点するものではありません。'));
  });parent.append(validate,validation);
  const rubric=node('div','term-result');rubric.append(node('h3','','採点基準（3点満点）'),node('p','','1点：情報の信頼性を確かめることに触れている'),node('p','','1点：異なる世代との交流、または他者と考えを深めることに触れている'),node('p','','1点：オンライン化しても価値が残るという問いに答えている'));parent.appendChild(rubric);
- const sample=node('details');const summary=node('summary','','模範解答と見直しポイントを見る');summary.style.cursor='pointer';sample.appendChild(summary);sample.appendChild(node('p','','模範解答例：図書館は情報の信頼性を確かめ、世代を超えて交流し、他者と考えを深められる場だから。'));sample.appendChild(node('p','muted','見直し：①理由が書けているか ②本文にない主張を足していないか ③指定字数に収まっているか。'));parent.appendChild(sample);
+ const sample=node('details');const summary=node('summary','','模範解答と見直しポイントを見る');summary.style.cursor='pointer';sample.appendChild(summary);sample.appendChild(node('p','','模範解答例：オンライン化した今も、図書館は情報の信頼性を確かめ、世代を超えて交流できる場だから。'));sample.appendChild(node('p','muted','見直し：①理由が書けているか ②本文にない主張を足していないか ③指定字数に収まっているか。'));parent.appendChild(sample);
 }
 function termSearch(parent){parent.appendChild(node('p','muted','古典・国語・漢文の語句を横断して検索できます。単語を入力すると意味が表示されます。'));const input=node('input');input.type='search';input.placeholder='例：あはれ、示唆、未、温故知新';input.setAttribute('aria-label','検索する単語');const results=node('div');const all=node('button','secondary','すべての単語を見る');all.type='button';parent.append(input,all,results);const termAliases={
 "あはれ":"あわれ しみじみ 趣深い","をかし":"趣 おもしろい すばらしい","ありがたし":"有難し 珍しい めったにない",
