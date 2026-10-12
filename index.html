@@ -2358,7 +2358,7 @@ function writingPractice(parent){
   const criteria=[
    {name:'情報の信頼性を確かめること',ok:/信頼性|信頼できるか|情報の正しさ|情報を確かめ|真偽/.test(answer),tip:'「情報の信頼性を確かめる」など、本文にある具体的な役割を入れる。'},
    {name:'交流・他者と考えを深めること',ok:/交流|世代|他者と考え|他者と意見|意見を交わ|考えを深め/.test(answer),tip:'「異なる世代と交流する」「他者と考えを深める」などの要素を確認する。'},
-   {name:'オンライン化した今も価値がある理由',ok:/オンライン|今も|現在も|なお|価値がある|価値は失われ|価値が残|価値を保|必要性/.test(answer),tip:'「オンラインで情報を得やすい今も価値がある理由」まで、設問に答える形でまとめる。'}
+   {name:'オンライン化した今も価値がある理由',ok:(/オンライン|今も|現在も|なお/.test(answer)&&/価値|必要性|役割|から|ため|ので/.test(answer)),tip:'「オンラインで情報を得やすい今も価値がある理由」まで、設問に答える形でまとめる。'}
   ];
   const points=criteria.filter(x=>x.ok).length,lengthOk=n>=40&&n<=60;
   validation.className='feedback '+(points===3&&lengthOk?'correct':'');
