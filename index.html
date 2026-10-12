@@ -71,6 +71,7 @@ const subjects={
  ['本文翻訳','古文の短い本文を現代語訳する練習'],
  ['模擬テスト','古典の複数分野をまとめてチェック'],
  ['共通テスト','文章・文法・内容理解の総合演習'],
+ ['文脈付き単語帳','短文の中で古文単語の意味を判断'],
  ['単語検索','古語を入力して意味を調べる']
  ]},
  japanese:{name:'国語',menus:[
@@ -92,6 +93,7 @@ const subjects={
  ['本文読解','本文から読み取れることを四択で選ぶ'],
  ['模擬テスト','語彙・句法・読解をまとめて確認'],
  ['共通テスト','漢文の文章理解と選択肢演習'],
+ ['句形・書き下し変換','返り点・句形・現代語訳をまとめて練習'],
  ['単語検索','国語・古典・漢文の語句をまとめて検索']
  ]}
 };
@@ -2164,8 +2166,9 @@ function begin(title,content){$('work').classList.remove('hidden');$('work-tag')
 function node(tag,cls,txt){const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n;}
 function openMenu(i){selectedMenu=i;const content=node('div');const name=subjects[subject].menus[i][0];
  if(subject==='japanese'&&i===7){writingPractice(content);begin('国語｜記述問題・採点ポイント',content);return}
- if(i===(subject==='japanese'?8:7)){termSearch(content);begin('単語検索｜入力して意味を調べる',content);return}
- if(subject==='classical'&&i===0){classicalContextVocab(content);begin('古典｜文脈付き古文単語',content);return}
+ if((subject==='japanese'&&i===8)||((subject==='classical'||subject==='kanbun')&&i===8)){termSearch(content);begin('単語検索｜入力して意味を調べる',content);return}
+ if(subject==='classical'&&i===7){classicalContextVocab(content);begin('古典｜文脈付き古文単語',content);return}
+ if(subject==='kanbun'&&i===7){kanbunConversionDrill(content);begin('漢文｜句形・書き下し変換',content);return}
  if(subject==='classical'&&i===1){classicalGrammarDrill(content);begin('古典｜助動詞・敬語・助詞の根拠付き識別',content);return}
  if(subject==='classical'&&i===3){classicalGrammarDrill(content);begin('古典｜文法・主語の見分け',content);return}
  if(subject==='classical'&&i===4){classicalSentenceBreakdown(content);begin('古典｜一文ずつ品詞・文法・現代語訳',content);return}
