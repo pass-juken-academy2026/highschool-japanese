@@ -118,7 +118,7 @@ jobs:
           for n, (_, raw_choices, raw_answer, explanation) in enumerate(quizzes, 1):
               choices = re.findall(r"'([^']*)'", raw_choices)
               answer = int(raw_answer)
-              if len(choices) < 2 or answer >= len(choices) or len(explanation.strip()) < 8:
+              if len(choices) < 2 or answer < 0 or answer >= len(choices) or len(explanation.strip()) < 8:
                   errors.append(f'index.html quiz {n}: choices={len(choices)}, answer={answer}')
           if len(quizzes) < 90:
               errors.append(f'index.html question coverage unexpectedly low: {len(quizzes)} quiz records (expected at least 90)')
@@ -130,7 +130,7 @@ jobs:
           for n, (raw_opts, raw_answer, raw_lines, raw_evidence) in enumerate(evidence, 1):
               opts = re.findall(r"'([^']*)'", raw_opts)
               lines = re.findall(r"'([^']*)'", raw_lines)
-              if int(raw_answer) >= len(opts) or int(raw_evidence) >= len(lines) or not opts or not lines:
+              if int(raw_answer) < 0 or int(raw_answer) >= len(opts) or int(raw_evidence) < 0 or int(raw_evidence) >= len(lines) or not opts or not lines:
                   errors.append(f'modern evidence item {n}: answer/evidence index out of range')
           bank_match = re.search(r'const BANK=\[(.*?)\];\s*const \$=', practice, re.S)
           bank = []
