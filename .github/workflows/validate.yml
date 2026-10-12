@@ -125,7 +125,7 @@ jobs:
           evidence_start = page.find('function modernEvidencePractice')
           evidence_end = page.find('function modernWrongAnswerAnalysis', evidence_start)
           evidence_fn = page[evidence_start:evidence_end] if evidence_start >= 0 and evidence_end > evidence_start else ''
-          evidence_re = re.compile(r"opts:\[([^\]]*)\],a:(\d+),\s*lines:\[([^\]]*)\],e:(-?\d+),")
+          evidence_re = re.compile(r"opts:\[([^\]]*)\],a:(-?\d+),\s*lines:\[([^\]]*)\],e:(-?\d+),")
           evidence = evidence_re.findall(evidence_fn)
           for n, (raw_opts, raw_answer, raw_lines, raw_evidence) in enumerate(evidence, 1):
               opts = re.findall(r"'([^']*)'", raw_opts)
