@@ -130,7 +130,7 @@ jobs:
               lines = re.findall(r"'([^']*)'", raw_lines)
               if int(raw_answer) >= len(opts) or int(raw_evidence) >= len(lines) or not opts or not lines:
                   errors.append(f'modern evidence item {n}: answer/evidence index out of range')
-          bank_match = re.search(r'const BANK=\[(.*?)\];\s*let idx', practice, re.S)
+          bank_match = re.search(r'const BANK=\[(.*?)\];\s*const \$=', practice, re.S)
           bank = []
           if bank_match:
               bank_re = re.compile(r'\["([^"]*)",\[([^\]]*)\],(\d+),"([^"]*)"\]')
