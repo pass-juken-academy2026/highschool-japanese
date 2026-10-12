@@ -2169,7 +2169,8 @@ function openMenu(i){selectedMenu=i;const content=node('div');const name=subject
  if((subject==='japanese'&&i===8)||((subject==='classical'||subject==='kanbun')&&i===8)){termSearch(content);begin('単語検索｜入力して意味を調べる',content);return}
  if(subject==='classical'&&i===7){classicalContextVocab(content);begin('古典｜文脈付き古文単語',content);return}
  if(subject==='kanbun'&&i===7){kanbunConversionDrill(content);begin('漢文｜句形・書き下し変換',content);return}
- if(subject==='classical'&&i===1){classicalGrammarDrill(content);begin('古典｜助動詞・敬語・助詞の根拠付き識別',content);return}
+ if(subject==='classical'&&i===1){classicalGrammarDrill(content);begin('古典｜助動詞・敬語の根拠付き識別',content);return}
+ if(subject==='classical'&&i===2){classicalParticleDrill(content);begin('古典｜助詞の働き・意味の識別',content);return}
  if(subject==='classical'&&i===3){classicalGrammarDrill(content);begin('古典｜文法・主語の見分け',content);return}
  if(subject==='classical'&&i===4){classicalSentenceBreakdown(content);begin('古典｜一文ずつ品詞・文法・現代語訳',content);return}
  if(subject==='kanbun'&&i===2){kanbunPatternDrill(content);begin('漢文｜返り点・句形・再読文字ドリル',content);return}
@@ -2199,6 +2200,15 @@ function classicalGrammarDrill(parent){
  {q:'「書かず」の「ず」を識別する根拠として適切なのは？',c:['未然形「書か」に接続し、打消を表す','連体形にだけ接続し、過去を表す','名詞に接続し、尊敬を表す','文末にあれば必ず詠嘆'],a:0,e:'打消の助動詞「ず」は未然形に接続する。「書か」は「書く」の未然形なので、接続が根拠になる。'},
  {q:'「こそ」がある文の係り結びで、文末に来る活用形は原則どれ？',c:['已然形','連体形','未然形','命令形'],a:0,e:'「こそ」は已然形で結ぶ。「ぞ・なむ・や・か」は連体形で結ぶ。'}
  ],'古典文法・主語判定');
+}
+function classicalParticleDrill(parent){
+ parent.appendChild(node('p','muted','助詞は直前直後の語だけで決めず、文中での働きと意味を確認します。'));
+ makeQuizCard(parent,[
+ {q:'「花ぞ咲く」の「ぞ」の品詞・働きは？',c:['係助詞。文末は原則連体形で結ぶ','格助詞。必ず場所を表す','接続助詞。必ず逆接を表す','終助詞。必ず禁止を表す'],a:0,e:'「ぞ」は係助詞で強意を表し、係り結びでは文末が連体形になる。'},
+ {q:'「人の書」の「の」の働きとして最も自然なのは？',c:['連体修飾（〜の）','逆接（しかし）','打消（〜ない）','完了（〜た）'],a:0,e:'「人の書」は「人の書物」のように、名詞「人」が後ろの名詞「書」を修飾している。文脈によって主格などの用法もあるため、関係を確認する。'},
+ {q:'「雨降れば、道ぬかるむ」の「ば」が已然形に接続している場合に考える意味は？',c:['〜ので／〜すると（確定条件）','もし〜なら（仮定条件）だけ','〜けれども','〜するな'],a:0,e:'接続助詞「ば」は未然形接続なら仮定条件、已然形接続なら確定条件を表すのが基本。接続形が重要な判定根拠。'},
+ {q:'係助詞「こそ」に呼応する係り結びの形は？',c:['已然形','連体形','未然形','終止形'],a:0,e:'「こそ」は已然形で結ぶ。「ぞ・なむ・や・か」は連体形で結ぶ。'}
+ ],'古典助詞ドリル');
 }
 function classicalSentenceBreakdown(parent){
  parent.appendChild(node('p','muted','短文を一文ずつ確認する練習です。各文の重要語・文法事項・現代語訳をセットで学びます。'));
