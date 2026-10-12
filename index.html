@@ -65,13 +65,13 @@ button{min-height:42px}
 const subjects={
  classical:{name:'古典',menus:[
  ['用言','動詞・形容詞・形容動詞の活用を確認'],
- ['助動詞','接続・意味・活用をセットで練習'],
+ ['助動詞・敬語','助動詞の接続・意味と敬語の種類・敬意の方向を練習'],
  ['助詞','助詞の働きと意味を整理'],
- ['文法の見分け','用言・助動詞・助詞を見分ける短問'],
+ ['敬語・主語判定','敬語の向きと前後の文脈から省略された主語を推定'],
  ['一文ずつ読解','古文の品詞・文法・現代語訳を一文ずつ確認'],
  ['模擬テスト','古典の複数分野をまとめてチェック'],
  ['共通テスト','文章・文法・内容理解の総合演習'],
- ['文脈付き単語帳','短文の中で古文単語の意味を判断'],
+ ['古文単語','短文の文脈から古語の意味を判断'],
  ['単語検索','古語を入力して意味を調べる']
  ]},
  japanese:{name:'国語',menus:[
@@ -79,12 +79,12 @@ const subjects={
  ['単語の意味','語句の意味を確認'],
  ['ことわざ','ことわざの意味と使い方'],
  ['短文問題','短文を読んで文法・語彙を判断'],
- ['本文読解','本文から読み取れることを四択で選ぶ'],
+ ['本文の根拠を探す','設問の答えと根拠になる一文をセットで選ぶ'],
  ['模擬テスト','漢字・語彙・短文・読解をまとめて確認'],
  ['共通テスト','文章と選択肢を根拠で照合する演習'],
- ['記述問題','本文の根拠・必要な要素・採点基準を確認'],
+ ['記述答案の採点・改善','字数・必要要素を確認し、足りない点の改善案を見る'],
  ['単語検索','国語・古典・漢文の語句をまとめて検索'],
- ['現代文の誤答分析','不正解の原因を分類して読み直す']
+ ['現代文の誤答分析','誤答の原因を分類し、読み直す箇所と改善手順を確認']
  ]},
  kanbun:{name:'漢文',menus:[
  ['単語の意味','漢文で使う語の意味を確認'],
@@ -94,7 +94,7 @@ const subjects={
  ['本文読解','本文から読み取れることを四択で選ぶ'],
  ['模擬テスト','語彙・句法・読解をまとめて確認'],
  ['共通テスト','漢文の文章理解と選択肢演習'],
- ['句形・書き下し変換','返り点・句形・現代語訳をまとめて練習'],
+ ['返り点・書き下し文','返り点で読む順を決め、書き下し文と現代語訳を確認'],
  ['単語検索','国語・古典・漢文の語句をまとめて検索']
  ]}
 };
@@ -2338,12 +2338,31 @@ function classicalSubjectInference(parent){
  ],'古文の主語判定');
 }
 function writingPractice(parent){
- parent.appendChild(node('p','muted','記述は「結論だけ」ではなく、本文の根拠と設問で求められた要素をそろえる練習をしよう。'));
+ parent.appendChild(node('p','muted','記述答案を入力し、字数・本文の根拠・設問に必要な要素を確認します。改善案は語句の有無を使った補助判定です。'));
  const passage=node('div','term-result');passage.append(node('h3','','課題文'),node('p','','地域の図書館は、本の貸し出しだけでなく、人々が情報の信頼性を確かめ、異なる世代と交流する場にもなっている。オンラインで情報を得やすくなった今も、他者と考えを深められる点に価値がある。'));parent.appendChild(passage);
  parent.appendChild(node('p','question-title','問題：本文をもとに、今も図書館に価値がある理由を40〜60字で説明しよう。'));
- const ta=node('textarea');ta.rows=4;ta.placeholder='本文の根拠を使って、自分の言葉でまとめる';ta.setAttribute('aria-label','記述答案');parent.appendChild(ta);
- const count=node('p','muted','0字');const update=()=>{const n=Array.from(ta.value).length;count.textContent=n+'字（目標：40〜60字）';count.className='feedback '+(n>=40&&n<=60?'correct':n>60?'wrong':'muted');count.setAttribute('aria-live','polite');};ta.addEventListener('input',update);parent.appendChild(count);
- const validate=node('button','primary','字数と記述ポイントを確認');validate.type='button';const validation=node('div','feedback','答案を書いたら確認できます。');validation.setAttribute('aria-live','polite');validate.addEventListener('click',()=>{const answer=ta.value.trim();const n=Array.from(answer).length;if(!answer){validation.className='feedback wrong';validation.textContent='まず答案を書いてみよう。';return;}const lengthOk=n>=40&&n<=60;const reliability=/信頼|確かめ|情報/.test(answer);const interaction=/交流|世代|他者|考え/.test(answer);const answerOk=/価値|今も|オンライン|役割|残る|失われ/.test(answer);const points=[reliability,interaction,answerOk].filter(Boolean).length;validation.className='feedback';validation.replaceChildren(node('p','', '字数：'+n+'字（'+(lengthOk?'指定範囲内':'40〜60字に調整しよう')+'）'),node('p','', '本文要素の自己確認：3項目中'+points+'項目に関連する語句が見つかりました。'),node('p','muted','確認項目：'+(reliability?'✓':'△')+' 情報の信頼性／'+(interaction?'✓':'△')+' 交流・他者と考えること／'+(answerOk?'✓':'△')+' 今も価値がある理由'),node('p','muted','この結果は語句の有無だけを見る補助表示です。正解・不正解や答案の意味を自動判定する採点ではありません。本文の根拠と自分の説明が対応しているか確認しよう。'));});parent.appendChild(validate);parent.appendChild(validation);
+ const ta=node('textarea');ta.rows=4;ta.maxLength=300;ta.placeholder='本文の根拠を使って、自分の言葉でまとめる';ta.setAttribute('aria-label','記述答案');parent.appendChild(ta);
+ const count=node('p','muted','0字（目標：40〜60字）');count.setAttribute('aria-live','polite');
+ const countNow=()=>Array.from(ta.value.trim()).length;
+ ta.addEventListener('input',()=>{const n=countNow();count.textContent=n+'字（目標：40〜60字）';count.className='feedback '+(n>=40&&n<=60?'correct':n>60?'wrong':'muted');});parent.appendChild(count);
+ const validate=node('button','primary','採点基準と改善点を確認');validate.type='button';const validation=node('div','feedback','答案を書いたら確認できます。');validation.setAttribute('aria-live','polite');validate.addEventListener('click',()=>{
+  const answer=ta.value.trim(),n=Array.from(answer).length;
+  if(!answer){validation.className='feedback wrong';validation.textContent='まず答案を書いてみよう。';return;}
+  const criteria=[
+   {name:'情報の信頼性を確かめること',ok:/信頼|確かめ|情報/.test(answer),tip:'「情報の信頼性を確かめる」など、本文にある具体的な役割を入れる。'},
+   {name:'交流・他者と考えを深めること',ok:/交流|世代|他者|考え/.test(answer),tip:'「異なる世代と交流する」「他者と考えを深める」などの要素を確認する。'},
+   {name:'オンライン化した今も価値がある理由',ok:/価値|今も|オンライン|役割|残る|失われ/.test(answer),tip:'「オンラインで情報を得やすい今も価値がある理由」まで、設問に答える形でまとめる。'}
+  ];
+  const points=criteria.filter(x=>x.ok).length,lengthOk=n>=40&&n<=60;
+  validation.className='feedback '+(points===3&&lengthOk?'correct':'');
+  validation.replaceChildren(node('p','', '補助評価：3点中'+points+'点／字数：'+n+'字（'+(lengthOk?'指定範囲内':'40〜60字に調整')+'）'));
+  const list=node('ul');criteria.forEach(c=>list.appendChild(node('li','',(c.ok?'✓ ':'△ ')+c.name)));validation.appendChild(list);
+  const missing=criteria.filter(x=>!x.ok);const suggestions=node('div','term-result');suggestions.appendChild(node('h3','','改善ポイント'));
+  if(!lengthOk)suggestions.appendChild(node('p','',n<40?'指定字数に届いていません。本文の理由をもう一つ加え、40字以上にまとめよう。':'字数が多すぎます。意味の重なる表現を整理し、40〜60字にまとめよう。'));
+  if(missing.length){missing.forEach(c=>suggestions.appendChild(node('p','', '・'+c.tip)))}else suggestions.appendChild(node('p','','3つの確認要素に関連する語句が見つかりました。本文の意味と合っているかも自分で確認しよう。'));
+  validation.appendChild(suggestions);
+  validation.appendChild(node('p','muted','注意：これは指定語句の有無と字数を確認する補助評価です。答案の意味・論理・本文との対応を完全に自動採点するものではありません。'));
+ });parent.append(validate,validation);
  const rubric=node('div','term-result');rubric.append(node('h3','','採点基準（3点満点）'),node('p','','1点：情報の信頼性を確かめることに触れている'),node('p','','1点：異なる世代との交流、または他者と考えを深めることに触れている'),node('p','','1点：オンライン化しても価値が残るという問いに答えている'));parent.appendChild(rubric);
  const sample=node('details');const summary=node('summary','','模範解答と見直しポイントを見る');summary.style.cursor='pointer';sample.appendChild(summary);sample.appendChild(node('p','','模範解答例：図書館は情報の信頼性を確かめ、世代を超えて交流し、他者と考えを深められる場だから。'));sample.appendChild(node('p','muted','見直し：①理由が書けているか ②本文にない主張を足していないか ③指定字数に収まっているか。'));parent.appendChild(sample);
 }
