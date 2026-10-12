@@ -2165,12 +2165,73 @@ function node(tag,cls,txt){const n=document.createElement(tag);if(cls)n.classNam
 function openMenu(i){selectedMenu=i;const content=node('div');const name=subjects[subject].menus[i][0];
  if(subject==='japanese'&&i===7){writingPractice(content);begin('国語｜記述問題・採点ポイント',content);return}
  if(i===(subject==='japanese'?8:7)){termSearch(content);begin('単語検索｜入力して意味を調べる',content);return}
- if(subject==='classical'&&i===4){translation(content,'classical');begin('古典｜本文翻訳',content);return}
- if(subject==='kanbun'&&i===3){translation(content,'kanbun');begin('漢文｜本文翻訳',content);return}
+ if(subject==='classical'&&i===0){classicalContextVocab(content);begin('古典｜文脈付き古文単語',content);return}
+ if(subject==='classical'&&i===1){classicalGrammarDrill(content);begin('古典｜助動詞・敬語・助詞の根拠付き識別',content);return}
+ if(subject==='classical'&&i===3){classicalGrammarDrill(content);begin('古典｜文法・主語の見分け',content);return}
+ if(subject==='classical'&&i===4){classicalSentenceBreakdown(content);begin('古典｜一文ずつ品詞・文法・現代語訳',content);return}
+ if(subject==='kanbun'&&i===2){kanbunPatternDrill(content);begin('漢文｜返り点・句形・再読文字ドリル',content);return}
+ if(subject==='kanbun'&&i===3){kanbunConversionDrill(content);begin('漢文｜返り点・書き下し文・現代語訳',content);return}
  if((subject==='japanese'&&i===3)){shortQuestions(content);begin('国語｜短文問題',content);return}
  if((subject==='japanese'&&i===4)||(subject==='kanbun'&&i===4)){readingQuestion(content);begin(subjects[subject].name+'｜本文読解・四択問題',content);return}
  if(i===5||i===6){startTest(content,i===5?'mock':'common');begin(subjects[subject].name+'｜'+(i===5?'模擬テスト':'共通テスト型演習'),content);return}
  startPractice(content,i,name);begin(subjects[subject].name+'｜'+name,content);
+}
+function classicalContextVocab(parent){
+ parent.appendChild(node('p','muted','単語だけを丸暗記せず、短い文の中で意味を選びます。文脈のどの部分が手がかりか、解説で確認しましょう。'));
+ const examples=node('div','term-result');examples.append(node('h3','','例文'),node('p','','山の端に月が出でて、あたりの景色いとをかし。'),node('p','muted','「いと」は程度、「をかし」は景色への評価を表す語。文全体の意味から考えます。'));parent.appendChild(examples);
+ makeQuizCard(parent,[
+ {q:'「月の光、いとあはれなり」の「あはれ」に最も近い意味は？',c:['しみじみと心に感じられる','腹立たしい','珍しくて高価だ','急いでいる'],a:0,e:'「月の光」という情景を受けて、しみじみとした趣を表す。情景や話し手の反応が文脈の手がかり。'},
+ {q:'「この景色、をかし」の「をかし」の意味は？',c:['趣がある・すばらしい','恐ろしい','退屈である','必ず正しい'],a:0,e:'景色を評価する文脈なので「趣がある・すばらしい」が自然。「をかし」は文脈により「おもしろい」などにもなる。'},
+ {q:'「ありがたきことなり」の「ありがたき」に近い古語の意味は？',c:['めったにない','感謝している','値段が高い','腹が立つ'],a:0,e:'古語「ありがたし」は基本的に「めったにない・珍しい」。現代語の「ありがたい」と意味がずれることに注意。'},
+ {q:'「人も来ず、つれづれなり」の「つれづれなり」は？',c:['することがなく退屈だ','とてもにぎやかだ','体が丈夫だ','すばやく走る'],a:0,e:'人が来ない状況が手がかり。「つれづれなり」はすることがなく退屈な様子を表す。'}
+ ],'文脈付き古文単語');
+}
+function classicalGrammarDrill(parent){
+ parent.appendChild(node('p','muted','正解だけでなく、接続・活用・敬意の方向・文脈のどれを根拠に判断したか確認します。'));
+ makeQuizCard(parent,[
+ {q:'「花咲きけり」の「けり」の意味として文脈上まず考えるものは？',c:['過去・詠嘆','打消','使役','受身'],a:0,e:'「けり」は過去または詠嘆。和歌・気づきの場面では詠嘆も考え、文末や前後の文脈で判断する。'},
+ {q:'「人に笑はる」の「る」の意味を考えるとき、最も重要な手がかりは？',c:['主語が動作を受ける関係かどうか','文の文字数','句読点の数','現代語の語順だけ'],a:0,e:'「る・らる」は受身・可能・自発・尊敬。ここでは「人に」という動作主を示す語があり、受身「人に笑われる」が自然。'},
+ {q:'敬語から主語を推定する方法として適切なのは？',c:['敬語の種類と敬意の向き、前後の行動を合わせて見る','敬語があれば必ず筆者が主語','尊敬語と謙譲語を区別しない','直前の名詞を無条件に主語にする'],a:0,e:'尊敬語は動作主を高め、謙譲語は動作の向かう相手を高める。敬語だけで決めず、会話・動作・前後関係も確認する。'},
+ {q:'「書かず」の「ず」を識別する根拠として適切なのは？',c:['未然形「書か」に接続し、打消を表す','連体形にだけ接続し、過去を表す','名詞に接続し、尊敬を表す','文末にあれば必ず詠嘆'],a:0,e:'打消の助動詞「ず」は未然形に接続する。「書か」は「書く」の未然形なので、接続が根拠になる。'},
+ {q:'「こそ」がある文の係り結びで、文末に来る活用形は原則どれ？',c:['已然形','連体形','未然形','命令形'],a:0,e:'「こそ」は已然形で結ぶ。「ぞ・なむ・や・か」は連体形で結ぶ。'}
+ ],'古典文法・主語判定');
+}
+function classicalSentenceBreakdown(parent){
+ parent.appendChild(node('p','muted','短文を一文ずつ確認する練習です。各文の重要語・文法事項・現代語訳をセットで学びます。'));
+ const lines=[
+ ['春になりて、花いと美しく咲きたり。','なりて＝なって（接続助詞「て」につながる形）、いと＝とても、咲きたり＝咲いた／咲いている。','春になって、花がとても美しく咲いた。'],
+ ['人々、これを見て心をなぐさむ。','これ＝花を指す指示語、見て＝見て、なぐさむ＝心を慰める。主語は「人々」。','人々はこれを見て心を慰める。'],
+ ['帝、御覧じて、ほほ笑み給ふ。','御覧ず＝「見る」の尊敬語、給ふ＝尊敬の補助動詞。敬意の対象は帝。','帝はご覧になって、ほほ笑みなさる。']
+ ];
+ lines.forEach((line,i)=>{const d=node('details','term-result');const sum=node('summary','',String(i+1)+'. '+line[0]);sum.style.cursor='pointer';d.appendChild(sum);d.append(node('p','', '文法・語句：'+line[1]),node('p','', '現代語訳：'+line[2]));parent.appendChild(d)});
+ makeQuizCard(parent,[
+ {q:'「春になりて」の「て」の働きとして最も適切なのは？',c:['動作・状態をつなぐ接続助詞','過去の助動詞','尊敬の助動詞','係助詞'],a:0,e:'「なりて」は「なり」＋接続助詞「て」と捉え、前後の内容をつなぐ。'},
+ {q:'「帝、御覧じて」の「御覧ず」が示す敬語は？',c:['帝の動作を高める尊敬語','話し手を低める謙譲語','丁寧語だけ','敬語ではない'],a:0,e:'「御覧ず」は「見る」の尊敬語で、動作主である帝を高める。'}
+ ],'一文ごとの文法確認');
+}
+function kanbunPatternDrill(parent){
+ parent.appendChild(node('p','muted','句形を暗記するだけでなく、本文中の形から読みと意味を見抜きます。'));
+ makeQuizCard(parent,[
+ {q:'「未だ〜ず」の「未」が表す意味は？',c:['まだ〜ない','すでに〜した','どうして〜か','必ず〜する'],a:0,e:'再読文字「未」は「未だ〜ず」と読み、未実現・打消「まだ〜ない」を表す。'},
+ {q:'「不レ知」の読み方として正しいものは？',c:['知らず','知るべからず','知らしむ','知ることなし'],a:0,e:'否定の「不」は下の字を打ち消し、「知らず」と読む。レ点で下の字を先に読んで戻る。'},
+ {q:'「使二人一行」のような使役の句形の意味は？',c:['人をして行かしむ＝人に行かせる','人が行くことを禁止する','人が行ったことを後悔する','人がまだ行かない'],a:0,e:'使役は「〜をして…せしむ／しむ」などと読み、「〜に…させる」の意味。'},
+ {q:'「見二笑一」のような受身の句形を読むとき、基本となる意味は？',c:['笑われる','笑わせる','笑わない','笑うべきだ'],a:0,e:'受身は「〜に…らる」などと読み、「〜される」の意味を表す。'},
+ {q:'「於」は置き字として使われる場合、一般にどう扱う？',c:['書き下し文では読まないことがある','必ず文頭で「いまだ」と読む','必ず「なり」と読む','必ず二度読む'],a:0,e:'「於」は句法により場所・対象などを示し、書き下しでは読まない場合がある。句形と文脈を確認する。'},
+ {q:'再読文字「当」の基本的な読み方は？',c:['まさに〜べし','いまだ〜ず','すでに〜たり','なんぞ〜や'],a:0,e:'「当」は「まさに〜べし」と読み、「当然〜すべきだ／きっと〜だろう」などの意味。'}
+ ],'漢文句形・識別');
+}
+function kanbunConversionDrill(parent){
+ parent.appendChild(node('p','muted','返り点をたどって読む順を決め、書き下し文から意味まで確認します。'));
+ const examples=[
+ ['温故而知新。','故きを温ねて新しきを知る。','昔のことを学び直して、新しい知識や見解を得る。','「温」はたずねる・学び直す、「而」は文脈に応じて接続を表す。'],
+ ['学而時習之。不亦説乎。','学びて時にこれを習ふ。また説ばしからずや。','学んで、折にふれて復習する。それもまた喜ばしいことではないか。','「不亦〜乎」は「また〜ずや」と読み、反語・詠嘆を表す。'],
+ ['己所不欲、勿施於人。','己の欲せざる所は、人に施すこと勿かれ。','自分が望まないことを、他人にしてはいけない。','「勿」は禁止「〜するな」、「於人」は「人に」と読む句法。']
+ ];
+ examples.forEach((v,i)=>{const d=node('details','term-result');const sum=node('summary','',String(i+1)+'. 原文：'+v[0]);sum.style.cursor='pointer';d.appendChild(sum);d.append(node('p','', '書き下し文：'+v[1]),node('p','', '現代語訳：'+v[2]),node('p','muted','句法の根拠：'+v[3]));parent.appendChild(d)});
+ makeQuizCard(parent,[
+ {q:'「不亦〜乎」の句形の意味として最も適切なのは？',c:['また〜ずや（反語・詠嘆）','まだ〜ない','〜に…させる','どうして〜しないのか（必ず禁止）'],a:0,e:'「不亦〜乎」は「また〜ずや」と読み、文脈により反語や詠嘆を表す。'},
+ {q:'「勿施於人」の「勿」が表す働きは？',c:['禁止（〜するな）','過去','使役','受身'],a:0,e:'「勿」は禁止を表し、「〜するな・〜してはいけない」と読む。'}
+ ],'書き下し・句形確認');
 }
 function makeQuizCard(parent,items,title){let idx=0,score=0,selected=null,done=false,miss=[];const card=node('div');const heading=node('p','muted',title||'選択肢を選び、採点して解説を確認しよう。');const progress=node('div','progress');const bar=node('div');progress.appendChild(bar);const q=node('div','question-title');const options=node('div');const feedback=node('div','feedback','選択肢を選んでください。');const stats=node('p','muted','');const actions=node('div','row');const check=node('button','primary','採点する');const next=node('button','secondary','次の問題');actions.append(check,next);card.append(heading,progress,q,options,feedback,stats,actions);parent.appendChild(card);
  function draw(){selected=null;done=false;const item=items[idx];q.textContent=(idx+1)+'. '+item.q;options.replaceChildren();item.c.forEach((v,j)=>{const b=node('button','option',String.fromCharCode(65+j)+'. '+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(done)return;selected=j;[...options.children].forEach((x,k)=>x.setAttribute('aria-pressed',String(k===j)));feedback.textContent='選択肢を選びました。採点して確認しよう。';});options.appendChild(b)});feedback.className='feedback';feedback.textContent='選択肢を選んでください。';bar.style.width=(idx/items.length*100)+'%';stats.textContent='問題 '+(idx+1)+' / '+items.length+'　正解 '+score+'問';check.disabled=false;}
