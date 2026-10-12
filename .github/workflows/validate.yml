@@ -82,7 +82,7 @@ jobs:
           missing = [item for item in required if item not in source]
           if missing:
               print('Missing Stage 2 Japanese coverage:')
-              print('\\n'.join(missing))
+              print("\n".join(missing))
               sys.exit(1)
           print(f'Checked {len(required)} Stage 2 Japanese coverage markers')
           PY
