@@ -2285,16 +2285,35 @@ function readingQuestion(parent){
  const guide=node('div','notice');guide.append(node('h3','','読解のチェック手順'),node('p','','①設問の条件に線を引く　②本文の該当箇所を探す　③選択肢を「一致・矛盾・本文にない情報」に分ける　④段落ごとの役割を一言でまとめる。'));parent.appendChild(guide);
 }
 function modernEvidencePractice(parent){
- parent.appendChild(node('p','muted','まず設問の答えを選び、次に根拠となる本文の一文を自分で選びます。根拠が選択肢と一致しているかを確認しよう。'));
- const passage=node('article','term-result');
- passage.append(node('h3','','本文'),node('p','','地域の図書館は、本を貸し出す場所として知られている。しかし、その役割はそれだけではない。人々が調べものをしたり、異なる世代が交流したり、地域の情報を共有したりする場にもなっている。'),node('p','','オンラインで多くの情報を得られるようになった今、図書館の役割が変化していることは確かだ。それでも、情報の信頼性を確かめ、他者と考えを深める場としての価値は失われていない。'));parent.appendChild(passage);
- const question=node('div','question-title','問：筆者が、今も図書館に価値があると考える理由は？');parent.appendChild(question);
- const opts=['本を貸し出すことだけが役割だから','情報の信頼性を確かめ、他者と考えを深める場だから','オンライン情報を利用できないから','図書館の役割は変化していないから'];
- let answer=-1,evidence=-1;const answerBox=node('div');const feedback=node('p','feedback','答えを選んでください。');opts.forEach((v,i)=>{const b=node('button','option',String.fromCharCode(65+i)+'. '+v);b.type='button';b.addEventListener('click',()=>{answer=i;[...answerBox.children].forEach((x,j)=>x.setAttribute('aria-pressed',String(i===j)));feedback.textContent='答えを選びました。根拠の一文も選ぼう。'});b.setAttribute('aria-pressed','false');answerBox.appendChild(b)});parent.append(answerBox,feedback);
- parent.appendChild(node('h3','','次に、根拠となる本文の一文を選ぶ'));
- const lines=['地域の図書館は、本を貸し出す場所として知られている。','人々が調べものをしたり、異なる世代が交流したり、地域の情報を共有したりする場にもなっている。','オンラインで多くの情報を得られるようになった今、図書館の役割が変化していることは確かだ。','それでも、情報の信頼性を確かめ、他者と考えを深める場としての価値は失われていない。'];
- const evidenceBox=node('div');lines.forEach((v,i)=>{const b=node('button','option',String(i+1)+'. '+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{evidence=i;[...evidenceBox.children].forEach((x,j)=>x.setAttribute('aria-pressed',String(i===j)));});evidenceBox.appendChild(b)});parent.appendChild(evidenceBox);
- const check=node('button','primary','答えと根拠を確認');const result=node('div','feedback','');check.addEventListener('click',()=>{if(answer<0||evidence<0){result.textContent='答えと根拠の一文を両方選んでね。';return}const aOk=answer===1,eOk=evidence===3;result.className='feedback '+(aOk&&eOk?'correct':'wrong');result.textContent=(aOk?'答えは正解。':'答えは不正解。正解はB。')+(eOk?' 根拠も正解。4文目が「今も価値がある理由」を直接説明している。':evidence===1?'根拠として関連はあるけれど、2文目は図書館の一般的な役割。設問に直接答える4文目を選ぼう。':'根拠は4文目が最適。オンライン化した今も価値が失われていない理由が直接書かれている。')+' 根拠を選ぶときは、答えの言い換えが本文にあるか確認しよう。'});parent.append(check,result);
+ const items=[
+  {passage:'地域の図書館は、本を貸し出す場所として知られている。しかし、その役割はそれだけではない。人々が調べものをしたり、異なる世代が交流したり、地域の情報を共有したりする場にもなっている。オンラインで多くの情報を得られるようになった今も、情報の信頼性を確かめ、他者と考えを深める場としての価値は失われていない。',
+   q:'筆者が、今も図書館に価値があると考える理由は？',
+   opts:['本を貸し出すことだけが役割だから','情報の信頼性を確かめ、他者と考えを深める場だから','オンライン情報を利用できないから','図書館の役割は変化していないから'],a:1,
+   lines:['地域の図書館は、本を貸し出す場所として知られている。','人々が調べものをしたり、異なる世代が交流したり、地域の情報を共有したりする場にもなっている。','オンラインで多くの情報を得られるようになった今も、情報の信頼性を確かめ、他者と考えを深める場としての価値は失われていない。'],e:2,
+   why:'3文目が、オンライン化した今も価値が失われていない理由を直接説明している。'},
+  {passage:'学校で朝読書を始めたところ、本を読む習慣がついた生徒がいた。一方、読む本を自分で選べず、なかなか集中できない生徒もいた。担当教員は、時間を確保するだけでなく、生徒が興味を持てる本を見つける手助けも必要だと話した。',
+   q:'担当教員が、朝読書をよりよくするために必要だと考えていることは？',
+   opts:['読書時間をなくすこと','全員が同じ本を読むこと','時間の確保に加えて、興味を持てる本を見つける支援をすること','朝読書をすれば全員が必ず本好きになると考えること'],a:2,
+   lines:['学校で朝読書を始めたところ、本を読む習慣がついた生徒がいた。','読む本を自分で選べず、なかなか集中できない生徒もいた。','時間を確保するだけでなく、生徒が興味を持てる本を見つける手助けも必要だと話した。'],e:2,
+   why:'3文目の「時間を確保するだけでなく」が、時間以外の支援も必要だという根拠。'},
+  {passage:'公園にベンチを増やした後、休憩する人は増えた。しかし、利用者への聞き取りでは、日差しが強い時間帯には長く滞在しにくいという声もあった。管理する市は、ベンチの数だけでなく、木陰をつくる工夫も検討している。',
+   q:'市がベンチの数以外にも検討していることは？',
+   opts:['公園をすべて閉鎖すること','木陰をつくり、日差しを避けて過ごせるようにすること','利用者への聞き取りをやめること','ベンチを増やすと必ず全員が長く滞在すると考えること'],a:1,
+   lines:['公園にベンチを増やした後、休憩する人は増えた。','日差しが強い時間帯には長く滞在しにくいという声もあった。','市は、ベンチの数だけでなく、木陰をつくる工夫も検討している。'],e:2,
+   why:'3文目に、市が検討している具体策として「木陰をつくる工夫」が明記されている。'}
+ ];
+ let idx=0,answer=-1,evidence=-1,checked=false,score=0;
+ parent.appendChild(node('p','muted','本文を読んで答えを選び、次に根拠となる一文を選びます。答えと根拠の両方が合っているか確認しよう。'));
+ const progress=node('p','muted','');const passage=node('article','term-result');const question=node('div','question-title');const answerTitle=node('h3','','① 設問の答えを選ぶ');const answerBox=node('div');const evidenceTitle=node('h3','','② 根拠となる本文の一文を選ぶ');const evidenceBox=node('div');const feedback=node('div','feedback','答えと根拠を選んでね。');const actions=node('div','row');const check=node('button','primary','答えと根拠を確認');const next=node('button','secondary','次の問題');next.disabled=true;actions.append(check,next);parent.append(progress,passage,question,answerTitle,answerBox,evidenceTitle,evidenceBox,actions,feedback);
+ function render(){
+  const item=items[idx];answer=-1;evidence=-1;checked=false;answerBox.replaceChildren();evidenceBox.replaceChildren();passage.replaceChildren();passage.appendChild(node('h3','','本文'),node('p','',item.passage));question.textContent='問：'+item.q;progress.textContent='練習 '+(idx+1)+' / '+items.length+'　正解 '+score+'問';
+  item.opts.forEach((v,i)=>{const b=node('button','option',String.fromCharCode(65+i)+'. '+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(checked)return;answer=i;[...answerBox.children].forEach((x,j)=>x.setAttribute('aria-pressed',String(i===j)));});answerBox.appendChild(b);});
+  item.lines.forEach((v,i)=>{const b=node('button','option',String(i+1)+'. '+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(checked)return;evidence=i;[...evidenceBox.children].forEach((x,j)=>x.setAttribute('aria-pressed',String(i===j)));});evidenceBox.appendChild(b);});
+  check.disabled=false;next.disabled=true;next.textContent=idx===items.length-1?'結果を見る':'次の問題';feedback.className='feedback';feedback.textContent='答えと根拠を両方選んでね。';
+ }
+ check.addEventListener('click',()=>{if(checked)return;if(answer<0||evidence<0){feedback.className='feedback wrong';feedback.textContent='設問の答えと本文の根拠を両方選んでね。';return;}checked=true;const item=items[idx],aOk=answer===item.a,eOk=evidence===item.e;if(aOk&&eOk)score++;[...answerBox.children,...evidenceBox.children].forEach(b=>b.disabled=true);check.disabled=true;next.disabled=false;feedback.className='feedback '+(aOk&&eOk?'correct':'wrong');feedback.replaceChildren(node('p','',((aOk&&eOk)?'正解！':(!aOk&&!eOk?'答えと根拠を見直そう。':!aOk?'答えが違うよ。':'答えは合っているけれど、根拠の一文が違うよ。'))),node('p','', '正解：'+String.fromCharCode(65+item.a)+'. '+item.opts[item.a]),node('p','', '根拠：'+item.lines[item.e]),node('p','muted',item.why));progress.textContent='練習 '+(idx+1)+' / '+items.length+'　正解 '+score+'問';});
+ next.addEventListener('click',()=>{if(!checked)return;if(idx<items.length-1){idx++;render();return;}progress.textContent='全'+items.length+'問終了　正解 '+score+' / '+items.length+'問';passage.replaceChildren(node('h3','','練習結果'),node('p','',score===items.length?'全問正解！答えと根拠をセットで確認できたね。':'正解 '+score+' / '+items.length+'問。解説を読み、答えと根拠が直接つながるか確認しよう。'));question.textContent='本文の根拠を選ぶときは、設問に直接答えている文を探そう。';answerTitle.hidden=true;answerBox.hidden=true;evidenceTitle.hidden=true;evidenceBox.hidden=true;actions.replaceChildren();feedback.replaceChildren();const retry=node('button','primary','もう一度練習する');retry.type='button';retry.addEventListener('click',()=>{idx=0;score=0;answerTitle.hidden=false;answerBox.hidden=false;evidenceTitle.hidden=false;evidenceBox.hidden=false;actions.append(check,next);render();});actions.appendChild(retry);});
+ render();
 }
 function modernWrongAnswerAnalysis(parent){
  parent.appendChild(node('p','muted','不正解を選んだ理由を分類し、本文のどこを読み直すべきか確認する練習です。'));
