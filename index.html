@@ -2372,7 +2372,7 @@ function startStructuredTest(parent,mode){
  const cases=mode==='mock'?JAPANESE_MOCK_CASES:JAPANESE_COMMON_CASES.map((c,i)=>{
   const pool=c.questions.map((q,index)=>({q,index}));
   for(let j=pool.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[pool[j],pool[k]]=[pool[k],pool[j]];}
-  return {...c,questions:pool.slice(0,commonTargets[i]||pool.length).sort((a,b)=>a.index-b.index).map((item,index)=>({...item.q,q:item.q.q.replace(/^問\\d+/, '問'+(index+1))}))};
+  return {...c,questions:pool.slice(0,commonTargets[i]||pool.length).sort((a,b)=>a.index-b.index).map((item,index)=>({...item.q,q:item.q.q.replace(/^問[0-9]+/, '問'+(index+1))}))};
  });
  const total=cases.reduce((n,c)=>n+c.questions.length,0);
  parent.appendChild(node('p','notice',mode==='mock'?'模擬テスト：同じ本文に基づく関連小問10問の大問1題です。全10問・制限時間40分。':'共通テスト型：評論・小説・実用的文章・古文・漢文の5大問・全'+total+'問。47問の問題バンクから各大問の規定数を抽出します。制限時間90分。本文・資料は学習用オリジナルです。'));
