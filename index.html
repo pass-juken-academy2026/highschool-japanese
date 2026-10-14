@@ -2366,9 +2366,16 @@ JAPANESE_COMMON_CASES[4].questions.push(
 {q:"問10　本文の教えを学習に生かす例として最も適切なのは？",c:["一度解いた問題は理由を確かめずに捨てる","以前学んだ考え方を見直し、新しい問題にどう使えるか考える","新しい問題では過去の知識を使わない","答えだけを暗記し、説明はしない"],a:1,e:"過去の学びを見直し、新しい問題への応用を考えることが「温故知新」の考え方に合う。"}
 );
 function startStructuredTest(parent,mode){
- const cases=mode==='mock'?JAPANESE_MOCK_CASES:JAPANESE_COMMON_CASES;
+ // 共通テスト型は47問の独自問題バンクから、本番構成の10/7/5/7/8問を各大問ごとに抽出する。
+ // 抽出後は元の設問順を保ち、表示上の問番号を振り直す。模擬テストは大問1題・10小問。
+ const commonTargets=[10,7,5,7,8];
+ const cases=mode==='mock'?JAPANESE_MOCK_CASES:JAPANESE_COMMON_CASES.map((c,i)=>{
+  const pool=c.questions.map((q,index)=>({q,index}));
+  for(let j=pool.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[pool[j],pool[k]]=[pool[k],pool[j]];}
+  return {...c,questions:pool.slice(0,commonTargets[i]||pool.length).sort((a,b)=>a.index-b.index).map((item,index)=>({...item.q,q:item.q.q.replace(/^問\\d+/, '問'+(index+1))}))};
+ });
  const total=cases.reduce((n,c)=>n+c.questions.length,0);
- parent.appendChild(node('p','notice',mode==='mock'?'模擬テスト：同じ本文に基づく関連小問10問の大問1題です。全10問・制限時間40分。':'共通テスト型：評論・小説・実用的文章・古文・漢文の5大問構成です。全47問・制限時間90分。本文・資料は学習用オリジナルです。'));
+ parent.appendChild(node('p','notice',mode==='mock'?'模擬テスト：同じ本文に基づく関連小問10問の大問1題です。全10問・制限時間40分。':'共通テスト型：評論・小説・実用的文章・古文・漢文の5大問・全'+total+'問。47問の問題バンクから各大問の規定数を抽出します。制限時間90分。本文・資料は学習用オリジナルです。'));
  const timer=node('p','tag',mode==='common'?'制限時間：90分':'制限時間：40分'),progress=node('p','muted',''),stimulus=node('article','term-result'),qtitle=node('div','question-title'),opts=node('div'),feedback=node('div','feedback','選択肢を選び、解答を確認してください。'),actions=node('div','row'),check=node('button','primary','解答する'),next=node('button','secondary','次の小問');next.disabled=true;actions.append(check,next);parent.append(timer,progress,stimulus,qtitle,opts,feedback,actions);
  let ci=0,si=0,selected=-1,checked=false,score=0,remaining=mode==='mock'?2400:5400,timerId=null,finished=false;const records=[];
  {const tick=()=>{if(finished)return;remaining--;timer.textContent='残り時間 '+Math.floor(remaining/60)+':'+String(remaining%60).padStart(2,'0');if(remaining<=0){finished=true;clearInterval(timerId);showResult();}};timer.textContent='残り時間 '+(mode==='mock'?'40:00':'90:00');timerId=setInterval(tick,1000);}
