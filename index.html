@@ -2297,6 +2297,12 @@ const JAPANESE_MOCK_CASES=[{title:"大問1　情報を読み解く力と学び�
 {q:"小問4　文章全体の要旨は？",c:["正解数だけ増やせばよい","誤答は振り返らず正解だけ覚える","根拠や判断過程を点検し、使える考え方として整理することが学びを深める","資料の数値はすべて疑う"],a:2,e:"最終段落で、理由を点検し、別の状況でも使える形に整理することが学びを深めるとまとめている。"},
 {q:"小問5　本文の論理展開として最も適切なのは？",c:["正解数だけを見る限界→振り返りの意義→学びを深める方法","物語の結末→登場人物の評価","反対意見を示すだけで結論を出さない","数値比較→歴史的背景→古典解釈"],a:0,e:"第1段落で限界、第2段落で振り返りの意義、第3段落で学びの定義を示す。"},
 {q:"小問6　本文の考え方を資料分析に応用する方法は？",c:["変化があれば原因をすぐ決める","数値だけ示して根拠を説明しない","数値・解釈・判断の根拠を分けて説明する","予想に合わないデータを除く"],a:2,e:"数値と解釈を区別し、判断の根拠を確認するという本文の主張に合う。"}
+,
+{q:"小問7　学習記録の見直しに本文の考え方を応用する方法は？",c:["正解数だけを比較し、考え方は記録しない","正誤に加え、使った根拠と判断の手順を記録する","間違えた問題をすべて難易度のせいにする","一度正解した問題は二度と見直さない"],a:1,e:"本文は、結果だけでなく、根拠と判断の過程を振り返ることが次の学びに役立つと述べている。"},
+{q:"小問8　本文から導ける資料の読み方として最も適切なのは？",c:["数値が変化したら原因は必ず一つだと決める","予想に合う数値だけを使う","観察された数値と、その数値についての解釈を区別する","数値より印象を優先する"],a:2,e:"数値の変化が観察されても、それだけで原因が一つに決まるとは限らない。"},
+{q:"小問9　筆者の主張を実践した結果として最も期待できるものは？",c:["根拠を説明せずに答えを選べるようになる","似た問題で考え方を応用しやすくなる","誤答が必ずゼロになる","どの資料も同じ結論になる"],a:1,e:"考え方を別の状況でも使える形に整理することが、本文でいう学びを深める行為である。"},
+{q:"小問10　本文全体の題名として最も適切なのは？",c:["正解数だけで学習を評価する方法","情報を集める速さを競う","答えの理由を振り返り、学びを次に生かす","資料を読まずに判断する技術"],a:2,e:"本文全体は、根拠や判断の過程を点検し、別の場面でも使える形に整理する重要性を述べている。"}
+
 ]}];
 const JAPANESE_COMMON_EXTRA=[
 [
@@ -2338,13 +2344,34 @@ const JAPANESE_COMMON_EXTRA=[
 ]
 ];
 JAPANESE_COMMON_CASES.forEach((c,i)=>c.questions.push(...JAPANESE_COMMON_EXTRA[i]));
+
+JAPANESE_COMMON_CASES[0].questions.push(
+{q:"問11　情報を知識として活用できている状態に最も近いものは？",c:["検索結果を保存したが、内容を説明できない","複数の資料を比べ、根拠を示しながら自分の言葉で説明できる","最初に見た説明だけを記憶している","自分の予想に合わない情報を除いている"],a:1,e:"本文は、情報を関連付け、出典や異なる説明を確かめ、自分で説明し直すことを重視している。"},
+{q:"問12　本文の論理展開をまとめたものとして最も適切なのは？",c:["情報を集めるだけでは不十分だと示し、知識化に必要な比較・検討・説明の過程を述べる","情報量の多さを評価し、検索をやめるよう勧める","個人的な体験を紹介した後、図書館の歴史を説明する","異なる意見を排除する方法を順に説明する"],a:0,e:"第1段落で情報収集と学びを区別し、第2段落で比較・根拠確認の必要性を述べている。"}
+);
+JAPANESE_COMMON_CASES[1].questions.push(
+{q:"問8　真帆が友人に感想を話したいと思うようになった変化は？",c:["本を借りた理由が変わらないまま、返却を急いでいる","物語を読み終え、主人公の選択について他者と考えを共有したくなった","友人に本の内容を知られないようにしている","主人公の選択を忘れたため、別の本を探している"],a:1,e:"借りたときは表紙にひかれただけだったが、読後は主人公の選択について友人と話したいと思っている。"},
+{q:"問9　真帆の気持ちを判断する最も確かな手がかりは？",c:["語り手が真帆を明るい人物だと直接評価する表現","本の値段についての説明","声をかける前に立ち止まり、感想を言葉にできるか迷う行動","図書室の本棚の数"],a:2,e:"人物の気持ちは、行動や内面の描写を根拠に判断する。ここでは立ち止まる行動と迷いが手がかりになる。"}
+);
+JAPANESE_COMMON_CASES[2].questions.push(
+{q:"問6　3項目の回答数を合計すると回答者数を超える可能性があるのはなぜ？",c:["複数回答可の調査だから、同じ人が複数項目を選べる","回答数がすべて推定値だから","調査対象が毎日変わるから","無回答者を必ず二重に数えるから"],a:0,e:"複数回答可では、一人が複数の希望を選べるため、項目別回答数の合計は回答者数と一致するとは限らない。"},
+{q:"問7　静かな読書席の希望割合を回答者120人に対して求めると何％か？",c:["30％","40％","60％","72％"],a:2,e:"72÷120×100＝60％。回答数を全回答者数で割り、百分率に直す。"}
+);
+JAPANESE_COMMON_CASES[3].questions.push(
+{q:"問8　古文で主語を判断するとき、最も適切な方法は？",c:["直前の名詞を必ず主語にする","敬語・助詞・動作のつながりと前後の文脈を合わせて考える","現代語と同じ語順だけで決める","主語が省略されていたら判断できないとする"],a:1,e:"古文では主語が省略されることがあるため、敬語や助詞、前後の動作・発話の流れを合わせて判断する。"},
+{q:"問9　本文の場面の移り変わりとして最も適切なのは？",c:["花を見て感じたことを話す場面から、争いの場面へ移る","若き人の花への感想を示し、その後の行動へ話が進む","旅立ちの決意から帰郷後の反省へ移る","人物の会話を中断し、自然現象の説明だけになる"],a:1,e:"本文の出来事と人物の行動を時間順に整理し、書かれていない出来事を付け加えない。"}
+);
+JAPANESE_COMMON_CASES[4].questions.push(
+{q:"問9　「温故」と「知新」の関係を説明するものとして最も適切なのは？",c:["過去の知識を振り返ることと、新しい理解を得ることを結び付けている","過去の知識を忘れ、新しいことだけを学ぶ","他人に教わることを避ける","古い考えと新しい考えは必ず対立する"],a:0,e:"「温故知新」は、古いことを学び直すことを通じて新しい知識や見解を得るという関係を表す。"},
+{q:"問10　本文の教えを学習に生かす例として最も適切なのは？",c:["一度解いた問題は理由を確かめずに捨てる","以前学んだ考え方を見直し、新しい問題にどう使えるか考える","新しい問題では過去の知識を使わない","答えだけを暗記し、説明はしない"],a:1,e:"過去の学びを見直し、新しい問題への応用を考えることが「温故知新」の考え方に合う。"}
+);
 function startStructuredTest(parent,mode){
  const cases=mode==='mock'?JAPANESE_MOCK_CASES:JAPANESE_COMMON_CASES;
  const total=cases.reduce((n,c)=>n+c.questions.length,0);
- parent.appendChild(node('p','notice',mode==='mock'?'模擬テスト：大問1題の中に、同じ本文に基づく関連小問6問を配置しています。':'共通テスト型：評論・小説・実用的文章・古文・漢文の5大問構成です。本文・資料は学習用オリジナルです。'));
- const timer=node('p','tag',mode==='common'?'制限時間：90分':'制限時間なし'),progress=node('p','muted',''),stimulus=node('article','term-result'),qtitle=node('div','question-title'),opts=node('div'),feedback=node('div','feedback','選択肢を選び、解答を確認してください。'),actions=node('div','row'),check=node('button','primary','解答する'),next=node('button','secondary','次の小問');next.disabled=true;actions.append(check,next);parent.append(timer,progress,stimulus,qtitle,opts,feedback,actions);
- let ci=0,si=0,selected=-1,checked=false,score=0,remaining=5400,timerId=null,finished=false;const records=[];
- if(mode==='common'){const tick=()=>{if(finished)return;remaining--;timer.textContent='残り時間 '+Math.floor(remaining/60)+':'+String(remaining%60).padStart(2,'0');if(remaining<=0){finished=true;clearInterval(timerId);showResult();}};timer.textContent='残り時間 90:00';timerId=setInterval(tick,1000);}
+ parent.appendChild(node('p','notice',mode==='mock'?'模擬テスト：同じ本文に基づく関連小問10問の大問1題です。全10問・制限時間40分。':'共通テスト型：評論・小説・実用的文章・古文・漢文の5大問構成です。全47問・制限時間90分。本文・資料は学習用オリジナルです。'));
+ const timer=node('p','tag',mode==='common'?'制限時間：90分':'制限時間：40分'),progress=node('p','muted',''),stimulus=node('article','term-result'),qtitle=node('div','question-title'),opts=node('div'),feedback=node('div','feedback','選択肢を選び、解答を確認してください。'),actions=node('div','row'),check=node('button','primary','解答する'),next=node('button','secondary','次の小問');next.disabled=true;actions.append(check,next);parent.append(timer,progress,stimulus,qtitle,opts,feedback,actions);
+ let ci=0,si=0,selected=-1,checked=false,score=0,remaining=mode==='mock'?2400:5400,timerId=null,finished=false;const records=[];
+ {const tick=()=>{if(finished)return;remaining--;timer.textContent='残り時間 '+Math.floor(remaining/60)+':'+String(remaining%60).padStart(2,'0');if(remaining<=0){finished=true;clearInterval(timerId);showResult();}};timer.textContent='残り時間 '+(mode==='mock'?'40:00':'90:00');timerId=setInterval(tick,1000);}
  function render(){selected=-1;checked=false;const c=cases[ci],q=c.questions[si];stimulus.replaceChildren(node('h3','',c.title));const body=node('div');body.innerHTML=c.passage.replace(/\n/g,'<br>');stimulus.appendChild(body);qtitle.textContent=q.q;opts.replaceChildren();q.c.forEach((v,i)=>{const b=node('button','option',String.fromCharCode(65+i)+'．'+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(checked)return;selected=i;[...opts.children].forEach((x,j)=>x.setAttribute('aria-pressed',String(i===j)));});opts.appendChild(b)});feedback.className='feedback';feedback.textContent='選択肢を選んでください。';check.disabled=false;next.disabled=true;next.textContent=(ci===cases.length-1&&si===c.questions.length-1)?'結果を見る':'次の小問';progress.textContent=(mode==='mock'?'大問1':'大問'+(ci+1)+'／'+cases.length)+'・小問'+(si+1)+'／'+c.questions.length+'　全'+(records.length+1)+'／'+total+'問　正解 '+score+'問';}
  check.addEventListener('click',()=>{if(checked)return;if(selected<0){feedback.className='feedback wrong';feedback.textContent='先に選択肢を選んでください。';return;}checked=true;const q=cases[ci].questions[si],ok=selected===q.a;if(ok)score++;records.push({q,selected,ok,title:cases[ci].title});[...opts.children].forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');if(i===selected&&!ok)b.classList.add('wrong')});feedback.className='feedback '+(ok?'correct':'wrong');feedback.replaceChildren(node('p','',ok?'正解！':'不正解。正解：'+String.fromCharCode(65+q.a)+'．'+q.c[q.a]),node('p','muted',q.e));check.disabled=true;next.disabled=false;});
  next.addEventListener('click',()=>{if(!checked)return;const c=cases[ci];if(si<c.questions.length-1)si++;else if(ci<cases.length-1){ci++;si=0;}else{showResult();return;}render();});
