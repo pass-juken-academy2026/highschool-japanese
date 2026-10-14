@@ -2460,7 +2460,13 @@ function termSearch(parent){parent.appendChild(node('p','muted','古典・国語
 };
 function normTerm(v){return String(v||"").normalize("NFKC").toLowerCase().replace(/[\s・･‐‑–—ー]/g,"");}
 function search(){const word=normTerm(input.value);const matches=terms.filter(t=>{const alias=termAliases[t[1]]||"";const text=normTerm(t.join(" ")+" "+alias);return !word||text.includes(word)});results.replaceChildren();if(!matches.length){results.appendChild(node('p','feedback','見つかりませんでした。正式名称・別表記・関連語でも検索してみてください。'));return}matches.forEach(t=>{const box=node('article','term-result');box.append(node('span','tag',t[3]),node('h3','',t[1]),node('p','',t[2]));const alias=termAliases[t[1]];if(alias)box.append(node('p','muted','関連語：'+alias));results.appendChild(box)});if(word)results.prepend(node('p','muted',matches.length+'件見つかりました。'))}input.addEventListener('input',search);all.addEventListener('click',()=>{input.value='';search()});search();}
-renderMenus();
+const routeParams=new URLSearchParams(location.search);
+if(routeParams.get('subject')==='japanese'&&['mock','common'].includes(routeParams.get('mode'))){
+ subject='japanese';
+ document.querySelectorAll('[data-subject]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.subject==='japanese')));
+ renderMenus();
+ openMenu(routeParams.get('mode')==='mock'?5:6);
+}else renderMenus();
 })();
 </script>
 <script id="subject-wide-search-script">
