@@ -2225,17 +2225,14 @@ function classicalParticleDrill(parent){
  ],'古典助詞ドリル');
 }
 function classicalSentenceBreakdown(parent){
- parent.appendChild(node('p','muted','短文を一文ずつ確認する練習です。各文の重要語・文法事項・現代語訳をセットで学びます。'));
- const lines=[
- ['春になりて、花いと美しく咲きたり。','なり＝動詞「なる」の連用形、て＝接続助詞、いと＝とても、咲きたり＝咲いた／咲いている。','春になって、花がとても美しく咲いた。'],
- ['人々、これを見て心をなぐさむ。','これ＝花を指す指示語、見て＝見て、なぐさむ＝心を慰める。主語は「人々」。','人々はこれを見て心を慰める。'],
- ['帝、御覧じて、ほほ笑み給ふ。','御覧ず＝「見る」の尊敬語、給ふ＝尊敬の補助動詞。敬意の対象は帝。','帝はご覧になって、ほほ笑みなさる。']
+ parent.appendChild(node('p','muted','短文を読み、語句の意味・文法・現代語訳を実際に解答します。'));
+ const items=[
+ {q:'「春になりて、花いと美しく咲きたり。」の「いと」の意味は？',c:['とても','少しも〜ない','すでに','どうして'],a:0,e:'「いと」は程度を強め、「とても」の意味を表す。'},
+ {q:'「人々、これを見て心をなぐさむ。」の「これ」が指すものとして最も自然なのは？',c:['直前に話題となった花や景色','人々自身','都への道','これから起きる出来事'],a:0,e:'指示語は前後の文脈から指す内容を特定する。この短文の流れでは直前に話題となった花や景色を指す。'},
+ {q:'「帝、御覧じて、ほほ笑み給ふ。」を現代語にしたものは？',c:['帝はご覧になって、ほほ笑みなさる','帝は見ずに立ち去った','帝は人に笑われた','帝は命令して歌わせた'],a:0,e:'「御覧ず」は「見る」の尊敬語、「給ふ」は尊敬の補助動詞として働いている。'},
+ {q:'「文を書きて、人に贈る。」で、文を贈る相手を示す語は？',c:['人に','文を','書きて','文'],a:0,e:'格助詞「に」は、この文では贈り先・相手を示している。'}
  ];
- lines.forEach((line,i)=>{const d=node('details','term-result');const sum=node('summary','',String(i+1)+'. '+line[0]);sum.style.cursor='pointer';d.appendChild(sum);d.append(node('p','', '文法・語句：'+line[1]),node('p','', '現代語訳：'+line[2]));parent.appendChild(d)});
- makeQuizCard(parent,[
- {q:'「春になりて」の「て」の働きとして最も適切なのは？',c:['動作・状態をつなぐ接続助詞','過去の助動詞','尊敬の助動詞','係助詞'],a:0,e:'「なりて」は「なり」＋接続助詞「て」と捉え、前後の内容をつなぐ。'},
- {q:'「帝、御覧じて」の「御覧ず」が示す敬語は？',c:['帝の動作を高める尊敬語','話し手を低める謙譲語','丁寧語だけ','敬語ではない'],a:0,e:'「御覧ず」は「見る」の尊敬語で、動作主である帝を高める。'}
- ],'一文ごとの文法確認');
+ makeQuizCard(parent,items,'古文短文読解');
 }
 function kanbunPatternDrill(parent){
  parent.appendChild(node('p','muted','漢文の句形を、実際の原文から書き下し・意味まで解きます。'));
@@ -2250,19 +2247,14 @@ function kanbunPatternDrill(parent){
  ],'漢文句形・読解');
 }
 function kanbunConversionDrill(parent){
- parent.appendChild(node('p','muted','返り点をたどって読む順を決め、書き下し文から意味まで確認します。'));
- const examples=[
- ['温故而知新。','故きを温ねて新しきを知る。','昔のことを学び直して、新しい知識や見解を得る。','「温」はたずねる・学び直す、「而」は文脈に応じて接続を表す。'],
- ['学而時習之。不亦説乎。','学びて時にこれを習ふ。また説ばしからずや。','学んで、折にふれて復習する。それもまた喜ばしいことではないか。','「不亦〜乎」は「また〜ずや」と読み、反語・詠嘆を表す。'],
- ['己所不欲、勿施於人。','己の欲せざる所は、人に施すこと勿かれ。','自分が望まないことを、他人にしてはいけない。','「勿」は禁止「〜するな」、「於人」は「人に」と読む句法。']
- ];
- examples.forEach((v,i)=>{const d=node('details','term-result');const sum=node('summary','',String(i+1)+'. 原文：'+v[0]);sum.style.cursor='pointer';d.appendChild(sum);d.append(node('p','', '書き下し文：'+v[1]),node('p','', '現代語訳：'+v[2]),node('p','muted','句法の根拠：'+v[3]));parent.appendChild(d)});
+ parent.appendChild(node('p','muted','漢文の原文を読み、書き下し文・現代語訳・句形を解きます。'));
  makeQuizCard(parent,[
- {q:'レ点が付いた「読レ書」の読む順序として正しいものは？',c:['下の「書」を先に読み、次に「読」に戻る','上の「読」を読み、下の「書」をそのまま続ける','必ず二字を同時に読む','レ点は読み順に関係しない'],a:0,e:'レ点は一字下を先に読み、その後にレ点の付いた字へ戻る指示。返り点を読み順に変換してから書き下す。'},
- {q:'「不亦〜乎」の句形の意味として最も適切なのは？',c:['また〜ずや（反語・詠嘆）','まだ〜ない','〜に…させる','どうして〜しないのか（必ず禁止）'],a:0,e:'「不亦〜乎」は「また〜ずや」と読み、文脈により反語や詠嘆を表す。'},
- {q:'「勿施於人」の「勿」が表す働きは？',c:['禁止（〜するな）','過去','使役','受身'],a:0,e:'「勿」は禁止を表し、「〜するな・〜してはいけない」と読む。'},
- {q:'一・二点が付いた箇所を読む基本手順として適切なのは？',c:['二点の字を読んでから、一点の字に返る','一点の字を先に読み、二点は無視する','必ず上から順に読む','一点と二点は書き下しに影響しない'],a:0,e:'一・二点は返る範囲を示す。まず二点の字を読み、その後に一点の字へ返る。実際の文ではレ点などとの組み合わせも確認する。'}
- ],'返り点・書き下し確認');
+ {q:'「温故而知新」の書き下し文は？',c:['故きを温ねて新しきを知る','新しきを捨てて故きを忘る','故きを知らずして新しきを学ぶ','温かき故郷に帰る'],a:0,e:'「温故而知新」は「故きを温ねて新しきを知る」と書き下す。'},
+ {q:'「学而時習之」の意味として適切なのは？',c:['学んで、折にふれてそれを復習する','学問をやめて休む','時刻を見て学びを拒む','人に学ばせることを禁じる'],a:0,e:'「時に」は折にふれて、「習之」はそれを習う・復習するという意味。'},
+ {q:'「己所不欲、勿施於人」の「勿施於人」の意味は？',c:['人にしてはいけない','人に必ず与えなさい','人から学びなさい','人を呼びなさい'],a:0,e:'「勿」は禁止を表し、「於人」は「人に」。「人に施すことなかれ」という意味。'},
+ {q:'「不亦説乎」の意味として最も適切なのは？',c:['また喜ばしいことではないか','まだ喜んでいない','喜ぶことを禁止する','誰が喜んだのか'],a:0,e:'「不亦〜乎」は反語・詠嘆を表し、「また〜ずや」と読む。'},
+ {q:'「使人行」の意味として正しいものは？',c:['人をして行かしむ（人に行かせる）','人は行ってはいけない','人はまだ行かない','人が行かれる'],a:0,e:'「使」は使役を表す。人に行動させるという意味。'}
+ ],'漢文読解・書き下し');
 }
 function makeQuizCard(parent,items,title){let idx=0,score=0,selected=null,done=false,miss=[];const card=node('div');const heading=node('p','muted',title||'選択肢を選び、採点して解説を確認しよう。');const progress=node('div','progress');const bar=node('div');progress.appendChild(bar);const q=node('div','question-title');const options=node('div');const feedback=node('div','feedback','選択肢を選んでください。');const stats=node('p','muted','');const actions=node('div','row');const check=node('button','primary','採点する');const next=node('button','secondary','次の問題');actions.append(check,next);card.append(heading,progress,q,options,feedback,stats,actions);parent.appendChild(card);
  function draw(){selected=null;done=false;const item=items[idx];q.textContent=(idx+1)+'. '+item.q;options.replaceChildren();item.c.forEach((v,j)=>{const b=node('button','option',String.fromCharCode(65+j)+'. '+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(done)return;selected=j;[...options.children].forEach((x,k)=>x.setAttribute('aria-pressed',String(k===j)));feedback.textContent='選択肢を選びました。採点して確認しよう。';});options.appendChild(b)});feedback.className='feedback';feedback.textContent='選択肢を選んでください。';bar.style.width=(idx/items.length*100)+'%';stats.textContent='問題 '+(idx+1)+' / '+items.length+'　正解 '+score+'問';check.disabled=false;}
@@ -2517,12 +2509,14 @@ function modernWrongAnswerAnalysis(parent){
  const check=node('button','primary','答えと誤答原因を分析');check.type='button';const result=node('div','feedback','選択肢と原因を選んでから分析しよう。');check.addEventListener('click',()=>{if(chosen<0||!reason.value){result.className='feedback wrong';result.textContent='選択肢と誤答の原因を両方選んでね。';return}const correct=chosen===2;const why={'missed':'「時間を確保するだけでなく…工夫も必要」という最後の発言を根拠に、前半だけで判断していないか見直そう。','overgeneralized':'本文は「全員の読書量が増えたわけではない」と明記している。「全員」「必ず」は本文にない断定なので避けよう。','keyword':'「時間」という語だけで決めず、「だけでなく」「必要だ」という文のつながりまで読むのがポイント。','confused':'生徒の変化についての説明と、担当教員が必要だと述べた意見を分けて整理しよう。'};result.className='feedback '+(correct?'correct':'wrong');result.replaceChildren(node('p','',correct?'正解。本文の最後の発言が直接の根拠です。':'不正解。正解はC。時間の確保に加え、本との出会いの工夫が必要と述べています。'),node('p','', '選んだ原因：'+reason.options[reason.selectedIndex].text),node('p','muted',why[reason.value]),node('p','muted','見直し手順：①設問の問いを短く言い換える ②根拠の一文を探す ③選択肢に本文以上の断定がないか確かめる。'));});parent.appendChild(check,result);
 }
 function classicalSubjectInference(parent){
- parent.appendChild(node('p','muted','主語は省略されることが多いため、敬語の種類・敬意の向き・直前直後の行動を合わせて判断します。'));
+ parent.appendChild(node('p','muted','短い古文を読み、動作主を本文の情報から判断します。'));
  makeQuizCard(parent,[
- {q:'「帝、臣に文を給ふ」の動作主として最も自然なのは？',c:['帝','臣','筆者','文'],a:0,e:'「給ふ」は文脈により尊敬語として用いられ、ここでは帝が臣に文をお与えになる意味。動作主は帝。'},
- {q:'「大臣、帝に申し上ぐ」の「申し上ぐ」から推定できることは？',c:['大臣が帝に対して謙譲表現を使っている','帝が大臣に命令していると必ず分かる','主語は必ず帝','敬語からは何も推定できない'],a:0,e:'「申し上ぐ」は謙譲語で、動作主側を低め、動作の向かう相手（帝）を高める。主語は前後の文脈も合わせて判断する。'},
- {q:'主語が省略された文で、主語を判断する最もよい方法は？',c:['敬語・会話の流れ・前後の動作を合わせる','直前の名詞を必ず主語にする','尊敬語があれば必ず話し手が主語','文末だけで決める'],a:0,e:'古文では主語が省略されることがある。敬語の向きだけで断定せず、前後の動作や会話の主体を合わせて推定する。'}
- ],'古文の主語判定');
+ {q:'本文：「女君、文を読みて、いと喜び給ふ。」文を読んで喜んだ人物は？',c:['女君','文を書いた人','語り手','本文だけでは決められない'],a:0,e:'「女君」が文を読み、その後「喜び給ふ」と続くため、喜んだ人物は女君。'},
+ {q:'本文：「大臣、帝の御前に参りて、申し上ぐ。」帝に申し上げた人物は？',c:['大臣','帝','別の使者','文を書いた人'],a:0,e:'「大臣」が「参りて、申し上ぐ」の主語。謙譲語「申し上ぐ」は相手を高める表現で、動作主は大臣。'},
+ {q:'本文：「姫、歌を詠みて、帝に奉る。」歌を差し上げた相手は？',c:['帝','姫','語り手','歌を聞いた人々'],a:0,e:'本文に「帝に奉る」とあるので、歌を差し上げた相手は帝。「奉る」は文脈により謙譲の意味を持つ。'},
+ {q:'本文：「僧、門より入り、主に会ひて語る。」門から入り、主人と話した人物は？',c:['僧','主','門番','語り手'],a:0,e:'「僧」が「入り」「会ひて」「語る」の一連の動作の主体。'},
+ {q:'本文：「帝、臣を召して、書を読ませ給ふ。」書を読んだのは誰？',c:['臣','帝','語り手','特定できない'],a:0,e:'帝が臣を召し、臣に書を読ませる文なので、実際に読む動作をするのは臣。'} 
+ ],'古文の本文読解・動作主'); 
 }
 function writingPractice(parent){
  parent.appendChild(node('p','muted','記述答案を入力し、字数・本文の根拠・設問に必要な要素を確認します。改善案は語句の有無を使った補助判定です。'));
