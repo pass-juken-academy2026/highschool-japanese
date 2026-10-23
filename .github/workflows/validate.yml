@@ -159,3 +159,40 @@ jobs:
               sys.exit(1)
           print(f'Stage 2 Japanese coverage OK; index quiz records: {len(quizzes)}; evidence items: {len(evidence)}; practice quiz records: {len(bank)}')
           PY
+
+      - name: Regression test Japanese subject and menu rendering
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+          page = Path('index.html').read_text(encoding='utf-8')
+          errors = []
+          # The three visible subject buttons must map to actual data keys.
+          for key, label in [('classical', '古典'), ('japanese', '国語'), ('kanbun', '漢文')]:
+              if not re.search(r'<button[^>]*data-subject="' + key + r'"', page):
+                  errors.append(f'missing subject button: {key}')
+              if not re.search(r'\b' + key + r':\{name:\x27' + label + r'\x27,menus:\[', page):
+                  errors.append(f'missing menu data: {key}')
+          # Ensure menu data isn't empty and the rendering/click handlers remain wired.
+          menu_arrays = re.findall(r'(?:classical|japanese|kanbun):\{name:\x27[^\x27]+\x27,menus:\[(.*?)\]\}', page, re.S)
+          if len(menu_arrays) != 3:
+              errors.append(f'expected 3 subject menu arrays, found {len(menu_arrays)}')
+          elif any(len(re.findall(r"\['[^']+'\s*,\s*'[^']+'\]", menu)) < 5 for menu in menu_arrays):
+              errors.append('one or more subject menus unexpectedly has fewer than 5 entries')
+          for marker in [
+              "function renderMenus(){",
+              "subjects[subject].menus.forEach",
+              "document.querySelectorAll('[data-subject]').forEach",
+              "else renderMenus();",
+              "id=\"menu-grid\"",
+              "id=\"menu-title\"",
+          ]:
+              if marker not in page:
+                  errors.append(f'missing menu rendering wiring: {marker}')
+          if errors:
+              print('Japanese menu regression test failed:')
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('Japanese subject/menu regression checks passed for classical, japanese, and kanbun.')
+          PY
