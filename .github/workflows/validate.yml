@@ -196,3 +196,31 @@ jobs:
               sys.exit(1)
           print('Japanese subject/menu regression checks passed for classical, japanese, and kanbun.')
           PY
+
+      - name: Detect duplicate Japanese quiz prompts
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from collections import defaultdict
+          import re, sys, unicodedata
+          page = Path('index.html').read_text(encoding='utf-8')
+          pattern = re.compile(r"\{(?:type:\d+,)?q:'([^']*)',c:\[([^\]]*)\],a:(-?\d+),e:'([^']*)'\}")
+          records = pattern.findall(page)
+          by_prompt = defaultdict(list)
+          def normalize(value):
+              value = unicodedata.normalize('NFKC', value).casefold()
+              return re.sub(r'[\s\W_]+', '', value, flags=re.UNICODE)
+          for number, record in enumerate(records, 1):
+              by_prompt[normalize(record[0])].append((number, record[0]))
+          duplicates = [items for key, items in by_prompt.items() if key and len(items) > 1]
+          if duplicates:
+              print('Duplicate Japanese quiz prompts found:')
+              for group in duplicates:
+                  print(' | '.join(f'#{number}: {prompt}' for number, prompt in group))
+              sys.exit(1)
+          if len(records) < 90:
+              print(f'Question bank unexpectedly small: {len(records)} records')
+              sys.exit(1)
+          print(f'No duplicate normalized prompts found among {len(records)} Japanese quiz records.')
+          PY
