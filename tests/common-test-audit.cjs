@@ -26,7 +26,7 @@ function matchingBracket(source, open) {
     const ch = source[i];
     if (quote) {
       if (escaped) escaped = false;
-      else if (ch === '\\') escaped = true;
+      else if (ch.charCodeAt(0) === 92) escaped = true;
       else if (ch === quote) quote = '';
       continue;
     }
@@ -39,7 +39,6 @@ function matchingBracket(source, open) {
   }
   throw new Error('Unclosed bank question record.');
 }
-function decodeString(value) { return JSON.parse('"' + value + '"'); }
 const bankStart = index.indexOf('const JAPANESE_COMMON_CASES=');
 const bankEnd = index.indexOf('const JAPANESE_MOCK_CASES=', bankStart);
 if (bankStart < 0 || bankEnd <= bankStart) {
@@ -51,27 +50,27 @@ if (bankStart < 0 || bankEnd <= bankStart) {
   while ((cursor = bank.indexOf('{q:', cursor)) >= 0) {
     const end = matchingBracket(bank, cursor);
     const row = bank.slice(cursor, end + 1);
-    const qMatch = row.match(/\bq:"((?:\\.|[^"\\])*)"/s);
-    const aMatch = row.match(/\ba:(\d+)/);
-    const eMatch = row.match(/\be:"((?:\\.|[^"\\])*)"/s);
+    const qMatch = row.match(/q:"([^"]*)"/);
+    const aMatch = row.match(/a:([0-9]+)/);
+    const eMatch = row.match(/e:"([^"]*)"/);
     const cAt = row.indexOf('c:[');
     let choices = [];
     if (cAt >= 0) {
       const cOpen = row.indexOf('[', cAt);
       const cEnd = matchingBracket(row, cOpen);
-      choices = [...row.slice(cOpen + 1, cEnd).matchAll(/"((?:\\.|[^"\\])*)"/gs)].map(m => decodeString(m[1]));
+      choices = [...row.slice(cOpen + 1, cEnd).matchAll(/"([^"]*)"/g)].map(m => m[1]);
     }
     questions.push({
-      q: qMatch ? decodeString(qMatch[1]) : '',
+      q: qMatch ? qMatch[1] : '',
       answer: aMatch ? Number(aMatch[1]) : -1,
-      explanation: eMatch ? decodeString(eMatch[1]) : '',
+      explanation: eMatch ? eMatch[1] : '',
       choices
     });
     cursor = end + 1;
   }
   if (questions.length !== 47) errors.push('Expected 47 questions in the full bank, found ' + questions.length + '.');
   const seen = new Set();
-  const normalize = value => String(value || '').normalize('NFKC').toLocaleLowerCase().replace(/[\s、。！？「」『』（）()【】・,:：;；]/g, '');
+  const normalize = value => String(value || '').normalize('NFKC').toLocaleLowerCase().replace(/[ 　、。！？「」『』（）()【】・,:：;；]/g, '');
   for (const [i, q] of questions.entries()) {
     const label = 'Full bank question ' + (i + 1);
     if (!q.q.trim()) errors.push(label + ': missing prompt.');
