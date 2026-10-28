@@ -26,7 +26,7 @@ function matchingBracket(source, open) {
     const ch = source[i];
     if (quote) {
       if (escaped) escaped = false;
-      else if (ch === '\\\\') escaped = true;
+      else if (ch === '\\') escaped = true;
       else if (ch === quote) quote = '';
       continue;
     }
@@ -51,15 +51,15 @@ if (bankStart < 0 || bankEnd <= bankStart) {
   while ((cursor = bank.indexOf('{q:', cursor)) >= 0) {
     const end = matchingBracket(bank, cursor);
     const row = bank.slice(cursor, end + 1);
-    const qMatch = row.match(/\\bq:"((?:\\\\.|[^"\\\\])*)"/s);
-    const aMatch = row.match(/\\ba:(\\d+)/);
-    const eMatch = row.match(/\\be:"((?:\\\\.|[^"\\\\])*)"/s);
+    const qMatch = row.match(/\bq:"((?:\\.|[^"\\])*)"/s);
+    const aMatch = row.match(/\ba:(\d+)/);
+    const eMatch = row.match(/\be:"((?:\\.|[^"\\])*)"/s);
     const cAt = row.indexOf('c:[');
     let choices = [];
     if (cAt >= 0) {
       const cOpen = row.indexOf('[', cAt);
       const cEnd = matchingBracket(row, cOpen);
-      choices = [...row.slice(cOpen + 1, cEnd).matchAll(/"((?:\\\\.|[^"\\\\])*)"/gs)].map(m => decodeString(m[1]));
+      choices = [...row.slice(cOpen + 1, cEnd).matchAll(/"((?:\\.|[^"\\])*)"/gs)].map(m => decodeString(m[1]));
     }
     questions.push({
       q: qMatch ? decodeString(qMatch[1]) : '',
@@ -71,7 +71,7 @@ if (bankStart < 0 || bankEnd <= bankStart) {
   }
   if (questions.length !== 47) errors.push('Expected 47 questions in the full bank, found ' + questions.length + '.');
   const seen = new Set();
-  const normalize = value => String(value || '').normalize('NFKC').toLocaleLowerCase().replace(/[\\s、。！？「」『』（）()【】・,:：;；]/g, '');
+  const normalize = value => String(value || '').normalize('NFKC').toLocaleLowerCase().replace(/[\s、。！？「」『』（）()【】・,:：;；]/g, '');
   for (const [i, q] of questions.entries()) {
     const label = 'Full bank question ' + (i + 1);
     if (!q.q.trim()) errors.push(label + ': missing prompt.');
