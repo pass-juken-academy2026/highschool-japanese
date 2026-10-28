@@ -17,7 +17,7 @@ if (!index.includes("JAPANESE_COMMON_CASES.slice(0,5).map((c,i)=>{")) {
   errors.push('Common-test mode must use only the five main sections.');
 }
 if (index.includes('79問の問題バンク')) errors.push('Outdated question-bank count remains in the common-test notice.');
-if (!index.includes('5大問・全\\'+total+\\'問')) errors.push('The common-test notice must report the selected total dynamically.');
+if (!index.includes("5大問・全'+total+'問")) errors.push('The common-test notice must report the selected total dynamically.');
 if (!practice.includes('共通テスト型（全37問）')) errors.push('Practice page label must match the 37-question common-test total.');
 if (errors.length) {
   console.error(errors.join('\n'));
