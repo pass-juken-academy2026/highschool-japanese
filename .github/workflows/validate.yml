@@ -224,3 +224,5 @@ jobs:
               sys.exit(1)
           print(f'No duplicate normalized prompts found among {len(records)} Japanese quiz records.')
           PY
+      - name: Check Japanese common-test section count
+        run: node tests/common-test-audit.cjs
