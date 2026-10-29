@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
   try {
     const page = await browser.newPage();
     await page.goto('http://127.0.0.1:4173/practice.html');
-    await page.selectOption('#mode', 'common');
+    await page.selectOption('#mode', 'basic');
     await page.click('#start');
     await page.waitForSelector('#pdfExportControls:not(.hidden)');
     const openExport = async (button) => {
