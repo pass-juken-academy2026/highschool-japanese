@@ -49,6 +49,35 @@ const { chromium } = require('playwright');
     assert.match(combinedCopy, /問題/);
     assert.match(combinedCopy, /解答・解説/);
     assert.match(combinedCopy, /正解：/);
+
+    await page.goto('http://127.0.0.1:4173/index.html');
+    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.click('[data-subject="japanese"]');
+    await page.locator('#menu-grid button').nth(5).click();
+    await page.waitForSelector('#structuredExportControls');
+    const copyStructured = async (label) => {
+      await page.getByRole('button', { name: label }).click();
+      await page.waitForFunction(() => (document.querySelector('#structuredExportStatus')?.textContent || '').includes('コピーしました'));
+      return page.evaluate(() => navigator.clipboard.readText());
+    };
+    const structuredQuestions = await copyStructured('問題のみテキスト');
+    assert.match(structuredQuestions, /模擬テスト|問題/);
+    assert.doesNotMatch(structuredQuestions, /正解：|解答・解説/);
+    const structuredAnswers = await copyStructured('解答・解説テキスト');
+    assert.match(structuredAnswers, /正解：/);
+    assert.match(structuredAnswers, /解説：/);
+    const structuredCombined = await copyStructured('問題＋解答テキスト');
+    assert.match(structuredCombined, /問題＋解答・解説/);
+    assert.match(structuredCombined, /正解：/);
+    const structuredPopupPromise = page.waitForEvent('popup');
+    await page.getByRole('button', { name: '問題のみPDF' }).click();
+    const structuredPopup = await structuredPopupPromise;
+    await structuredPopup.waitForLoadState('domcontentloaded');
+    assert.match(await structuredPopup.locator('body').innerText(), /問題/);
+    const structuredPdf = await structuredPopup.pdf({ format: 'A4' });
+    assert.equal(structuredPdf.subarray(0, 4).toString(), '%PDF');
+    assert.ok(structuredPdf.length > 1000);
+    await structuredPopup.close();
     console.log('PASS PDF export modes');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exit(1); });
