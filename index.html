@@ -2413,8 +2413,42 @@ function chooseJapaneseMockCase(){
  return [JAPANESE_MOCK_CASES[selected]];
 }
 
+function addExamExport(parent, cases, mode) {
+ const panel=node('section','term-result');
+ panel.id='structuredExportControls';
+ panel.appendChild(node('h3','','模擬テスト・共通テスト型の出力'));
+ panel.appendChild(node('p','muted','問題のみ／解答・解説のみ／一体版をPDFまたはテキストで出力できます。'));
+ const actions=node('div','row');
+ const status=node('p','muted','');status.id='structuredExportStatus';status.setAttribute('aria-live','polite');
+ const labels=[['questions','問題のみPDF'],['answers','解答・解説PDF'],['combined','問題＋解答PDF']];
+ labels.forEach(([kind,label])=>{const b=node('button','secondary',label);b.type='button';b.addEventListener('click',()=>exportPdf(kind));actions.appendChild(b);});
+ [['questions','問題のみテキスト'],['answers','解答・解説テキスト'],['combined','問題＋解答テキスト']].forEach(([kind,label])=>{const b=node('button','secondary',label);b.type='button';b.addEventListener('click',()=>copyText(kind));actions.appendChild(b);});
+ panel.append(actions,status);parent.appendChild(panel);
+ const plain=q=>String(q??'');
+ const escapeHtml=value=>plain(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+ const answerText=q=>'正解：'+plain((q.c||[])[q.a]??'未設定')+'\n解説：'+plain(q.e||'解説未設定');
+ const questionText=c=>['【'+c.title+'】',plain(c.passage||''),...c.questions.map((q,i)=>'問題 '+(i+1)+'\n'+plain(q.q)+'\n'+(Array.isArray(q.c)?q.c:[]).map((v,j)=>String.fromCharCode(65+j)+'. '+plain(v)).join('\n'))].filter(Boolean).join('\n\n');
+ const answersText=c=>['【'+c.title+'】',plain(c.passage||''),...c.questions.map((q,i)=>'問題 '+(i+1)+'\n'+plain(q.q)+'\n'+answerText(q))].filter(Boolean).join('\n\n');
+ const combinedText=()=>cases.map(c=>questionText(c)+'\n\n【解答・解説】\n'+answersText(c)).join('\n\n');
+ function exportPdf(kind){
+  const title=subjects[subject].name+'｜'+(mode==='mock'?'模擬テスト':'共通テスト型');
+  const qHtml=cases.map(c=>'<section><h2>'+escapeHtml(c.title)+'</h2>'+(c.passage?'<p class="passage">'+escapeHtml(c.passage)+'</p>':'')+c.questions.map((q,i)=>'<article><h3>問題 '+(i+1)+'</h3><p>'+escapeHtml(q.q)+'</p><ol type="A">'+(Array.isArray(q.c)?q.c:[]).map(v=>'<li>'+escapeHtml(v)+'</li>').join('')+'</ol></article>').join('')+'</section>').join('');
+  const aHtml=cases.map(c=>'<section><h2>'+escapeHtml(c.title)+'</h2>'+(c.passage?'<p class="passage">'+escapeHtml(c.passage)+'</p>':'')+c.questions.map((q,i)=>'<article><h3>問題 '+(i+1)+'</h3><p>'+escapeHtml(q.q)+'</p><p><strong>'+escapeHtml(answerText(q).split('\n')[0])+'</strong></p><p>'+escapeHtml(answerText(q).split('\n').slice(1).join(' '))+'</p></article>').join('')+'</section>').join('');
+  const body=kind==='questions'?'<h1>問題</h1>'+qHtml:kind==='answers'?'<h1>解答・解説</h1>'+aHtml:'<h1>問題</h1>'+qHtml+'<div class="answer-key"><h1>解答・解説</h1>'+aHtml+'</div>';
+  const win=window.open('','_blank');if(!win){status.textContent='PDF出力のポップアップを許可してください。';return;}
+  win.document.open();win.document.write('<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escapeHtml(title)+'</title><style>body{font:12pt/1.65 system-ui,sans-serif;color:#111;margin:16mm}h1{font-size:20pt;border-bottom:2px solid #333;padding-bottom:3mm}h2{font-size:15pt}h3{font-size:12pt}.passage{white-space:pre-wrap;border:1px solid #aaa;padding:4mm}.answer-key{break-before:page}article{margin:5mm 0;padding:3mm 0;border-bottom:1px solid #bbb;break-inside:avoid}li{margin:1mm 0}@page{size:A4;margin:14mm}</style></head><body><h1>'+escapeHtml(title)+'</h1>'+body+'<script>window.addEventListener("load",()=>setTimeout(()=>window.print(),250));<\\/script></body></html>');win.document.close();
+ }
+ async function copyText(kind){
+  const title=subjects[subject].name+'｜'+(mode==='mock'?'模擬テスト':'共通テスト型');
+  const text=kind==='questions'?title+'\n問題\n'+cases.map(questionText).join('\n\n'):kind==='answers'?title+'\n解答・解説\n'+cases.map(answersText).join('\n\n'):title+'\n問題＋解答・解説\n'+combinedText();
+  try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(text);else{const area=document.createElement('textarea');area.value=text;area.setAttribute('readonly','');area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();const ok=document.execCommand('copy');area.remove();if(!ok)throw new Error('copy failed');}status.textContent=kind==='questions'?'問題のみのテキストをコピーしました。':kind==='answers'?'解答・解説のテキストをコピーしました。':'問題と解答・解説のテキストをコピーしました。';}
+  catch(e){status.textContent='自動コピーできませんでした。ブラウザの権限を確認してください。';}
+ }
+}
+
 function startStructuredTest(parent,mode){
- // 共通テスト型は最初の5大問から、本番構成の10/7/5/7/8問を各大問ごとに抽出する。
+ parent.replaceChildren();
+ // 共通テスト型は最初の5大問から、本番構成の10/7/5/7/8問を各大問ごとに抽出する.
  // 抽出後は元の設問順を保ち、表示上の問番号を振り直す。模擬テストは大問1題・10小問。
  const commonTargets=[10,7,5,7,8];
  const cases=mode==='mock'?chooseJapaneseMockCase():JAPANESE_COMMON_CASES.slice(0,5).map((c,i)=>{
@@ -2424,7 +2458,7 @@ function startStructuredTest(parent,mode){
  });
  const total=cases.reduce((n,c)=>n+c.questions.length,0);
  parent.appendChild(node('p','notice',mode==='mock'?'模擬テスト：同じ本文に基づく関連小問10問の大問1題です。全10問・制限時間40分。':'共通テスト型：評論・小説・実用的文章・古文・漢文の5大問・全'+total+'問。各大問の問題バンクから規定数を抽出します。制限時間90分。本文・資料は学習用オリジナルです。'));
- const timer=node('p','tag',mode==='common'?'制限時間：90分':'制限時間：40分'),progress=node('p','muted',''),stimulus=node('article','term-result'),qtitle=node('div','question-title'),opts=node('div'),feedback=node('div','feedback','選択肢を選び、解答を確認してください。'),actions=node('div','row'),check=node('button','primary','解答する'),next=node('button','secondary','次の小問');next.disabled=true;actions.append(check,next);parent.append(timer,progress,stimulus,qtitle,opts,feedback,actions);
+ const timer=node('p','tag',mode==='common'?'制限時間：90分':'制限時間：40分'),progress=node('p','muted',''),stimulus=node('article','term-result'),qtitle=node('div','question-title'),opts=node('div'),feedback=node('div','feedback','選択肢を選び、解答を確認してください。'),actions=node('div','row'),check=node('button','primary','解答する'),next=node('button','secondary','次の小問');next.disabled=true;actions.append(check,next);parent.append(timer,progress,stimulus,qtitle,opts,feedback,actions);addExamExport(parent,cases,mode);
  let ci=0,si=0,selected=-1,checked=false,score=0,remaining=mode==='mock'?2400:5400,timerId=null,finished=false;const records=[];
  {const tick=()=>{if(finished)return;remaining--;timer.textContent='残り時間 '+Math.floor(remaining/60)+':'+String(remaining%60).padStart(2,'0');if(remaining<=0){finished=true;clearInterval(timerId);showResult();}};timer.textContent='残り時間 '+(mode==='mock'?'40:00':'90:00');timerId=setInterval(tick,1000);}
  function render(){selected=-1;checked=false;const c=cases[ci],q=c.questions[si];stimulus.replaceChildren(node('h3','',c.title));const body=node('div');body.innerHTML=c.passage.replace(/\n/g,'<br>');stimulus.appendChild(body);qtitle.textContent=q.q;opts.replaceChildren();q.c.forEach((v,i)=>{const b=node('button','option',String.fromCharCode(65+i)+'．'+v);b.type='button';b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{if(checked)return;selected=i;[...opts.children].forEach((x,j)=>x.setAttribute('aria-pressed',String(i===j)));});opts.appendChild(b)});feedback.className='feedback';feedback.textContent='選択肢を選んでください。';check.disabled=false;next.disabled=true;next.textContent=(ci===cases.length-1&&si===c.questions.length-1)?'結果を見る':'次の小問';progress.textContent=(mode==='mock'?'大問1':'大問'+(ci+1)+'／'+cases.length)+'・小問'+(si+1)+'／'+c.questions.length+'　全'+(records.length+1)+'／'+total+'問　正解 '+score+'問';}
@@ -2442,11 +2476,11 @@ function startStructuredTest(parent,mode){
   parent.appendChild(node('h3','','復習する問題'));
   if(!review.length)parent.appendChild(node('p','correct','全問正解。選んだ根拠も説明できるか確認しよう。'));
   else review.forEach(r=>{const d=node('div','term-result');d.append(node('strong','',r.title+'｜'+r.q.q),node('p','','正解：'+r.q.c[r.q.a]),node('p','muted',r.unanswered?'未回答です。正解と解説を確認しましょう。':r.q.e));parent.appendChild(d)});
-  const retry=node('button','primary','もう一度挑戦');retry.type='button';retry.addEventListener('click',()=>startStructuredTest(parent,mode));parent.appendChild(retry);
+  const retry=node('button','primary','もう一度挑戦');retry.type='button';retry.addEventListener('click',()=>startStructuredTest(parent,mode));parent.appendChild(retry);addExamExport(parent,cases,mode);
  }
  render();
 }
-function startTest(parent,mode){if(subject==='japanese'){startStructuredTest(parent,mode);return;}let items;if(mode==='mock'){items=db[subject].slice(0,Math.min(8,db[subject].length))}else{items=db[subject].filter(q=>q.type>=4).concat(db[subject].filter(q=>q.type===3)).slice(0,6)}if(!items.length)items=db[subject].slice(0,6);parent.appendChild(node('p','notice',mode==='mock'?'分野を横断する模擬テストです。最後に正答率と復習問題が表示されます。':'本文や知識を根拠に判断する共通テスト型の練習です。'));makeQuizCard(parent,items,mode==='mock'?'模擬テスト':'共通テスト型');}
+function startTest(parent,mode){if(subject==='japanese'){startStructuredTest(parent,mode);return;}let items;if(mode==='mock'){items=db[subject].slice(0,Math.min(8,db[subject].length))}else{items=db[subject].filter(q=>q.type>=4).concat(db[subject].filter(q=>q.type===3)).slice(0,6)}if(!items.length)items=db[subject].slice(0,6);parent.appendChild(node('p','notice',mode==='mock'?'分野を横断する模擬テストです。最後に正答率と復習問題が表示されます。':'本文や知識を根拠に判断する共通テスト型の練習です。'));makeQuizCard(parent,items,mode==='mock'?'模擬テスト':'共通テスト型');addExamExport(parent,[{title:subjects[subject].name+'｜'+(mode==='mock'?'模擬テスト':'共通テスト型'),passage:'',questions:items}],mode);}
 function translation(parent,kind){const data=translations[kind];parent.appendChild(node('p','muted','本文を読んで、現代語訳として最も適切なものを選びましょう。'));parent.appendChild(node('div','term-result',data.text));makeQuizCard(parent,[{q:data.question,c:data.c,a:data.a,e:data.e}],data.title);}
 function shortQuestions(parent){const items=db.japanese.filter(q=>q.type===3);parent.appendChild(node('p','muted','短い文章の表現・接続関係を読み取る練習です。'));makeQuizCard(parent,items,'短文読解');}
 function readingQuestion(parent){
