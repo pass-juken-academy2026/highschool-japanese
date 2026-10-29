@@ -48,7 +48,7 @@ function exportPracticePdf(kind){
  if(!Array.isArray(questions)||!questions.length){alert("先に演習を開始してください。");return;}
  const mode=$("mode").value,title=document.querySelector("h1")?.textContent||"演習",stamp=new Date().toLocaleDateString("ja-JP");
  let body="",lastStimulus="";
- const renderStimulus=q=>{const st=pdfStimulusFor(q,mode);if(!st)return "";const key=mode+":"+String(q[4]??"shared");if(key===lastStimulus)return "";lastStimulus=key;return '<section class="stimulus"><h2>'+pdfEscape(st.title||"資料")+'</h2><p>'+pdfEscape(st.text||"")+'</p><div>'+String(st.table||"")+'</div></section>';};
+ const renderStimulus=q=>{const st=pdfStimulusFor(q,mode);if(!st)return "";const key=mode+":"+String(st.title||"shared");if(key===lastStimulus)return "";lastStimulus=key;return '<section class="stimulus"><h2>'+pdfEscape(st.title||"資料")+'</h2><p>'+pdfEscape(st.text||"")+'</p><div>'+String(st.table||"")+'</div></section>';};
  const qhtml=(q,i)=>'<article class="question"><h3>問題 '+(i+1)+'</h3><p class="prompt">'+pdfEscape(q[0])+'</p><ol type="A">'+(Array.isArray(q[1])?q[1]:[]).map(v=>'<li>'+pdfEscape(v)+'</li>').join("")+'</ol></article>';
  const ahtml=(q,i)=>'<article class="answer"><h3>問題 '+(i+1)+'</h3><p><strong>'+pdfEscape(q[0])+'</strong></p><p><strong>正解：</strong>'+pdfEscape((q[1]||[])[q[2]]??"未設定")+'</p><p><strong>解説：</strong>'+pdfEscape(q[3]||"解説未設定")+'</p></article>';
  if(kind!=="answers"){body+='<h1>問題</h1><p class="meta">'+pdfEscape(title)+' · '+stamp+' · '+questions.length+'問</p>';questions.forEach((q,i)=>{body+=renderStimulus(q)+qhtml(q,i);});}
