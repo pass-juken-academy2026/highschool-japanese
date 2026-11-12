@@ -2406,10 +2406,15 @@ JAPANESE_COMMON_CASES[4].questions.push(
 {q:"問10　本文の教えを学習に生かす例として最も適切なのは？",c:["一度解いた問題は理由を確かめずに捨てる","以前学んだ考え方を見直し、新しい問題にどう使えるか考える","新しい問題では過去の知識を使わない","答えだけを暗記し、説明はしない"],a:1,e:"過去の学びを見直し、新しい問題への応用を考えることが「温故知新」の考え方に合う。"}
 );
 let lastJapaneseMockCaseIndex=-1;
+try{
+ const savedJapaneseMockCase=Number(localStorage.getItem("hsJapaneseLastMockCase"));
+ if(Number.isInteger(savedJapaneseMockCase)&&savedJapaneseMockCase>=0&&savedJapaneseMockCase<JAPANESE_MOCK_CASES.length)lastJapaneseMockCaseIndex=savedJapaneseMockCase;
+}catch(e){}
 function chooseJapaneseMockCase(){
  const choices=JAPANESE_MOCK_CASES.map((_,i)=>i).filter(i=>i!==lastJapaneseMockCaseIndex);
- const selected=choices[Math.floor(Math.random()*choices.length)];
+ const selected=choices.length?choices[Math.floor(Math.random()*choices.length)]:0;
  lastJapaneseMockCaseIndex=selected;
+ try{localStorage.setItem("hsJapaneseLastMockCase",String(selected));}catch(e){}
  return [JAPANESE_MOCK_CASES[selected]];
 }
 
