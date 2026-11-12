@@ -2405,16 +2405,18 @@ JAPANESE_COMMON_CASES[4].questions.push(
 {q:"問9　「温故」と「知新」の関係を説明するものとして最も適切なのは？",c:["過去の知識を振り返ることと、新しい理解を得ることを結び付けている","過去の知識を忘れ、新しいことだけを学ぶ","他人に教わることを避ける","古い考えと新しい考えは必ず対立する"],a:0,e:"「温故知新」は、古いことを学び直すことを通じて新しい知識や見解を得るという関係を表す。"},
 {q:"問10　本文の教えを学習に生かす例として最も適切なのは？",c:["一度解いた問題は理由を確かめずに捨てる","以前学んだ考え方を見直し、新しい問題にどう使えるか考える","新しい問題では過去の知識を使わない","答えだけを暗記し、説明はしない"],a:1,e:"過去の学びを見直し、新しい問題への応用を考えることが「温故知新」の考え方に合う。"}
 );
-let lastJapaneseMockCaseIndex=-1;
+let japaneseMockCaseHistory=[];
 try{
- const savedJapaneseMockCase=Number(localStorage.getItem("hsJapaneseLastMockCase"));
- if(Number.isInteger(savedJapaneseMockCase)&&savedJapaneseMockCase>=0&&savedJapaneseMockCase<JAPANESE_MOCK_CASES.length)lastJapaneseMockCaseIndex=savedJapaneseMockCase;
+ const savedHistory=JSON.parse(localStorage.getItem("hsJapaneseMockCaseHistory")||"[]");
+ if(Array.isArray(savedHistory))japaneseMockCaseHistory=savedHistory.filter(i=>Number.isInteger(i)&&i>=0&&i<JAPANESE_MOCK_CASES.length);
+ if(!japaneseMockCaseHistory.length){const previous=Number(localStorage.getItem("hsJapaneseLastMockCase"));if(Number.isInteger(previous)&&previous>=0&&previous<JAPANESE_MOCK_CASES.length)japaneseMockCaseHistory=[previous];}
 }catch(e){}
 function chooseJapaneseMockCase(){
- const choices=JAPANESE_MOCK_CASES.map((_,i)=>i).filter(i=>i!==lastJapaneseMockCaseIndex);
- const selected=choices.length?choices[Math.floor(Math.random()*choices.length)]:0;
- lastJapaneseMockCaseIndex=selected;
- try{localStorage.setItem("hsJapaneseLastMockCase",String(selected));}catch(e){}
+ if(japaneseMockCaseHistory.length>=JAPANESE_MOCK_CASES.length)japaneseMockCaseHistory=[];
+ const choices=JAPANESE_MOCK_CASES.map((_,i)=>i).filter(i=>!japaneseMockCaseHistory.includes(i));
+ const selected=choices[Math.floor(Math.random()*choices.length)];
+ japaneseMockCaseHistory.push(selected);
+ try{localStorage.setItem("hsJapaneseMockCaseHistory",JSON.stringify(japaneseMockCaseHistory));}catch(e){}
  return [JAPANESE_MOCK_CASES[selected]];
 }
 
