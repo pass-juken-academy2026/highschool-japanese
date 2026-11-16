@@ -2459,7 +2459,7 @@ function startStructuredTest(parent,mode){
  // 共通テスト型は大問ごとに未出題の設問を優先し、全設問を一巡するまでは重複させない。
  // 残りの未出題数が規定数に満たない回は、その残数だけを出題する。
  const commonTargets=[10,7,5,7,8];
- const cases=mode==='mock'?chooseJapaneseMockCase():JAPANESE_COMMON_CASES.slice(0,5).map((c,i)=>({...c,questions:chooseJapaneseCommonQuestions(c,i,commonTargets[i]||c.questions.length)}));
+ const cases=mode==='mock'?chooseJapaneseMockCase():JAPANESE_COMMON_CASES.slice(0,5).map((c,i)=>{return {...c,questions:chooseJapaneseCommonQuestions(c,i,commonTargets[i]||c.questions.length)};});
  const total=cases.reduce((n,c)=>n+c.questions.length,0);
  parent.appendChild(node('p','notice',mode==='mock'?'模擬テスト：同じ本文に基づく関連小問10問の大問1題です。全10問・制限時間40分。':'共通テスト型：評論・小説・実用的文章・古文・漢文の5大問・全'+total+'問。各大問の問題バンクから規定数を抽出します。制限時間90分。本文・資料は学習用オリジナルです。'));
  const timer=node('p','tag',mode==='common'?'制限時間：90分':'制限時間：40分'),progress=node('p','muted',''),stimulus=node('article','term-result'),qtitle=node('div','question-title'),opts=node('div'),feedback=node('div','feedback','選択肢を選び、解答を確認してください。'),actions=node('div','row'),check=node('button','primary','解答する'),next=node('button','secondary','次の小問');next.disabled=true;actions.append(check,next);parent.append(timer,progress,stimulus,qtitle,opts,feedback,actions);addExamExport(parent,cases,mode);
