@@ -55,10 +55,12 @@ function validateQuestions(rows, name, answerIndex=2) {
   return positions;
 }
 const basePositions = validateQuestions(base,'Base');
-const standardPositions = validateQuestions(standard,'Standard');
+const baseStandard = base.filter((q,i)=>!basicIndices.includes(i));
+const standardPool = [...baseStandard,...standard];
+const standardPositions = validateQuestions(standardPool,'Standard pool');
 const advancedPositions = validateQuestions(advanced,'Advanced');
 if (basePositions.some(n=>n!==8)) errors.push('Base answer positions must be balanced 8 per option.');
-if (standardPositions.some(n=>n!==3)) errors.push('Standard answer positions must be balanced 3 per option.');
+if (standardPositions.some(n=>n!==3)) errors.push('Standard pool answer positions must be balanced 3 per option.');
 if (JSON.stringify(advancedPositions)!==JSON.stringify([3,3,2,2])) errors.push('Advanced answer positions must be balanced 3/3/2/2.');
 
 if (!practice.includes('selected.length<count') || !practice.includes('refill')) errors.push('No-repeat rotation should refill to maintain fixed quiz length.');
