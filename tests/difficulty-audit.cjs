@@ -13,7 +13,7 @@ function extractArray(source, marker) {
     const ch = source[i];
     if (quote) {
       if (escaped) escaped = false;
-      else if (ch === '\\\\') escaped = true;
+      else if (ch === '\\') escaped = true;
       else if (ch === quote) quote = '';
       continue;
     }
@@ -48,7 +48,7 @@ function validateQuestions(rows, name, answerIndex=2) {
     if (!Number.isInteger(q[answerIndex]) || q[answerIndex] < 0 || q[answerIndex] > 3) errors.push(label + ': invalid answer index');
     if (!q[3] || !String(q[3]).trim()) errors.push(label + ': missing explanation');
     if (Array.isArray(q[1]) && q[1][q[answerIndex]] !== undefined) positions[q[answerIndex]]++;
-    const prompt = String(q[0]||'').normalize('NFKC').toLocaleLowerCase().replace(/[\\s　、。！？「」『』（）()【】・,:：;；]/g,'');
+    const prompt = String(q[0]||'').normalize('NFKC').toLocaleLowerCase().replace(/[\s　、。！？「」『』（）()【】・,:：;；]/g,'');
     if (prompt && seen.has(prompt)) errors.push(label + ': duplicate prompt in its pool');
     seen.add(prompt);
   }
@@ -67,7 +67,7 @@ if (!index.includes('function rebalanceJapaneseCaseAnswers') || !index.includes(
 if (!index.includes('if(selected.length<target)') || !index.includes('nextUsed=refill')) errors.push('Common-test no-repeat rotation should refill after consuming unseen questions.');
 
 if (errors.length) {
-  console.error(errors.join('\\n'));
+  console.error(errors.join('\n'));
   process.exit(1);
 }
 console.log('Japanese difficulty pools OK: 24 foundation / 12 standard / 10 advanced; answer keys balanced; fixed-length no-repeat rotation.');
