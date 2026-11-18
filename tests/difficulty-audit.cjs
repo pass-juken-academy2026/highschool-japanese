@@ -30,11 +30,14 @@ function extractArray(source, marker) {
 const base = extractArray(practice, 'const BANK=');
 const basicIndices = extractArray(practice, 'JAPANESE_BASIC_QUESTION_INDICES=');
 const standard = extractArray(practice, 'const STANDARD_JAPANESE_QUESTIONS=');
-const advanced = extractArray(practice, 'const ADVANCED_JAPANESE_QUESTIONS=');
+const advancedBase = extractArray(practice, 'const ADVANCED_JAPANESE_QUESTIONS=');
+const advancedPush = practice.match(/ADVANCED_JAPANESE_QUESTIONS\\.push\\(([\\s\\S]*?)\\);/);
+const advancedExtra = advancedPush ? [...advancedPush[1].matchAll(/\\["([^"]*)",\\[([^\\]]*)\\],(-?\\d+),"([^"]*)",3\\]/g)].map(q=>[q[1],[...q[2].matchAll(/"([^"]*)"/g)].map(m=>m[1]),Number(q[3]),q[4],3]) : [];
+const advanced = [...advancedBase,...advancedExtra];
 if (base.length !== 32) errors.push('Expected 32 base practice questions.');
 if (basicIndices.length !== 24) errors.push('Expected 24 foundation-level question indices.');
 if (standard.length !== 4) errors.push('Expected four standard additions.');
-if (advanced.length !== 10) errors.push('Expected ten advanced questions.');
+if (advanced.length !== 10) errors.push('Expected ten advanced questions including additions.');
 const levelCounts = { foundation: basicIndices.length, standard: base.length - basicIndices.length + standard.length, advanced: advanced.length };
 if (JSON.stringify(levelCounts) !== JSON.stringify({foundation:24,standard:12,advanced:10})) errors.push('Expected level pools 24/12/10.');
 
