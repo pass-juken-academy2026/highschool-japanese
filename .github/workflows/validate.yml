@@ -226,3 +226,5 @@ jobs:
           PY
       - name: Check Japanese common-test section count
         run: node tests/common-test-audit.cjs
+      - name: Check Japanese difficulty pools and answer balance
+        run: node tests/difficulty-audit.cjs
