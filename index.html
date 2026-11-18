@@ -2405,6 +2405,9 @@ JAPANESE_COMMON_CASES[4].questions.push(
 {q:"問9　「温故」と「知新」の関係を説明するものとして最も適切なのは？",c:["過去の知識を振り返ることと、新しい理解を得ることを結び付けている","過去の知識を忘れ、新しいことだけを学ぶ","他人に教わることを避ける","古い考えと新しい考えは必ず対立する"],a:0,e:"「温故知新」は、古いことを学び直すことを通じて新しい知識や見解を得るという関係を表す。"},
 {q:"問10　本文の教えを学習に生かす例として最も適切なのは？",c:["一度解いた問題は理由を確かめずに捨てる","以前学んだ考え方を見直し、新しい問題にどう使えるか考える","新しい問題では過去の知識を使わない","答えだけを暗記し、説明はしない"],a:1,e:"過去の学びを見直し、新しい問題への応用を考えることが「温故知新」の考え方に合う。"}
 );
+function rebalanceJapaneseCaseAnswers(caseList){caseList.forEach(c=>{const counts=[0,0,0,0];(c.questions||[]).forEach(q=>{if(!Array.isArray(q.c)||q.c.length!==4||!Number.isInteger(q.a)||q.a<0||q.a>3)return;const min=Math.min(...counts),candidates=[0,1,2,3].filter(i=>counts[i]===min);const target=candidates[Math.floor(Math.random()*candidates.length)];if(q.a!==target){const correct=q.c[q.a],wrong=q.c.filter((_,i)=>i!==q.a);wrong.splice(target,0,correct);q.c=wrong;q.a=target;}counts[target]++;});});}
+rebalanceJapaneseCaseAnswers(JAPANESE_COMMON_CASES);
+rebalanceJapaneseCaseAnswers(JAPANESE_MOCK_CASES);
 let japaneseMockCaseHistory=[];
 try{
  const savedHistory=JSON.parse(localStorage.getItem("hsJapaneseMockCaseHistory")||"[]");
@@ -2453,11 +2456,11 @@ function addExamExport(parent, cases, mode) {
  }
 }
 
-function chooseJapaneseCommonQuestions(caseData,caseIndex,target){const key="hsJapaneseCommonQuestionHistory:"+caseIndex,all=caseData.questions.map((_,i)=>i),shuffle=a=>{const out=a.slice();for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]];}return out;};let used=[];try{const saved=JSON.parse(localStorage.getItem(key)||"[]");if(Array.isArray(saved))used=[...new Set(saved.filter(i=>Number.isInteger(i)&&i>=0&&i<all.length))];}catch(e){}let available=all.filter(i=>!used.includes(i));if(!available.length){used=[];available=all.slice();}const selected=shuffle(available).slice(0,target);used=used.concat(selected);try{localStorage.setItem(key,JSON.stringify(used));}catch(e){}return selected.sort((a,b)=>a-b).map((item,index)=>({...caseData.questions[item],q:caseData.questions[item].q.replace(/^問[0-9]+/,'問'+(index+1))}));}
+function chooseJapaneseCommonQuestions(caseData,caseIndex,target){const key="hsJapaneseCommonQuestionHistory:"+caseIndex,all=caseData.questions.map((_,i)=>i),shuffle=a=>{const out=a.slice();for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]];}return out;};let used=[];try{const saved=JSON.parse(localStorage.getItem(key)||"[]");if(Array.isArray(saved))used=[...new Set(saved.filter(i=>Number.isInteger(i)&&i>=0&&i<all.length))];}catch(e){}let available=all.filter(i=>!used.includes(i));if(!available.length){used=[];available=all.slice();}const selected=shuffle(available).slice(0,target);let nextUsed;if(all.length<=target)nextUsed=[];else if(selected.length<target){const chosen=new Set(selected);const refill=shuffle(all.filter(i=>!chosen.has(i))).slice(0,target-selected.length);selected.push(...refill);nextUsed=refill;}else nextUsed=used.concat(selected);try{if(nextUsed&&nextUsed.length)localStorage.setItem(key,JSON.stringify(nextUsed));else localStorage.removeItem(key);}catch(e){}return selected.sort((a,b)=>a-b).map((item,index)=>({...caseData.questions[item],c:caseData.questions[item].c.slice(),q:caseData.questions[item].q.replace(/^問[0-9]+/,'問'+(index+1))}));}
 function startStructuredTest(parent,mode){
  parent.replaceChildren();
  // 共通テスト型は大問ごとに未出題の設問を優先し、全設問を一巡するまでは重複させない。
- // 残りの未出題数が規定数に満たない回は、その残数だけを出題する。
+ // 未出題を使い切る場合は同じセット内で重複を避けて次の一巡から補充し、規定数を維持する。
  const commonTargets=[10,7,5,7,8];
  const cases=mode==='mock'?chooseJapaneseMockCase():JAPANESE_COMMON_CASES.slice(0,5).map((c,i)=>{return {...c,questions:chooseJapaneseCommonQuestions(c,i,commonTargets[i]||c.questions.length)};});
  const total=cases.reduce((n,c)=>n+c.questions.length,0);
